@@ -1,0 +1,7 @@
+.l-timeline { gap: 48px; }
+.l-timeline .tl-track { flex: 1; display: flex; gap: 40px; align-items: center; position: relative; margin-bottom: 60px; }
+.l-timeline .tl-track::before { content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 150px); border-top: calc(var(--border-w) + 2px) solid var(--fg); }
+.l-timeline .tl-step { flex: 1; display: flex; flex-direction: column; gap: 14px; padding-top: 190px; position: relative; align-self: stretch; justify-content: center; }
+.l-timeline .tl-dot { position: absolute; top: calc(50% - 150px - 70px); left: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--c); border: calc(var(--border-w) + 2px) solid var(--fg); }
+.l-timeline .tl-when { font-family: var(--font-mono); font-size: 26px; color: var(--c); letter-spacing: .1em; }
+.l-timeline p { color: var(--fg-soft); font-size: 28px; }

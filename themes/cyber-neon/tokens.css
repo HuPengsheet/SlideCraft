@@ -1,0 +1,12 @@
+:root {
+  --bg: #07060f; --bg-alt: #120f26;
+  --fg: #f2f0ff; --fg-soft: #9a94c8;
+  --accent: #00f0ff; --accent-2: #ff2bd6; --accent-3: #c6ff3d;
+  --surface: rgba(18,15,38,.8); --line: rgba(0,240,255,.55);
+  --font-display: Orbitron, "Rajdhani", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+  --font-body: Rajdhani, "PingFang SC", "Noto Sans CJK SC", sans-serif;
+  --font-mono: "Share Tech Mono", ui-monospace, monospace;
+  --display-weight: 800; --display-tracking: 0.02em; --display-case: uppercase;
+  --radius: 4px; --border-w: 2px; --shadow: 0 0 24px rgba(0,240,255,.35);
+  --pad-x: 110px; --pad-y: 90px;
+}

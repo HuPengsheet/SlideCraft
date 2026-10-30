@@ -1,0 +1,4 @@
+.l-end { justify-content: center; }
+.l-end .end-main { display: flex; flex-direction: column; gap: 40px; position: relative; z-index: 1; }
+.l-end h1 { font-size: 220px; }
+.l-end .deco { position: absolute; pointer-events: none; }

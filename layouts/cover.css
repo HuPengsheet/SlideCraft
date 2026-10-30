@@ -1,0 +1,4 @@
+.l-cover { justify-content: space-between; }
+.l-cover .cover-main { margin-top: auto; margin-bottom: 120px; display: flex; flex-direction: column; gap: 40px; position: relative; z-index: 1; }
+.l-cover h1 { max-width: 1500px; }
+.l-cover .deco { position: absolute; pointer-events: none; }

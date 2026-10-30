@@ -1,0 +1,6 @@
+<div class="eyebrow">{{eyebrow}}</div>
+<h2>{{title}}</h2>
+<div class="cb-plot cycle">
+{{#each bars}}<div class="cb-col"><div class="cb-val">{{value}}{{unit}}</div><div class="cb-bar" style="height:{{pct}}%" data-fx="grow"></div><div class="cb-lab">{{label}}</div></div>{{/each}}
+</div>
+<div class="folio"><span>{{note}}</span><span>{{page}} / {{total}}</span></div>

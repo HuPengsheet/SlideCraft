@@ -1,0 +1,6 @@
+.l-split { flex-direction: row; gap: 80px; align-items: center; }
+.l-split .sp-text { flex: 1; display: flex; flex-direction: column; gap: 40px; }
+.l-split .sp-media { flex: 1; align-self: stretch; margin: 20px 0 60px; padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--bg-alt); }
+.l-split .sp-media img { width: 100%; height: 100%; object-fit: cover; }
+.l-split .sp-ph { font-family: var(--font-mono); color: var(--fg-soft); font-size: 26px; letter-spacing: .12em; text-transform: uppercase; }
+.l-split .sp-media img + .sp-ph { display: none; }

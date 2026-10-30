@@ -1,0 +1,7 @@
+.l-toc { gap: 56px; }
+.l-toc .toc-list { list-style: none; margin: auto 0; padding: 0; display: flex; flex-direction: column; }
+.l-toc li { display: grid; grid-template-columns: 140px 700px 1fr; align-items: baseline; padding: 26px 0; border-top: var(--border-w) solid var(--line); }
+.l-toc li:last-child { border-bottom: var(--border-w) solid var(--line); }
+.l-toc .toc-n { font-family: var(--font-mono); font-size: 32px; color: var(--c); }
+.l-toc .toc-t { font-family: var(--font-display); font-size: 60px; letter-spacing: var(--display-tracking); text-transform: var(--display-case); }
+.l-toc .toc-d { color: var(--fg-soft); font-size: 30px; }

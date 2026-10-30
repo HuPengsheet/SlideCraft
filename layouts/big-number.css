@@ -1,0 +1,5 @@
+.l-big-number { justify-content: center; gap: 24px; }
+.l-big-number .bn-row { display: flex; align-items: baseline; gap: 24px; }
+.l-big-number .bn-value { font-size: 520px; line-height: .9; color: var(--accent); letter-spacing: -0.04em; }
+.l-big-number .bn-unit { font-size: 200px; color: var(--accent-2); }
+.l-big-number .lede { max-width: 1400px; color: var(--fg); }

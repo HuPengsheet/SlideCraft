@@ -1,0 +1,5 @@
+.l-quote { justify-content: center; gap: 56px; }
+.l-quote .q-mark { font-family: var(--font-display); font-size: 360px; line-height: .6; color: var(--accent); height: 150px; }
+.l-quote blockquote { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight); text-transform: var(--display-case); font-size: 84px; line-height: 1.12; letter-spacing: var(--display-tracking); max-width: 1500px; }
+.l-quote .q-by { display: flex; gap: 24px; align-items: baseline; font-family: var(--font-mono); font-size: 26px; letter-spacing: .1em; text-transform: uppercase; }
+.l-quote .q-role { color: var(--fg-soft); }

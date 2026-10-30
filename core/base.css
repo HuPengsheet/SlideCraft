@@ -1,0 +1,78 @@
+/*
+ * Token contract. Every theme's tokens.css must define all of these on :root.
+ *
+ *   --bg --bg-alt        slide background, alternate surface
+ *   --fg --fg-soft       primary text, secondary text
+ *   --accent --accent-2 --accent-3   accent palette (charts cycle through these)
+ *   --surface            card fill
+ *   --line               hairline / border colour
+ *   --font-display --font-body --font-mono
+ *   --display-weight --display-tracking --display-case
+ *   --radius --border-w --shadow
+ *   --pad-x --pad-y      slide padding
+ */
+
+html, body { margin: 0; padding: 0; background: #111; }
+deck-stage { background: #111; }
+
+.slide {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 36px;
+  line-height: 1.4;
+  padding: var(--pad-y) var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.slide *, .slide *::before, .slide *::after { box-sizing: border-box; }
+
+.slide h1, .slide h2, .slide h3, .slide .display {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  text-transform: var(--display-case);
+  margin: 0;
+  line-height: 1.02;
+}
+.slide h1 { font-size: 168px; }
+.slide h2 { font-size: 88px; }
+.slide h3 { font-size: 44px; line-height: 1.15; }
+.slide p { margin: 0; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-soft);
+}
+.lede { font-size: 40px; color: var(--fg-soft); max-width: 1200px; }
+
+.folio {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  color: var(--fg-soft);
+}
+
+.card {
+  background: var(--surface);
+  border: var(--border-w) solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 40px 44px;
+}
+
+/* accent cycle for repeated items */
+.cycle > :nth-child(3n+1) { --c: var(--accent); }
+.cycle > :nth-child(3n+2) { --c: var(--accent-2); }
+.cycle > :nth-child(3n+3) { --c: var(--accent-3); }

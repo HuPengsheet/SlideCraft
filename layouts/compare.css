@@ -1,0 +1,9 @@
+.l-compare { gap: 48px; }
+.l-compare .cmp-grid { flex: 1; display: grid; grid-template-columns: 1fr 120px 1fr; align-items: stretch; margin-bottom: 70px; }
+.l-compare .cmp { display: flex; flex-direction: column; gap: 28px; }
+.l-compare .cmp-a h3 { color: var(--accent); }
+.l-compare .cmp-b h3 { color: var(--accent-2); }
+.l-compare .cmp h3 { font-size: 56px; }
+.l-compare .cmp ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 22px; font-size: 34px; }
+.l-compare .cmp li { padding-top: 22px; border-top: var(--border-w) solid var(--line); }
+.l-compare .cmp-vs { align-self: center; text-align: center; font-size: 56px; color: var(--fg-soft); }

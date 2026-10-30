@@ -1,0 +1,7 @@
+.l-kpi { gap: 48px; }
+.l-kpi .kpi-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 70px; }
+.l-kpi .kpi { display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+.l-kpi .kpi-v { font-size: 130px; color: var(--c); line-height: 1; }
+.l-kpi .kpi-l { font-size: 32px; color: var(--fg-soft); }
+.l-kpi .kpi-bar { height: 14px; background: var(--bg-alt); border-radius: var(--radius); overflow: hidden; border: var(--border-w) solid var(--line); margin-top: 10px; }
+.l-kpi .kpi-bar i { display: block; height: 100%; background: var(--c); }

@@ -1,0 +1,12 @@
+:root {
+  --bg: #F2EEDF; --bg-alt: #ECE6D2;
+  --fg: #2A241B; --fg-soft: #5C5345;
+  --accent: #E1A4C2; --accent-2: #B7C7A8; --accent-3: #D6DD63;
+  --surface: rgba(255,255,255,.55); --line: rgba(42,36,27,.28);
+  --font-display: "Cormorant Garamond", Garamond, "Songti SC", "Noto Serif CJK SC", serif;
+  --font-body: "Work Sans", "Helvetica Neue", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --display-weight: 500; --display-tracking: -0.015em; --display-case: none;
+  --radius: 28px; --border-w: 1px; --shadow: none;
+  --pad-x: 110px; --pad-y: 90px;
+}

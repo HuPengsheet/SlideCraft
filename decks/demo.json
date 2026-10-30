@@ -1,0 +1,18 @@
+{
+  "title": "SlideCraft 演示",
+  "theme": "soft-editorial",
+  "slides": [
+    {"layout":"cover","label":"封面","eyebrow":"Field Notes · Vol. 3","title":"本季度我们学到了什么","subtitle":"用户在一月到三月之间告诉我们的事：哪些有效，哪些悄悄出了问题，下一步想试什么。","author":"研究组","date":"2026 年 4 月"},
+    {"layout":"toc","label":"目录","eyebrow":"Contents","title":"本次内容","items":[{"title":"背景与方法","desc":"我们怎么做的调研"},{"title":"核心发现","desc":"三个意外结论"},{"title":"数据表现","desc":"留存与增长"},{"title":"下一步","desc":"路线与分工"}]},
+    {"layout":"section","label":"章节","num":"01","eyebrow":"Section","title":"核心发现","subtitle":"我们听到的和预期的不太一样。"},
+    {"layout":"bullets","label":"要点","eyebrow":"Insights","title":"三个意外结论","points":[{"title":"问题不在上手，在信任","text":"用户反复提到的是数据是否可靠，而不是界面是否好用。"},{"title":"高频用户靠模板留存","text":"使用模板的团队四周留存明显高于从空白开始的团队。"},{"title":"支持邮箱是产品的一部分","text":"回复速度直接影响续费意愿。"}]},
+    {"layout":"quote","label":"金句","text":"我们不缺功能，缺的是敢把数据交给它的理由。","by":"某客户成功经理","role":"访谈 #17"},
+    {"layout":"big-number","label":"大数字","eyebrow":"Retention","value":"72","unit":"%","caption":"使用模板的团队在第四周仍然活跃，是空白起步团队的 1.8 倍。","source":"内部数据 · 2026 Q1"},
+    {"layout":"split","label":"图文","eyebrow":"Method","title":"我们怎么听","text":"二十八场深度访谈，九个团队跟访，十天不间断阅读支持邮箱。","imageLabel":"Image Placeholder"},
+    {"layout":"chart-bar","label":"柱状图","eyebrow":"Growth","title":"每周活跃团队数","note":"单位：个","bars":[{"label":"W1","value":120,"unit":""},{"label":"W2","value":180,"unit":""},{"label":"W3","value":260,"unit":""},{"label":"W4","value":410,"unit":""},{"label":"W5","value":520,"unit":""}]},
+    {"layout":"kpi","label":"KPI","eyebrow":"Dashboard","title":"关键指标","items":[{"value":"4.6","label":"满意度（满分 5）","progress":92},{"value":"38%","label":"周环比增长","progress":38},{"value":"1.2s","label":"首屏时间","progress":70}]},
+    {"layout":"timeline","label":"时间线","eyebrow":"Roadmap","title":"接下来四个阶段","steps":[{"when":"4 月","title":"修复信任问题","text":"数据来源可追溯"},{"when":"5 月","title":"模板中心","text":"上线二十个起步模板"},{"when":"6 月","title":"协作","text":"评论与审阅流"},{"when":"7 月","title":"开放","text":"公开 API"}]},
+    {"layout":"compare","label":"对比","eyebrow":"Compare","title":"空白起步 vs 模板起步","left":{"heading":"空白起步","items":["首次产出平均 42 分钟","四周留存 40%","多数人卡在第一页"]},"right":{"heading":"模板起步","items":["首次产出平均 9 分钟","四周留存 72%","直接进入内容修改"]}},
+    {"layout":"end","label":"结尾","title":"谢谢","subtitle":"欢迎提问，也欢迎挑刺。","contact":"research@example.com"}
+  ]
+}

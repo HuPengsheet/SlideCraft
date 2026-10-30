@@ -1,0 +1,6 @@
+.l-chart-bar { gap: 40px; }
+.l-chart-bar .cb-plot { flex: 1; display: flex; align-items: stretch; gap: 48px; margin-bottom: 70px; border-bottom: var(--border-w) solid var(--fg); }
+.l-chart-bar .cb-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; position: relative; }
+.l-chart-bar .cb-bar { background: var(--c); border: var(--border-w) solid var(--line); border-radius: var(--radius) var(--radius) 0 0; box-shadow: var(--shadow); min-height: 4px; }
+.l-chart-bar .cb-val { font-family: var(--font-display); font-size: 52px; text-align: center; padding-bottom: 14px; }
+.l-chart-bar .cb-lab { position: absolute; top: 100%; left: 0; right: 0; text-align: center; padding-top: 16px; font-family: var(--font-mono); font-size: 24px; color: var(--fg-soft); }
