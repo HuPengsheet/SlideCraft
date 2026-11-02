@@ -9,23 +9,6 @@ HTML 幻灯片与单页特效的素材库，分两部分：
 
 所有内容都是纯 HTML、CSS 和 JS，不需要构建，用浏览器直接打开。
 
-## 作为 skill 使用
-
-整个仓库是一个 skill（入口 [SKILL.md](SKILL.md)），让 Claude 带着你一步步做出一份 HTML 幻灯片：
-
-| 步骤 | 做什么 | 是否需要你确认 |
-|---|---|---|
-| 0 | 新建 `decks/<slug>/`，用 `process.md` 记录全过程 | 否 |
-| 1 | 按场合和气质，从 34 套模板里给出 3 个候选，你选一个 | 是 |
-| 2 | 确定页数和每页内容，列出每页需要的素材，写成 `outline.md` | 是 |
-| 3 | 按大纲从模板取页、替换内容，逐页截图自查 | 否 |
-| 4 | 你看成品、提修改意见，逐轮修改 | 是 |
-| 5 | 导出单文件 HTML（脚本与本地图片内联） | 否 |
-
-工具是 [scripts/deck.py](scripts/deck.py)（`init`、`slides`、`shots`、`assemble`、`export`、`log`），参考资料在 [references/](references/)。需要 Python、Playwright 的 Chromium 和 PIL。
-
-安装：把仓库链接到 `~/.claude/skills/slidecraft`，然后对 Claude 说"帮我做一份 PPT"。
-
 ## 一、单页特效（pages/）
 
 每个页面是一个独立的小型 HTML，由 `config.js` 驱动：改配置就换内容，不用改代码。可以单独打开，也可以用 `<iframe>` 嵌进 PPT。下面的动图是用浏览器实际录制的。
