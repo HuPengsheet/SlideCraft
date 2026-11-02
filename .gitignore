@@ -1,3 +1,4 @@
 dist/
 node_modules/
 beautiful-html-templates/
+__pycache__/
