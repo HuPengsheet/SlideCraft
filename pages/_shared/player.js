@@ -58,7 +58,8 @@ class Player {
           let last = performance.now(), t = 0;
           const tick = (now) => {
             if (e !== p.epoch) return rej(SC.CANCEL);
-            let dt = Math.min((now - last) / 1000, 0.1); last = now;
+            /* rAF 的 now 是本帧起始时间，第一帧可能早于 performance.now()，所以 dt 要夹在 0 以上 */
+            let dt = Math.max(0, Math.min((now - last) / 1000, 0.1)); last = now;
             if (!p.paused) { dt *= p.speed; t += dt; if (fn(dt, t) === false) return res(); }
             requestAnimationFrame(tick);
           };
