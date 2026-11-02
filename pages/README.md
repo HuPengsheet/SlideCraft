@@ -1,10 +1,6 @@
 # pages
 
-单页 HTML 特效模板，用于 PPT 里的转场、演示或开场页。每个放进 `<iframe>` 就能嵌进任意页面，也可以单独用浏览器打开。
-
-## 先看这个
-
-打开 [index.html](index.html)：左侧是全部页面的目录，右侧预览，可以切主题、调速度、重播、全屏。新增页面只需在这个文件里的 `GROUPS` 加一行。
+单页 HTML 特效，可单独打开，也可用 `<iframe>` 嵌入 PPT。打开 [index.html](index.html) 浏览全部页面，可切换主题、调速度、重播、全屏。
 
 ## 用法
 
@@ -21,9 +17,9 @@
    iframe.contentWindow.postMessage({ sc: "cmd", cmd: "resume" }, "*");   // 继续
    iframe.contentWindow.postMessage({ sc: "cmd", cmd: "speed", value: 2 }, "*");
    ```
-   页面加载完发 `{sc:"ready"}`，播放完发 `{sc:"done"}`。
+   页面加载完向父页面发送 `{sc:"ready"}`，播放完发送 `{sc:"done"}`。
 
-`gallery/` 和 `chat-sim/` 是早期做的两个页面，没有接入下面的共用底座，配色和控制是各自写的，用法见各自目录里的说明，不支持 `theme`/`speed` 参数。
+`gallery/` 和 `chat-sim/` 未接入共用底座，不支持 `theme`、`speed` 参数。
 
 ## 共用底座（`_shared/`）
 
@@ -106,8 +102,4 @@
 | [team-cards](team-cards/) | 头像卡片，聚光灯轮流展开，缺照片时生成字母头像 | `layout`，`people[]: {name,role,bio,photo}` |
 | [pricing-plans](pricing-plans/) | 高亮方案的渐变边框，月付年付切换 | `billing`，`plans[]: {name,price,features,highlight}` |
 
-每个页面具体支持哪些字段、默认值是多少，以该页面 `config.js` 开头的注释为准——这份清单只列最常用的几个。
-
-## 检查
-
-这些页面没有自动化测试脚本。改完用浏览器打开看效果，或者用 [index.html](index.html) 的预览面板切主题、调速度检查有没有溢出舞台（16:9，`.stage` 之外的内容会被裁掉）。
+各页面的完整字段、默认值和取值范围见其 `config.js` 开头的注释。
