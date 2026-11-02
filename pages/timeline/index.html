@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>时间线</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; padding: 3.4em 5.5em 3em; gap: 1.6em; --n: 1; }
+  .head .sc-title { font-size: 2.2em; }
+  .main { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 1.8em; }
+  .main.vertical { flex-direction: row; gap: 3em; }
+  .track { position: relative; display: grid; }
+  .horizontal .track { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+  .vertical .track { grid-template-rows: repeat(var(--n), minmax(0, 1fr)); width: 24em; flex: none; }
+  .rail { position: absolute; background: var(--line); border-radius: 1em; }
+  .rail i { position: absolute; inset: 0; background: var(--accent); border-radius: inherit; transition: transform calc(.6s / var(--speed)) ease; }
+  .horizontal .rail { left: calc(50% / var(--n)); right: calc(50% / var(--n)); top: 2.6em; height: .2em; }
+  .horizontal .rail i { transform-origin: left; transform: scaleX(var(--p, 0)); }
+  .vertical .rail { top: calc(50% / var(--n)); bottom: calc(50% / var(--n)); left: 7.9em; width: .2em; }
+  .vertical .rail i { transform-origin: top; transform: scaleY(var(--p, 0)); }
+  .node { position: relative; background: none; border: 0; padding: 0; margin: 0; color: inherit; font: inherit; text-align: center; cursor: default; opacity: 0; transition: opacity calc(.5s / var(--speed)), transform calc(.5s / var(--speed)); }
+  .node.on { opacity: 1; }
+  .clickable .node.on { cursor: pointer; }
+  .horizontal .node { display: grid; grid-template-rows: 1.6em 2em auto; row-gap: .4em; padding: 0 .3em; transform: translateY(.8em); }
+  .vertical .node { display: grid; grid-template-columns: 7em 2em minmax(0, 1fr); align-items: center; column-gap: .6em; transform: translateX(-.8em); text-align: left; }
+  .node.on { transform: none; }
+  .node .when { color: var(--fg-soft); font-size: .85em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+  .vertical .node .when { text-align: right; }
+  .node .dot { justify-self: center; align-self: center; width: 1.1em; height: 1.1em; border-radius: 50%; background: var(--bg); border: .2em solid var(--accent); transition: transform calc(.4s / var(--speed)), background calc(.4s / var(--speed)); }
+  .node .ttl { font-size: .9em; color: var(--fg-soft); line-height: 1.25; transition: color .3s; }
+  .node.cur .dot { background: var(--accent); transform: scale(1.45); animation: pulse calc(1.6s / var(--speed)) ease-out infinite; }
+  .node.cur .ttl, .node.cur .when { color: var(--fg); }
+  .node:focus-visible .dot { outline: .15em solid var(--accent-3); outline-offset: .2em; }
+  @keyframes pulse { from { box-shadow: 0 0 0 0 var(--accent); } to { box-shadow: 0 0 0 1em transparent; } }
+  .detail { flex: 1; min-width: 0; min-height: 0; display: flex; }
+  .card { flex: 1; display: flex; gap: 2em; align-items: center; padding: 1.6em 2em; animation: cardIn calc(.5s / var(--speed)) cubic-bezier(.2,.7,.2,1) both; overflow: hidden; }
+  .card .txt { flex: 1; min-width: 0; }
+  .card .cw { color: var(--accent); font-size: .9em; letter-spacing: .12em; font-variant-numeric: tabular-nums; }
+  .card h2 { margin: .15em 0 .4em; font-family: var(--font-display); font-size: 1.9em; line-height: 1.15; }
+  .card p { margin: 0; color: var(--fg-soft); font-size: 1.05em; }
+  .card .media { height: 100%; max-height: 14em; width: 16em; flex: none; object-fit: cover; border-radius: .6em; }
+  @keyframes cardIn { from { opacity: 0; transform: translateY(.8em); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文字揭示</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; justify-content: center; padding: 4em 6em; }
+  .stage.left { align-items: flex-start; text-align: left; }
+  .stage.center { align-items: center; text-align: center; }
+  .stage.right { align-items: flex-end; text-align: right; }
+  .slot { max-width: 100%; }
+  .line { font-family: var(--font-display); font-weight: 700; line-height: 1.25; text-wrap: balance; transition: opacity calc(.4s / var(--speed)); }
+  .line.out { opacity: 0; }
+  .xl .line { font-size: 4.4em; } .l .line { font-size: 3.2em; } .m .line { font-size: 2.2em; }
+  .line em { font-style: normal; color: var(--accent); }
+
+  /* type */
+  .caret { display: inline-block; width: .08em; height: .95em; margin-left: .06em; vertical-align: -.1em; background: var(--accent); animation: blink calc(.9s / var(--speed)) steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* mask：外层裁切，内层从下方滑入 */
+  .mask { display: block; overflow: hidden; padding: .08em 0 .14em; }
+  .mask > span { display: block; transform: translateY(115%); transition: transform calc(.9s / var(--speed)) cubic-bezier(.2,.8,.2,1); }
+  .mask.on > span { transform: none; }
+
+  /* words */
+  .w { display: inline-block; white-space: pre; opacity: 0; transform: translateY(.6em); transition: opacity calc(.5s / var(--speed)), transform calc(.6s / var(--speed)) cubic-bezier(.2,.8,.2,1); }
+  .w.on { opacity: 1; transform: none; }
+
+  /* glitch：红蓝两层错位抖动后归位 */
+  .glitch { position: relative; display: inline-block; animation: g-in calc(.9s / var(--speed)) steps(1) both; }
+  .glitch::before, .glitch::after { content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%; opacity: 0; pointer-events: none; mix-blend-mode: screen; }
+  .glitch::before { color: var(--accent-2); animation: g-a calc(.9s / var(--speed)) steps(1) both; }
+  .glitch::after { color: var(--accent-3); animation: g-b calc(.9s / var(--speed)) steps(1) both; }
+  @keyframes g-in { 0% { opacity: 0; } 10% { opacity: 1; } 30% { opacity: .4; } 40% { opacity: 1; } 100% { opacity: 1; } }
+  @keyframes g-a { 0% { opacity: .9; transform: translate(-.08em, .02em); clip-path: inset(10% 0 60% 0); } 20% { transform: translate(.1em, -.03em); clip-path: inset(55% 0 10% 0); }
+    40% { transform: translate(-.05em, 0); clip-path: inset(30% 0 40% 0); } 60% { opacity: .7; transform: translate(.04em, .02em); clip-path: inset(0 0 75% 0); } 80% { opacity: .5; transform: translate(-.02em, 0); clip-path: inset(70% 0 0 0); } 100% { opacity: 0; transform: none; } }
+  @keyframes g-b { 0% { opacity: .9; transform: translate(.09em, -.02em); clip-path: inset(50% 0 20% 0); } 25% { transform: translate(-.1em, .03em); clip-path: inset(5% 0 70% 0); }
+    45% { transform: translate(.06em, 0); clip-path: inset(65% 0 5% 0); } 65% { opacity: .7; transform: translate(-.04em, -.02em); clip-path: inset(25% 0 45% 0); } 85% { opacity: .5; transform: translate(.02em, 0); clip-path: inset(0 0 85% 0); } 100% { opacity: 0; transform: none; } }
+
+  /* fade */
+  .fade { opacity: 0; filter: blur(.25em); transition: opacity calc(1s / var(--speed)), filter calc(1s / var(--speed)); }
+  .fade.on { opacity: 1; filter: none; }
+
+  .prog { position: absolute; left: 6em; right: 6em; bottom: 2em; display: flex; gap: .5em; align-items: center; }
+  .prog i { flex: 1; height: .18em; border-radius: 1em; background: var(--line); overflow: hidden; }
+  .prog i b { display: block; height: 100%; width: 0; background: var(--accent); }
+  .prog i.done b { width: 100%; }
+  .prog i.cur b { animation: fill var(--dur, 2s) linear forwards; }
+  @keyframes fill { to { width: 100%; } }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

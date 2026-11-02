@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>开场封面</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; align-items: center; justify-content: center; text-align: center; }
+  .bd { position: absolute; inset: 0; overflow: hidden; }
+  .bd canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  /* gradient */
+  .blob { position: absolute; border-radius: 50%; filter: blur(5em); opacity: .35; animation: drift calc(24s / var(--speed)) ease-in-out infinite alternate; }
+  .blob:nth-child(1) { width: 40em; height: 40em; left: -8em; top: -12em; background: var(--accent); }
+  .blob:nth-child(2) { width: 36em; height: 36em; right: -6em; top: 6em; background: var(--accent-2); animation-duration: calc(30s / var(--speed)); animation-delay: -8s; }
+  .blob:nth-child(3) { width: 34em; height: 34em; left: 28%; bottom: -16em; background: var(--accent-3); animation-duration: calc(36s / var(--speed)); animation-delay: -14s; }
+  @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(10em, 6em) scale(1.25); } }
+  /* grid */
+  .gridwrap { position: absolute; left: 0; right: 0; bottom: 0; height: 60%; perspective: 30em; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to top, #000 30%, transparent); mask-image: linear-gradient(to top, #000 30%, transparent); }
+  .plane { position: absolute; left: -50%; right: -50%; top: 0; bottom: -100%; transform-origin: 50% 0; transform: rotateX(62deg);
+    background-image: linear-gradient(var(--accent) 1px, transparent 1px), linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+    background-size: 4em 4em; opacity: .45; animation: scroll calc(3s / var(--speed)) linear infinite; }
+  @keyframes scroll { to { background-position: 0 4em, 0 0; } }
+  /* rings */
+  .ring { position: absolute; left: 50%; top: 50%; width: 70em; height: 70em; margin: -35em 0 0 -35em; border-radius: 50%;
+    border: .12em solid var(--accent); opacity: 0; transform: scale(.05);
+    animation: ring calc(8s / var(--speed)) cubic-bezier(.2,.5,.3,1) infinite; animation-delay: calc(var(--k) * -1.6s / var(--speed)); }
+  .ring:nth-child(even) { border-color: var(--accent-2); }
+  @keyframes ring { 0% { opacity: 0; transform: scale(.05); } 15% { opacity: .7; } 100% { opacity: 0; transform: scale(1); } }
+
+  .content { position: relative; z-index: 1; padding: 0 6em; }
+  .sc-eyebrow { opacity: 0; transform: translateY(.6em); transition: opacity .8s, transform .8s; }
+  .hero { font-family: var(--font-display); font-weight: 800; font-size: 5.6em; line-height: 1.1; margin: .2em 0 .15em; letter-spacing: -.01em; }
+  .hero .ch { display: inline-block; opacity: 0; transform: translateY(.5em) rotate(5deg); transition: opacity .6s, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .hero .ch.on { opacity: 1; transform: none; }
+  .hero .ln { display: block; overflow: hidden; padding: .08em 0; }
+  .hero .ln > span { display: block; transform: translateY(110%); transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+  .hero .ln.on > span { transform: none; }
+  .sub { font-size: 1.5em; color: var(--fg-soft); margin: 0; opacity: 0; transform: translateY(.6em); transition: opacity .9s, transform .9s; }
+  .foot { position: absolute; z-index: 1; left: 0; right: 0; bottom: 2.2em; font-size: .8em; color: var(--fg-soft); letter-spacing: .12em; opacity: 0; transition: opacity 1s; }
+  .on { opacity: 1; }
+  .sc-eyebrow.on, .sub.on { opacity: 1; transform: none; }
+  .foot.on { opacity: 1; }
+  .hero .ch.on, .hero .ln.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

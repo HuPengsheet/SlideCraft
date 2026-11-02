@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>浏览器演示</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.2em; }
+  .dev { position: relative; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 1.5em 4em rgba(0,0,0,.4); overflow: hidden; display: flex; flex-direction: column; }
+  /* 浏览器 */
+  .dev.browser { width: 46em; border-radius: .8em; }
+  .tabs { display: flex; align-items: flex-end; gap: .3em; padding: .55em .8em 0; height: 2.4em; background: var(--bg); }
+  .tabs .dots { display: flex; gap: .4em; align-self: center; margin-right: .6em; }
+  .tabs .dots i { width: .7em; height: .7em; border-radius: 50%; display: block; background: #ff5f57; }
+  .tabs .dots i:nth-child(2) { background: #febc2e; } .tabs .dots i:nth-child(3) { background: #28c840; }
+  .tab { max-width: 11em; padding: .35em .9em; font-size: .7em; border-radius: .6em .6em 0 0; color: var(--fg-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background .3s, color .3s; }
+  .tab.on { background: var(--surface); color: var(--fg); }
+  .addr { display: flex; align-items: center; padding: .45em .8em; border-bottom: 1px solid var(--line); }
+  .addr span { flex: 1; background: var(--bg); border-radius: 1em; padding: .25em .9em; font-size: .72em; color: var(--fg-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-mono); }
+  .browser .screen { aspect-ratio: 16 / 9; }
+  /* 手机 */
+  .dev.phone { height: 31em; padding: .7em; border-radius: 2.2em; background: #111; border: .25em solid var(--line); }
+  .phone .screen { height: 100%; aspect-ratio: 9 / 19.5; border-radius: 1.6em; }
+  .phone .notch { position: absolute; z-index: 5; top: .95em; left: 50%; width: 3.4em; height: .9em; margin-left: -1.7em; background: #111; border-radius: 1em; }
+  .screen { position: relative; overflow: hidden; background: var(--bg); }
+  .scr { position: absolute; inset: 0; opacity: 0; transition: opacity calc(.7s / var(--speed)); }
+  .scr.on { opacity: 1; }
+  .scr img, .scr video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cur { position: absolute; z-index: 6; left: 0; top: 0; width: 1.6em; height: 1.6em; margin: -.1em 0 0 -.1em; pointer-events: none; filter: drop-shadow(0 .1em .2em rgba(0,0,0,.5)); transition: opacity .3s; }
+  .cur svg { width: 100%; height: 100%; fill: var(--fg); stroke: var(--bg); stroke-width: 1.5; stroke-linejoin: round; }
+  .rip { position: absolute; z-index: 5; width: 3em; height: 3em; margin: -1.5em 0 0 -1.5em; border-radius: 50%; border: .2em solid var(--accent); background: color-mix(in srgb, var(--accent) 30%, transparent); pointer-events: none; animation: rip calc(.7s / var(--speed)) ease-out forwards; }
+  @keyframes rip { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.2); opacity: 0; } }
+  .cap { min-height: 2.4em; font-size: 1.1em; color: var(--fg); text-align: center; padding: 0 2em; transition: opacity calc(.4s / var(--speed)); }
+  .cap.off { opacity: 0; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

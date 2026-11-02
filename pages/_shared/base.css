@@ -1,0 +1,35 @@
+/* 舞台与通用样式。页面内容请用 em 作单位（1em = 舞台宽度的 1.6%），这样缩放时整体等比。
+ * 舞台固定 16:9，铺满视口较小的一边；放进 iframe 也一样。 */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--page-bg); overflow: hidden; }
+body { display: flex; align-items: center; justify-content: center; }
+
+.stage {
+  --u: calc(min(100vw, 100vh * 16 / 9) / 100);   /* 舞台宽度的 1% */
+  position: relative; overflow: hidden;
+  width: calc(var(--u) * 100); height: calc(var(--u) * 56.25);
+  font-size: calc(var(--u) * 1.6);
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); line-height: 1.4;
+}
+
+/* 通用小件 */
+.sc-eyebrow { font-size: .75em; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.sc-title { font-family: var(--font-display); font-weight: 700; font-size: 2.4em; line-height: 1.1; margin: 0; }
+.sc-sub { color: var(--fg-soft); font-size: 1em; margin: .4em 0 0; }
+.sc-mono { font-family: var(--font-mono); }
+.sc-card { background: var(--surface); border: 1px solid var(--line); border-radius: .8em; }
+code.sc, .sc-code { font-family: var(--font-mono); color: var(--accent-2); }
+
+/* 播放控制（右下角）。?controls=0 或 controls:false 时不创建 */
+.sc-ctl { position: fixed; right: 12px; bottom: 10px; display: flex; gap: 6px; font: 12px/1 system-ui, sans-serif; opacity: .5; transition: opacity .2s; z-index: 99; }
+.sc-ctl:hover { opacity: 1; }
+.sc-ctl button { background: rgba(30,28,24,.85); color: #d8d2c4; border: 1px solid rgba(255,255,255,.18); border-radius: 5px; padding: 5px 10px; cursor: pointer; font: inherit; }
+
+/* 暂停时冻结所有 CSS 动画；--speed 供动画时长引用：animation-duration: calc(4s / var(--speed)) */
+:root { --speed: 1; }
+html.paused *, html.paused *::before, html.paused *::after { animation-play-state: paused !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01s !important; animation-iteration-count: 1 !important; transition-duration: .01s !important; }
+}

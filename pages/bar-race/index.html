@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>排行榜竞赛</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; padding: 3.4em 5.5em 3em; gap: 1.2em; }
+  .head .sc-title { font-size: 2.2em; }
+  .race { position: relative; flex: 1; min-height: 0; }
+  .frame-label { position: absolute; right: 0; bottom: 0; z-index: 0; font-family: var(--font-display); font-weight: 700; font-size: 9em; line-height: 1; color: var(--fg); opacity: .14; font-variant-numeric: tabular-nums; pointer-events: none; }
+  .row { position: absolute; left: 0; right: 0; top: 0; height: calc(100% / var(--top)); z-index: 1; display: flex; align-items: center; will-change: transform; }
+  .row .name { width: 8.5em; padding-right: 1em; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.05em; }
+  .row .track { position: relative; flex: 1; height: 68%; margin-right: 7em; }
+  .row .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--c); border-radius: 0 .4em .4em 0; }
+  .row .val { position: absolute; top: 50%; transform: translateY(-50%); margin-left: .7em; white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; font-size: 1.05em; }
+  .note { color: var(--fg-soft); font-size: .75em; text-align: right; margin: 0; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

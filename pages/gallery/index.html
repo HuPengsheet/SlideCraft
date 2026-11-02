@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery · 16 套 PPT 模板</title>
+<style>
+  :root {
+    --bg: #14120f;
+    --fg: #f1ece1;
+    --fg-soft: #9a9384;
+    --accent: #e8b84a;
+    --gap: 14px;
+    --head-h: 96px;
+    --pad: 32px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); overflow: hidden;
+    font-family: "Inter", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif; }
+
+  body { display: flex; flex-direction: column; align-items: center; }
+
+  header { height: var(--head-h); width: 100%; padding: 0 var(--pad); display: flex; align-items: center; justify-content: space-between;
+    opacity: 0; animation: fade .8s .1s forwards; }
+  header h1 { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: .01em; }
+  header p { margin: 4px 0 0; font-size: 14px; color: var(--fg-soft); }
+  .count { font-variant-numeric: tabular-nums; font-size: 14px; color: var(--fg-soft); }
+  .count b { color: var(--accent); font-weight: 600; }
+
+  /* 网格整体保持 16:9，随窗口宽高取较小者，保证 4×4 一屏放下 */
+  .grid {
+    width: min(calc(100vw - var(--pad) * 2), calc((100vh - var(--head-h) - var(--pad)) * 16 / 9));
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap);
+  }
+
+  /* 入场动画只用 backwards 填充，结束后 transform 归还给悬停倾斜 */
+  .card { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; cursor: pointer; padding: 0; border: 0; background: #222;
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px)) scale(var(--s, 1));
+    animation: rise .7s cubic-bezier(.2,.7,.2,1) backwards, sway 5s ease-in-out infinite alternate;
+    animation-duration: .7s, calc(4.5s + var(--c) * .6s + var(--r) * .4s);
+    animation-delay: calc(var(--i) * 55ms + 250ms), calc(var(--i) * -.9s);
+    transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .35s, filter .35s; }
+  .card:hover { transition: transform .12s ease-out, box-shadow .35s, filter .35s; animation-play-state: running, paused; }
+  /* 图片缓慢推拉，每张错开相位 */
+  .card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: scale .6s cubic-bezier(.2,.7,.2,1);
+    animation: kb 16s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -1.3s); }
+  /* 定时扫光，沿对角线依次掠过 */
+  .card::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.28) 50%, transparent 60%); transform: translateX(-120%);
+    animation: shine 8s cubic-bezier(.4,0,.2,1) infinite; animation-delay: calc((var(--c) + var(--r)) * 150ms + 2s); }
+  /* 跟随鼠标的高光 */
+  .card .glare { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; mix-blend-mode: soft-light; transition: opacity .3s;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.55), transparent 55%); }
+  .card:hover .glare { opacity: 1; }
+
+  /* 背景光斑 */
+  .bg { position: fixed; inset: -10%; z-index: 0; pointer-events: none; overflow: hidden; transform: translate(var(--px, 0px), var(--py, 0px)); transition: transform .8s ease-out; }
+  .bg i { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .22; animation: drift 22s ease-in-out infinite alternate; }
+  .bg i:nth-child(1) { width: 46vw; height: 46vw; left: -6%; top: -12%; background: #e8b84a; }
+  .bg i:nth-child(2) { width: 40vw; height: 40vw; right: -8%; top: 18%; background: #c96442; animation-duration: 28s; animation-delay: -6s; }
+  .bg i:nth-child(3) { width: 36vw; height: 36vw; left: 28%; bottom: -22%; background: #5b7fb0; animation-duration: 34s; animation-delay: -12s; }
+  header, .grid { position: relative; z-index: 1; }
+  header h1 span { display: inline-block; animation: letter .7s cubic-bezier(.2,.7,.2,1) backwards; animation-delay: calc(var(--k) * 45ms + 100ms); }
+  .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.72), transparent 45%); opacity: 0; transition: opacity .3s; }
+  .card .cap { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 1; text-align: left; opacity: 0; transform: translateY(8px); transition: .3s; }
+  .card .cap b { display: block; font-size: 15px; font-weight: 600; }
+  .card .cap span { font-size: 12px; color: #d8d2c4; }
+  .card .no { position: absolute; top: 8px; left: 10px; z-index: 1; font-size: 11px; font-variant-numeric: tabular-nums; letter-spacing: .08em;
+    color: #fff; background: rgba(0,0,0,.45); padding: 2px 7px; border-radius: 99px; backdrop-filter: blur(4px); }
+
+  .grid:hover .card { filter: brightness(.55) saturate(.8); }
+  .grid .card:hover { --lift: -6px; --s: 1.04; filter: none; z-index: 2; box-shadow: 0 22px 48px rgba(0,0,0,.6); }
+  .card:hover img { scale: 1.08; }
+  .card:hover::after, .card:hover .cap { opacity: 1; transform: none; }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* 灯箱 */
+  .lb { position: fixed; inset: 0; background: rgba(8,7,5,.92); display: none; align-items: center; justify-content: center; z-index: 10; backdrop-filter: blur(10px); }
+  .lb.on { display: flex; animation: fade .25s; }
+  .lb figure { margin: 0; max-width: 90vw; max-height: 86vh; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .lb img { max-width: 90vw; max-height: calc(86vh - 56px); border-radius: 8px; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+  .lb figcaption { font-size: 16px; }
+  .lb figcaption span { color: var(--fg-soft); margin-left: 10px; font-size: 14px; }
+  .lb button { position: absolute; background: rgba(255,255,255,.08); color: var(--fg); border: 0; width: 48px; height: 48px; border-radius: 50%; font-size: 22px; cursor: pointer; transition: background .2s; }
+  .lb button:hover { background: rgba(255,255,255,.2); }
+  .lb .prev { left: 24px; } .lb .next { right: 24px; } .lb .close { top: 20px; right: 24px; font-size: 18px; }
+  .hint { position: fixed; bottom: 10px; right: 16px; font-size: 12px; color: #5f594d; }
+
+  .lb img.go-next { animation: slideN .35s cubic-bezier(.2,.7,.2,1); }
+  .lb img.go-prev { animation: slideP .35s cubic-bezier(.2,.7,.2,1); }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(24px) scale(.97); } }
+  @keyframes fade { to { opacity: 1; } }
+  /* 微小摆动：用独立的 rotate / translate 属性，不与悬停倾斜的 transform 冲突 */
+  @keyframes sway { from { rotate: -.6deg; translate: 0 -3px; } to { rotate: .6deg; translate: 0 3px; } }
+  @keyframes kb { from { transform: scale(1.0) translate(0, 0); } to { transform: scale(1.07) translate(-1.5%, -1%); } }
+  @keyframes shine { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+  @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(8vw, 6vh) scale(1.2); } }
+  @keyframes letter { from { opacity: 0; transform: translateY(.6em) rotate(6deg); } }
+  @keyframes slideN { from { opacity: 0; transform: translateX(60px) scale(.97); } }
+  @keyframes slideP { from { opacity: 0; transform: translateX(-60px) scale(.97); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01s !important; }
+    header { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg" id="bg"><i></i><i></i><i></i></div>
+
+<header>
+  <div>
+    <h1 id="title"></h1>
+    <p id="sub"></p>
+  </div>
+  <div class="count"><b id="n">16</b> / 16</div>
+</header>
+
+<main class="grid" id="grid"></main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <button class="close" aria-label="关闭">✕</button>
+  <button class="prev" aria-label="上一张">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="next" aria-label="下一张">›</button>
+</div>
+<div class="hint">← → 切换 · Esc 关闭</div>
+
+<script>
+/* ===== 配置：换图只改这里。src 可以是 png / jpg / webp / gif。 ===== */
+const CONFIG = {
+  title: "16 套 PPT 模板",
+  subtitle: "每套都是完整的 HTML 幻灯片 · 点击放大",
+  items: [
+    { src: "img/8-bit-orbit.webp",      name: "8-Bit Orbit",       note: "像素街机 · 深色" },
+    { src: "img/biennale-yellow.webp",  name: "Biennale Yellow",   note: "艺术双年展 · 浅色" },
+    { src: "img/bold-poster.webp",      name: "Bold Poster",       note: "大字海报 · 浅色" },
+    { src: "img/broadside.webp",        name: "Broadside",         note: "报刊大版 · 深色" },
+    { src: "img/capsule.webp",          name: "Capsule",           note: "胶囊圆角 · 浅色" },
+    { src: "img/coral.webp",            name: "Coral",             note: "珊瑚杂志 · 混合" },
+    { src: "img/daisy-days.webp",       name: "Daisy Days",        note: "雏菊手作 · 浅色" },
+    { src: "img/editorial-forest.webp", name: "Editorial Forest",  note: "森林绿编辑风 · 混合" },
+    { src: "img/neo-grid-bold.webp",    name: "Neo-Grid Bold",     note: "新粗野网格 · 浅色" },
+    { src: "img/pink-script.webp",      name: "Pink Script",       note: "粉色手写 · 深色" },
+    { src: "img/retro-windows.webp",    name: "Retro Windows",     note: "复古桌面 · 浅色" },
+    { src: "img/retro-zine.webp",       name: "Retro Zine",        note: "孔版杂志 · 浅色" },
+    { src: "img/sakura-chroma.webp",    name: "Sakura Chroma",     note: "日系磁带 · 浅色" },
+    { src: "img/soft-editorial.webp",   name: "Soft Editorial",    note: "柔和编辑风 · 浅色" },
+    { src: "img/studio.webp",           name: "Studio",            note: "工作室 · 深色" },
+    { src: "img/vellum.webp",           name: "Vellum",            note: "羊皮纸 · 深色" }
+  ]
+};
+
+const $ = (s) => document.querySelector(s);
+const pad = (n) => String(n).padStart(2, "0");
+const items = CONFIG.items;
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.title = CONFIG.title;
+$("#sub").textContent = CONFIG.subtitle;
+
+/* 标题逐字出现 */
+$("#title").innerHTML = [...CONFIG.title].map((ch, k) =>
+  `<span style="--k:${k}">${ch === " " ? "&nbsp;" : ch}</span>`).join("");
+
+/* 数字滚动 */
+const nEl = $("#n");
+if (reduce) nEl.textContent = items.length;
+else {
+  const t0 = performance.now(), dur = 1200;
+  (function tick(t) {
+    const p = Math.min((t - t0) / dur, 1);
+    nEl.textContent = Math.round(items.length * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+
+const COLS = 4;
+$("#grid").innerHTML = items.map((it, i) => `
+  <button class="card" style="--i:${i};--c:${i % COLS};--r:${Math.floor(i / COLS)}" data-i="${i}" aria-label="${it.name}">
+    <img src="${it.src}" alt="${it.name}" loading="lazy">
+    <span class="glare"></span>
+    <span class="no">${pad(i + 1)}</span>
+    <span class="cap"><b>${it.name}</b><span>${it.note}</span></span>
+  </button>`).join("");
+
+/* 卡片 3D 倾斜 + 高光跟随鼠标 */
+if (!reduce) {
+  const MAX = 9; // 最大倾斜角度
+  $("#grid").addEventListener("pointermove", (e) => {
+    const c = e.target.closest(".card");
+    if (!c) return;
+    const r = c.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    c.style.setProperty("--ry", ((x - .5) * 2 * MAX).toFixed(2) + "deg");
+    c.style.setProperty("--rx", ((.5 - y) * 2 * MAX).toFixed(2) + "deg");
+    c.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+    c.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+  });
+  $("#grid").addEventListener("pointerout", (e) => {
+    const c = e.target.closest(".card");
+    if (!c || c.contains(e.relatedTarget)) return;
+    c.style.setProperty("--rx", "0deg");
+    c.style.setProperty("--ry", "0deg");
+  });
+  /* 背景随鼠标轻微视差 */
+  addEventListener("pointermove", (e) => {
+    const bg = $("#bg");
+    bg.style.setProperty("--px", ((e.clientX / innerWidth - .5) * -40).toFixed(1) + "px");
+    bg.style.setProperty("--py", ((e.clientY / innerHeight - .5) * -40).toFixed(1) + "px");
+  });
+}
+
+let cur = 0;
+const lb = $("#lb");
+function show(i, dir = 0) {
+  cur = (i + items.length) % items.length;
+  const img = $("#lbImg");
+  img.classList.remove("go-next", "go-prev");
+  if (dir && !reduce) { void img.offsetWidth; img.classList.add(dir > 0 ? "go-next" : "go-prev"); }
+  $("#lbImg").src = items[cur].src;
+  $("#lbImg").alt = items[cur].name;
+  $("#lbCap").innerHTML = `${pad(cur + 1)} · ${items[cur].name}<span>${items[cur].note}</span>`;
+}
+function open(i) { show(i); lb.classList.add("on"); }
+function close() { lb.classList.remove("on"); }
+
+$("#grid").addEventListener("click", (e) => { const c = e.target.closest(".card"); if (c) open(+c.dataset.i); });
+lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+lb.querySelector(".close").onclick = close;
+lb.querySelector(".prev").onclick = () => show(cur - 1, -1);
+lb.querySelector(".next").onclick = () => show(cur + 1, 1);
+addEventListener("keydown", (e) => {
+  if (!lb.classList.contains("on")) return;
+  if (e.key === "Escape") close();
+  if (e.key === "ArrowLeft") show(cur - 1, -1);
+  if (e.key === "ArrowRight") show(cur + 1, 1);
+});
+</script>
+</body>
+</html>

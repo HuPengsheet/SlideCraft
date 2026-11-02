@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>前后对比滑块</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1em; }
+  .cmp { --p: 50%; position: relative; width: 52em; aspect-ratio: 16 / 9; overflow: hidden; border-radius: .8em; border: 1px solid var(--line); background: var(--surface); cursor: ew-resize; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .cmp.v { cursor: ns-resize; }
+  .layer { position: absolute; inset: 0; }
+  .layer img, .layer video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+  .layer.before { clip-path: inset(0 calc(100% - var(--p)) 0 0); }
+  .v .layer.before { clip-path: inset(0 0 calc(100% - var(--p)) 0); }
+  .lab { position: absolute; z-index: 3; top: .8em; padding: .25em .8em; font-size: .8em; border-radius: 2em; background: color-mix(in srgb, var(--bg) 78%, transparent); color: var(--fg); border: 1px solid var(--line); pointer-events: none; }
+  .lab.b { left: .8em; } .lab.a { right: .8em; }
+  .v .lab.a { top: auto; bottom: .8em; right: auto; left: .8em; }
+  .hdl { position: absolute; z-index: 4; top: 0; bottom: 0; left: var(--p); width: 0; outline: none; }
+  .hdl::before { content: ""; position: absolute; top: 0; bottom: 0; left: -.1em; width: .2em; background: var(--fg); box-shadow: 0 0 .8em rgba(0,0,0,.45); }
+  .hdl b { position: absolute; top: 50%; left: 0; width: 2.6em; height: 2.6em; margin: -1.3em 0 0 -1.3em; border-radius: 50%; background: var(--fg); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: .9em; letter-spacing: -.1em; box-shadow: 0 .2em 1em rgba(0,0,0,.4); }
+  .hdl:focus-visible b { outline: .15em solid var(--accent); outline-offset: .15em; }
+  .v .hdl { top: var(--p); bottom: auto; left: 0; right: 0; width: auto; height: 0; }
+  .v .hdl::before { top: -.1em; bottom: auto; left: 0; right: 0; width: auto; height: .2em; }
+  .v .hdl b { left: 50%; top: 0; transform: rotate(90deg); }
+  .nav { display: flex; align-items: center; gap: 1.2em; min-height: 2.4em; color: var(--fg-soft); font-size: .95em; }
+  .nav button { width: 2.2em; height: 2.2em; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; cursor: pointer; }
+  .nav button:hover { border-color: var(--accent); color: var(--accent); }
+  .nav .ttl { min-width: 12em; text-align: center; color: var(--fg); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SlideCraft · 单页特效模板</title>
+<style>
+  :root { --bg:#14120f; --side:#1a1713; --surface:#221e18; --line:#332e26; --fg:#f1ece1; --soft:#9a9384; --accent:#e8b84a; --side-w:300px; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); overflow: hidden;
+    font: 14px/1.5 "Inter", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .app { display: grid; grid-template-columns: var(--side-w) 1fr; height: 100%; }
+
+  /* 侧栏 */
+  aside { background: var(--side); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; }
+  aside header { padding: 18px 18px 12px; }
+  aside h1 { margin: 0; font-size: 17px; letter-spacing: .01em; }
+  aside header p { margin: 2px 0 0; color: var(--soft); font-size: 12px; }
+  .search { margin: 0 14px 8px; padding: 8px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; color: var(--fg); font: inherit; width: calc(100% - 28px); outline: none; }
+  .search:focus { border-color: var(--accent); }
+  nav { flex: 1; overflow-y: auto; padding: 0 8px 14px; }
+  nav h2 { margin: 14px 10px 4px; font-size: 11px; font-weight: 600; letter-spacing: .12em; color: var(--soft); text-transform: uppercase; }
+  .item { display: block; width: 100%; text-align: left; background: none; border: 0; border-radius: 8px; padding: 8px 10px; transition: background .15s; }
+  .item:hover { background: var(--surface); }
+  .item.on { background: var(--surface); box-shadow: inset 2px 0 0 var(--accent); }
+  .item b { display: block; font-weight: 600; }
+  .item span { display: block; color: var(--soft); font-size: 12px; }
+  .item .tag { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 99px; border: 1px solid var(--line); font-size: 10px; font-weight: 400; color: var(--soft); vertical-align: 1px; }
+  .empty { padding: 20px; color: var(--soft); text-align: center; }
+
+  /* 主区 */
+  main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+  .bar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .bar .name { font-weight: 600; font-size: 15px; }
+  .bar .path { color: var(--soft); font: 12px ui-monospace, monospace; }
+  .sp { flex: 1; }
+  .grp { display: flex; align-items: center; gap: 4px; }
+  .grp label { color: var(--soft); font-size: 12px; margin-right: 2px; }
+  .chip { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; font-size: 12px; }
+  .chip:hover { border-color: #5a5042; }
+  .chip.on { border-color: var(--accent); color: var(--accent); }
+  .view { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 18px; position: relative; }
+  .frame { aspect-ratio: 16 / 9; width: min(100%, calc((100vh - 130px) * 16 / 9)); border-radius: 10px; overflow: hidden; background: #000;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55); border: 1px solid var(--line); }
+  .frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .foot { padding: 0 16px 10px; color: var(--soft); font-size: 12px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .foot kbd { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font: 11px ui-monospace, monospace; }
+  .foot a { color: var(--accent); text-decoration: none; }
+
+  body.full .app { grid-template-columns: 0 1fr; }
+  body.full aside, body.full .bar, body.full .foot { display: none; }
+  body.full .view { padding: 0; }
+  body.full .frame { width: min(100vw, 100vh * 16 / 9); border: 0; border-radius: 0; box-shadow: none; }
+  .exit { display: none; position: fixed; top: 10px; right: 10px; z-index: 5; opacity: .35; }
+  .exit:hover { opacity: 1; }
+  body.full .exit { display: block; }
+  @media (max-width: 860px) { :root { --side-w: 220px; } .item span { display: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <header>
+      <h1>单页特效模板</h1>
+      <p id="count"></p>
+    </header>
+    <input class="search" id="q" placeholder="搜索页面…" aria-label="搜索页面">
+    <nav id="nav"></nav>
+  </aside>
+  <main>
+    <div class="bar">
+      <span class="name" id="name"></span>
+      <span class="path" id="path"></span>
+      <span class="sp"></span>
+      <span class="grp" id="themes"><label>主题</label></span>
+      <span class="grp" id="speeds"><label>速度</label></span>
+      <button class="chip" id="replay">重播</button>
+      <button class="chip" id="full">全屏</button>
+      <a class="chip" id="open" target="_blank" style="text-decoration:none;color:inherit">新窗口</a>
+    </div>
+    <div class="view"><div class="frame"><iframe id="fr" title="预览" allow="autoplay"></iframe></div></div>
+    <div class="foot" id="foot"></div>
+  </main>
+</div>
+<button class="chip exit" id="exit">退出全屏 (Esc)</button>
+
+<script>
+/* ===== 目录：新增页面只需在这里加一行 =====
+ * dir 是 pages/ 下的目录名；shared:false 表示该页面尚未迁移到共用底座，主题/速度参数不生效。 */
+const GROUPS = [
+  { name: "展示", items: [
+    { dir: "gallery",         title: "图片展示墙",      desc: "16 张图错落入场，悬停倾斜，点击放大", shared: false },
+    { dir: "media-wall",      title: "媒体墙（可配置）", desc: "图片、动图、视频网格，灯箱浏览" },
+    { dir: "compare-slider",  title: "前后对比滑块",    desc: "拖动分隔线对比两张图，自动扫动" },
+    { dir: "browser-demo",    title: "浏览器 / 手机演示", desc: "截图轮播加模拟光标点击" }
+  ]},
+  { name: "对话与终端", items: [
+    { dir: "chat-sim",        title: "Claude Code 对话模拟", desc: "逐字输出、工具调用、diff 代码块", shared: false },
+    { dir: "terminal-demo",   title: "终端演示",        desc: "敲命令、输出日志、进度条" }
+  ]},
+  { name: "数据", items: [
+    { dir: "number-counter",  title: "数字滚动",        desc: "大数字依次滚动到目标值" },
+    { dir: "chart-animated",  title: "动态图表",        desc: "柱状图、折线图、环形图生长动画" },
+    { dir: "bar-race",        title: "排行榜赛跑",      desc: "条形随时间重排" }
+  ]},
+  { name: "叙事", items: [
+    { dir: "timeline",        title: "时间线",          desc: "事件依次点亮，可点击跳转" },
+    { dir: "flow-diagram",    title: "流程 / 架构图",   desc: "节点出现，数据光点沿连线流动" },
+    { dir: "step-tour",       title: "步骤导览",        desc: "聚光灯依次高亮界面区域" },
+    { dir: "text-reveal",     title: "逐句文案",        desc: "打字、遮罩、逐词、Glitch 等切换" }
+  ]},
+  { name: "氛围", items: [
+    { dir: "hero-intro",      title: "开场封面",        desc: "粒子、渐变、网格、圆环背景" },
+    { dir: "marquee",         title: "滚动跑马灯",      desc: "多行无限滚动的文字与 Logo" },
+    { dir: "countdown",       title: "倒计时",          desc: "翻页数字，可指定日期" }
+  ]}
+];
+const THEMES = ["dark", "light", "paper", "neon", "terminal"];
+const SPEEDS = [0.5, 1, 2, 4];
+
+const $ = (s) => document.querySelector(s);
+const all = GROUPS.flatMap((g) => g.items);
+let cur = all[0], theme = null, speed = 1;
+
+/* URL hash 记住当前页：#timeline?theme=light */
+function readHash() {
+  const [d, qs] = location.hash.slice(1).split("?");
+  const p = new URLSearchParams(qs || "");
+  const f = all.find((x) => x.dir === d);
+  if (f) cur = f;
+  theme = p.get("theme") || null;
+  speed = +p.get("speed") || 1;
+}
+function writeHash() {
+  const p = new URLSearchParams();
+  if (theme) p.set("theme", theme);
+  if (speed !== 1) p.set("speed", speed);
+  const qs = p.toString();
+  history.replaceState(null, "", "#" + cur.dir + (qs ? "?" + qs : ""));
+}
+function url(chrome = true) {
+  const p = new URLSearchParams();
+  if (cur.shared !== false) {
+    if (theme) p.set("theme", theme);
+    if (speed !== 1) p.set("speed", speed);
+    if (!chrome) p.set("controls", "0");
+  }
+  const qs = p.toString();
+  return cur.dir + "/index.html" + (qs ? "?" + qs : "");
+}
+
+function buildNav(filter = "") {
+  const f = filter.trim().toLowerCase();
+  let html = "", n = 0;
+  for (const g of GROUPS) {
+    const rows = g.items.filter((x) => !f || (x.title + x.desc + x.dir).toLowerCase().includes(f));
+    if (!rows.length) continue;
+    html += `<h2>${g.name}</h2>` + rows.map((x) => {
+      n++;
+      return `<button class="item${x === cur ? " on" : ""}" data-d="${x.dir}"><b>${x.title}${x.shared === false ? '<i class="tag">独立</i>' : ""}</b><span>${x.desc}</span></button>`;
+    }).join("");
+  }
+  $("#nav").innerHTML = html || '<div class="empty">没有匹配的页面</div>';
+  $("#count").textContent = `${all.length} 个页面 · ${GROUPS.length} 类`;
+}
+
+function buildChips() {
+  const shared = cur.shared !== false;
+  $("#themes").innerHTML = '<label>主题</label>' + (shared
+    ? THEMES.map((t) => `<button class="chip${theme === t ? " on" : ""}" data-t="${t}">${t}</button>`).join("")
+    : '<span class="path">此页自带配色</span>');
+  $("#speeds").innerHTML = '<label>速度</label>' + (shared
+    ? SPEEDS.map((s) => `<button class="chip${speed === s ? " on" : ""}" data-s="${s}">${s}×</button>`).join("")
+    : '<span class="path">用页内按钮</span>');
+}
+
+function load() {
+  $("#fr").src = url(!document.body.classList.contains("full"));
+  $("#name").textContent = cur.title;
+  $("#path").textContent = "pages/" + cur.dir + "/";
+  $("#open").href = url();
+  $("#foot").innerHTML = `<span>${cur.desc}</span>
+    <span>改内容：<a href="${cur.dir}/${cur.dir === "chat-sim" ? "conversation.js" : cur.dir === "gallery" ? "index.html" : "config.js"}" target="_blank">${cur.dir === "chat-sim" ? "conversation.js" : cur.dir === "gallery" ? "index.html 里的 CONFIG" : "config.js"}</a></span>
+    <span><kbd>↑</kbd><kbd>↓</kbd> 切换页面 · <kbd>F</kbd> 全屏 · <kbd>空格</kbd> 暂停 · <kbd>R</kbd> 重播</span>`;
+  buildNav($("#q").value); buildChips(); writeHash();
+}
+function select(d) { cur = all.find((x) => x.dir === d); if (cur.shared === false) { theme = null; speed = 1; } load(); }
+function step(k) { select(all[(all.indexOf(cur) + k + all.length) % all.length].dir); }
+function cmd(c, value) { $("#fr").contentWindow.postMessage({ sc: "cmd", cmd: c, value }, "*"); }
+
+$("#nav").onclick = (e) => { const b = e.target.closest(".item"); if (b) select(b.dataset.d); };
+$("#q").oninput = (e) => buildNav(e.target.value);
+$("#themes").onclick = (e) => { const b = e.target.closest("[data-t]"); if (!b) return; theme = theme === b.dataset.t ? null : b.dataset.t; load(); };
+$("#speeds").onclick = (e) => { const b = e.target.closest("[data-s]"); if (!b) return; speed = +b.dataset.s; buildChips(); writeHash(); cmd("speed", speed); };
+$("#replay").onclick = () => { cmd("replay"); if (cur.shared === false) $("#fr").src = url(); };
+function setFull(v) { document.body.classList.toggle("full", v); if (v) document.documentElement.requestFullscreen?.().catch(() => {}); else if (document.fullscreenElement) document.exitFullscreen(); load(); }
+$("#full").onclick = () => setFull(true);
+$("#exit").onclick = () => setFull(false);
+document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement && document.body.classList.contains("full")) setFull(false); });
+addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT") { if (e.key === "Escape") e.target.blur(); return; }
+  if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); step(-1); }
+  else if (e.key === "f" || e.key === "F") setFull(!document.body.classList.contains("full"));
+  else if (e.key === "Escape" && document.body.classList.contains("full")) setFull(false);
+  else if (e.key === "/") { e.preventDefault(); $("#q").focus(); }
+});
+/* iframe 获得焦点时，键盘事件不会冒泡到这里，所以 iframe 加载后把焦点还给外层 */
+$("#fr").addEventListener("load", () => { try { $("#fr").blur(); window.focus(); } catch (e) {} });
+
+readHash(); load();
+</script>
+</body>
+</html>

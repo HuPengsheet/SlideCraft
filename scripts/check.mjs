@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Usage: node scripts/check.mjs dist/demo.html
+// Usage: node scripts/check.mjs templates/soft-editorial/template.html
 // Injects a layout probe into a copy of the built deck and runs it in headless Chrome.
 // Reports, per slide, elements that extend past the 1920x1080 canvas or whose content is clipped.
 import { readFileSync, writeFileSync, rmSync } from 'node:fs';

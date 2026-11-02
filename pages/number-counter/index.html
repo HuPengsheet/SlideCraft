@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数字滚动</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; justify-content: center; padding: 5em 6em; gap: 3em; }
+  .grid { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 2em; }
+  .item { padding: 1.6em 1.4em 1.4em; opacity: 0; transform: translateY(1.2em); transition: opacity .6s, transform .6s cubic-bezier(.2,.7,.2,1); }
+  .item.on { opacity: 1; transform: none; }
+  .val { font-family: var(--font-display); font-weight: 700; font-size: 5.2em; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .val small { font-size: .4em; color: var(--accent); margin-left: .15em; font-weight: 600; }
+  .bar { height: .2em; background: var(--line); border-radius: 1em; margin: 1em 0 .8em; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 1.6s cubic-bezier(.2,.7,.2,1); }
+  .item.on .bar i { width: var(--w, 100%); }
+  .lab { font-size: 1.1em; }
+  .note { color: var(--fg-soft); font-size: .8em; margin-top: .2em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

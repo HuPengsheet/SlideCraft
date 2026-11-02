@@ -1,0 +1,53 @@
+/* 主题 = 一组 CSS 变量。页面只引用变量，不写死颜色。
+ * 切换：config.js 里写 theme: 'light'，或 URL 加 ?theme=light。
+ * 新增主题：复制一段，改 data-theme 的名字和值即可。
+ *
+ * 变量约定：
+ *   --bg --surface --line        背景、卡片面、分隔线
+ *   --fg --fg-soft               正文、次要文字
+ *   --accent --accent-2 --accent-3   强调色（图表按此顺序取色）
+ *   --good --bad                 正向、负向（涨跌、对错）
+ *   --font-display --font-body --font-mono
+ *   --page-bg                    舞台之外的底色
+ */
+:root, :root[data-theme="dark"] {
+  --page-bg: #0b0a08;
+  --bg: #14120f; --surface: #1f1c17; --line: #36312a;
+  --fg: #f1ece1; --fg-soft: #9a9384;
+  --accent: #e8b84a; --accent-2: #d77757; --accent-3: #6f93c8;
+  --good: #5fb760; --bad: #e06c75;
+  --font-display: "Inter", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
+  --font-body: "Inter", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
+  --font-mono: "Ubuntu Mono", "JetBrains Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", monospace;
+}
+:root[data-theme="light"] {
+  --page-bg: #d9d4c7;
+  --bg: #f7f4ec; --surface: #ffffff; --line: #e0dacb;
+  --fg: #2a241b; --fg-soft: #7d766b;
+  --accent: #c96442; --accent-2: #2f6f5e; --accent-3: #3f5f9a;
+  --good: #2f8f4e; --bad: #c4443c;
+}
+:root[data-theme="paper"] {
+  --page-bg: #cfc8b4;
+  --bg: #f2eedf; --surface: #ece6d2; --line: #d8d0b8;
+  --fg: #2a241b; --fg-soft: #5c5345;
+  --accent: #b5527e; --accent-2: #5f7d4f; --accent-3: #c79a2a;
+  --good: #5f7d4f; --bad: #b5523c;
+  --font-display: "Cormorant Garamond", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+}
+:root[data-theme="neon"] {
+  --page-bg: #05050c;
+  --bg: #0a0a14; --surface: #12122a; --line: #2a2a5a;
+  --fg: #e8f6ff; --fg-soft: #7f8fb5;
+  --accent: #00f0ff; --accent-2: #ff2bd6; --accent-3: #b6ff3c;
+  --good: #b6ff3c; --bad: #ff4d6d;
+  --font-display: "Orbitron", "Rajdhani", "Inter", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+}
+:root[data-theme="terminal"] {
+  --page-bg: #1b0715;
+  --bg: #300a24; --surface: #3b1a31; --line: #5a3350;
+  --fg: #eee8e0; --fg-soft: #a39a98;
+  --accent: #d77757; --accent-2: #e6b673; --accent-3: #7fb2e5;
+  --good: #5fb760; --bad: #e06c75;
+  --font-display: var(--font-mono); --font-body: var(--font-mono);
+}

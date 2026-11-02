@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>无限跑马灯</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; justify-content: center; gap: 2.4em; }
+  .head { text-align: center; padding: 0 6em; }
+  .rows { display: flex; flex-direction: column; gap: 1.4em; }
+  .fade .rows { -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .row { overflow: hidden; }
+  .track { display: flex; width: max-content; animation: mq calc(var(--dur, 30s) / var(--speed)) linear infinite; }
+  .row.rev .track { animation-direction: reverse; }
+  .pause .row:hover .track { animation-play-state: paused; }
+  .grp { display: flex; align-items: center; flex: none; gap: var(--gap, 3em); padding-right: var(--gap, 3em); }
+  @keyframes mq { to { transform: translateX(-50%); } }
+
+  .it { flex: none; white-space: nowrap; display: flex; align-items: center; justify-content: center; }
+  .st-text .it { font-family: var(--font-display); font-weight: 700; font-size: 3.4em; line-height: 1.2; color: var(--fg-soft); }
+  .st-text .it:nth-child(3n+1) { color: var(--fg); }
+  .st-pill .it { font-size: 1.3em; padding: .45em 1.3em; border: 1px solid var(--line); background: var(--surface); border-radius: 99em; color: var(--fg); }
+  .st-pill .it:nth-child(3n+1) { border-color: var(--accent); color: var(--accent); }
+  .st-pill .it:nth-child(3n+2) { border-color: var(--accent-2); color: var(--accent-2); }
+  .st-pill .it:nth-child(3n) { border-color: var(--accent-3); color: var(--accent-3); }
+  .it.img { width: 11em; height: 5em; padding: .5em .8em; background: var(--surface); border: 1px solid var(--line); border-radius: .6em; }
+  .it.img img { width: 100%; height: 100%; object-fit: contain; }
+  .it.img video { width: 100%; height: 100%; object-fit: contain; }
+  .st-image .it.img { width: 14em; height: 7.9em; padding: 0; overflow: hidden; }
+  .st-image .it.img img, .st-image .it.img video { object-fit: cover; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>
