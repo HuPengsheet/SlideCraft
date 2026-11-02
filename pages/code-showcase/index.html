@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>代码演示</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  :root { --sh: color-mix(in srgb, var(--page-bg) 85%, transparent); }
+  .stage { display: flex; flex-direction: column; gap: 1.2em; padding: 3.2em 7em;
+    background: radial-gradient(ellipse 70% 80% at 50% 45%, color-mix(in srgb, var(--accent) 8%, var(--bg)), var(--bg) 75%); }
+
+  .win { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: .9em;
+    background: color-mix(in srgb, var(--bg) 70%, var(--surface)); border: 1px solid var(--line);
+    box-shadow: 0 0 6em color-mix(in srgb, var(--accent) 10%, transparent), 0 2em 4em var(--sh); }
+  .bar { flex: none; display: flex; align-items: center; gap: .55em; height: 2.4em; padding: 0 1em; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .bar i { width: .8em; height: .8em; border-radius: 50%; display: block; }
+  .bar i:nth-child(1) { background: var(--bad); } .bar i:nth-child(2) { background: var(--accent); } .bar i:nth-child(3) { background: var(--good); }
+  .ttl { flex: 1; text-align: center; font-weight: 400; font-size: .8em; color: var(--fg-soft); font-family: var(--font-mono); margin-left: 3.5em; }
+  .lang { flex: none; width: 3.5em; text-align: right; font-size: .62em; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-family: var(--font-mono); }
+
+  .body { flex: 1; position: relative; overflow: auto; padding: .9em 1em .9em .6em; font-family: var(--font-mono); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  .code { font-size: clamp(.5em, calc(19em / (var(--n, 8) * 1.55)), 1.1em); tab-size: 2; counter-reset: ln; width: max-content; min-width: 100%; }
+  .ln { display: flex; height: 1.55em; line-height: 1.55; white-space: pre; overflow: hidden; border-radius: .2em; transition: opacity .4s, background .4s; }
+  .ln::before { content: ""; flex: none; width: 3em; padding-right: 1.1em; text-align: right; color: var(--fg-soft); opacity: .55; user-select: none; }
+  .ln:not(.rm)::before { counter-increment: ln; content: counter(ln); }
+  .nonum .ln::before { display: none; }
+  .nonum .body { padding-left: 1.2em; }
+  .ln.dim { opacity: .27; }
+  .ln.fo { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  .ln.add { animation: lnin calc(.55s / var(--speed)) cubic-bezier(.2,.8,.2,1) both, flashg calc(1.5s / var(--speed)) ease-out; }
+  .ln.rm { pointer-events: none; animation: flashr calc(.3s / var(--speed)) ease-out both, lnout calc(.4s / var(--speed)) calc(.28s / var(--speed)) ease-in forwards; }
+  @keyframes lnin { from { height: 0; opacity: 0; transform: translateX(-1.2em); } to { height: 1.55em; opacity: 1; transform: none; } }
+  @keyframes flashg { from { background: color-mix(in srgb, var(--good) 34%, transparent); } to { background: transparent; } }
+  @keyframes flashr { from { background: transparent; } to { background: color-mix(in srgb, var(--bad) 30%, transparent); } }
+  @keyframes lnout { to { height: 0; opacity: 0; } }
+
+  .tk-kw { color: var(--accent-2); }
+  .tk-str { color: var(--accent); }
+  .tk-num { color: var(--accent-3); }
+  .tk-com { color: var(--fg-soft); font-style: italic; }
+  .tk-fn { color: var(--accent-3); font-weight: 700; }
+  .tk-type { color: var(--accent); opacity: .85; }
+  .tk-prop { color: var(--accent-3); }
+  .cur { display: inline-block; width: .55em; height: 1.2em; vertical-align: text-bottom; background: var(--accent); animation: blink calc(1s / var(--speed)) steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .cap { flex: none; display: flex; align-items: center; gap: 1.4em; height: 4em; padding: 0 1.6em; background: var(--surface); border: 1px solid var(--line); border-radius: .8em; box-shadow: 0 .8em 2em var(--sh); }
+  .num { flex: none; font-family: var(--font-mono); font-size: .85em; color: var(--accent); letter-spacing: .08em; }
+  .txt { flex: 1; min-width: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.15em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .txt.pop { animation: capin calc(.5s / var(--speed)) cubic-bezier(.2,.8,.2,1); }
+  @keyframes capin { from { opacity: 0; transform: translateY(.5em); } to { opacity: 1; transform: none; } }
+  .dots { flex: none; display: flex; align-items: center; gap: .55em; }
+  .dots button { width: .7em; height: .7em; padding: 0; border-radius: 1em; border: 1px solid var(--fg-soft); background: transparent; cursor: default; transition: width .35s, background .35s, border-color .35s; }
+  .dots button.past { background: var(--fg-soft); }
+  .dots button.now { width: 1.8em; background: var(--accent); border-color: var(--accent); }
+  .dots.ready button { cursor: pointer; }
+  .dots.ready button:hover { border-color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

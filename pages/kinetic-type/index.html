@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>动感字幕</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { background: var(--bg); }
+  .k-line, .k-stack { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .k-txt { position: relative; display: inline-block; font-family: var(--font-display); font-weight: 900; line-height: 1.05; letter-spacing: -.02em;
+    color: var(--c, var(--fg)); text-transform: uppercase; white-space: nowrap; overflow-wrap: anywhere; }
+  .k-txt.wrap { white-space: normal; }
+  .k-t { display: inline-block; }
+  .k-ch { display: inline-block; }
+
+  /* punch */
+  .k-line.punch { animation: shake calc(var(--d) * 1.3 / var(--speed)) linear both; }
+  .punch .k-t { animation: punch calc(var(--d) / var(--speed)) cubic-bezier(.2,.9,.3,1) both; }
+  @keyframes punch { 0% { transform: scale(.25); opacity: 0; } 45% { transform: scale(1.14); opacity: 1; } 70% { transform: scale(.97); } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes shake { 0%,40% { transform: translate(0,0); } 48% { transform: translate(.35em,-.25em); } 56% { transform: translate(-.3em,.2em); } 64% { transform: translate(.2em,.15em); } 74% { transform: translate(-.12em,-.08em); } 100% { transform: none; } }
+
+  /* slide */
+  .slide .k-t { animation: slide calc(var(--d) / var(--speed)) cubic-bezier(.1,.8,.2,1) both; }
+  @keyframes slide { 0% { transform: translateX(calc(var(--dir) * -115%)) skewX(calc(var(--dir) * 22deg)); filter: blur(.5em); opacity: .4; }
+    70% { filter: blur(.08em); opacity: 1; } 100% { transform: none; filter: none; opacity: 1; } }
+  .streak { position: absolute; left: 0; width: 70%; height: .16em; border-radius: 1em; opacity: 0;
+    background: linear-gradient(calc(90deg - 90deg * var(--dir)), transparent, var(--c, var(--fg)));
+    animation: streak calc(var(--d) * 1.1 / var(--speed)) cubic-bezier(.1,.7,.2,1) both; animation-delay: calc(var(--sd) / var(--speed)); }
+  @keyframes streak { 0% { opacity: .9; transform: translateX(calc(var(--dir) * -150%)); } 100% { opacity: 0; transform: translateX(calc(var(--dir) * 60%)); } }
+
+  /* echo */
+  .k-e { position: absolute; left: 0; top: 0; width: 100%; color: transparent; -webkit-text-stroke: .02em var(--c, var(--fg)); opacity: 0;
+    animation: echo calc(var(--d) * 2.2 / var(--speed)) cubic-bezier(.15,.7,.3,1) both; animation-delay: calc(var(--k) * .09s / var(--speed)); }
+  @keyframes echo { 0% { opacity: .85; transform: scale(1); } 100% { opacity: 0; transform: scale(calc(1 + var(--k) * .09)) translateY(calc(var(--k) * -.04em)); } }
+  .echo .k-t { animation: punch calc(var(--d) * .8 / var(--speed)) cubic-bezier(.2,.9,.3,1) both; }
+
+  /* split */
+  .k-ch { animation: fly calc(var(--d) * 1.4 / var(--speed)) cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * .02s / var(--speed)); }
+  @keyframes fly { 0% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(2.2); opacity: 0; } 55% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+
+  /* outline */
+  .outline .k-t { -webkit-text-stroke: .035em var(--c, var(--fg)); color: transparent; animation: fill calc(var(--d) * 1.8 / var(--speed)) ease-in both, grow calc(var(--d) * 1.8 / var(--speed)) cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes fill { 0%, 45% { color: transparent; } 100% { color: var(--c, var(--fg)); } }
+  @keyframes grow { 0% { transform: scale(.82); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+
+  /* 背景闪光、节拍条、计数 */
+  .k-flash { position: absolute; inset: 0; background: var(--c, var(--accent)); pointer-events: none; opacity: 0; animation: flash calc(var(--d) * 1.2 / var(--speed)) ease-out both; }
+  @keyframes flash { 0% { opacity: .32; } 100% { opacity: 0; } }
+  .k-beat { position: absolute; left: 0; bottom: 0; height: .35em; width: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); animation: beat var(--beat) linear both; }
+  @keyframes beat { to { transform: scaleX(1); } }
+  .k-count { position: absolute; left: 3em; bottom: 2em; font-family: var(--font-mono); font-size: .8em; letter-spacing: .2em; color: var(--fg-soft); font-variant-numeric: tabular-nums; }
+  .k-count b { color: var(--accent); font-weight: 600; }
+
+  /* 终幕 */
+  .k-row { display: block; }
+  .k-row .k-txt { animation: rowin calc(.5s / var(--speed)) cubic-bezier(.2,.9,.3,1) both; animation-delay: calc(var(--i) * .08s / var(--speed)); }
+  .k-row .k-t { display: inline-block; }
+  .k-row.o .k-txt { -webkit-text-stroke: .03em var(--c, var(--fg)); color: transparent; }
+  @keyframes rowin { 0% { transform: translateY(.5em) scale(.9); opacity: 0; } 100% { transform: none; opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

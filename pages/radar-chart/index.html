@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>雷达图</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; gap: 2em; padding: 3.4em 4.5em; align-items: stretch; }
+  .side { width: 19em; flex: none; display: flex; flex-direction: column; justify-content: center; gap: 1.8em; }
+  .side .sc-title { font-size: 2.3em; }
+  .rise { opacity: 0; animation: rise calc(.7s / var(--speed)) cubic-bezier(.2,.7,.2,1) forwards; animation-delay: calc(var(--d, 0s) / var(--speed)); }
+  @keyframes rise { from { opacity: 0; transform: translateY(.7em); } to { opacity: 1; transform: none; } }
+  @keyframes fadein { to { opacity: 1; } }
+  @keyframes pop { 0% { opacity: 0; transform: scale(0); } 100% { opacity: 1; transform: scale(1); } }
+
+  .legend { display: flex; flex-direction: column; gap: .3em; margin: 0 -.8em; }
+  .lg { display: flex; align-items: center; gap: .8em; padding: .5em .8em; border: 1px solid transparent; border-radius: .6em; background: none; color: var(--fg); font: inherit; font-size: .95em; text-align: left; cursor: pointer; transition: background .25s, border-color .25s, opacity .25s; }
+  .lg i { flex: none; width: 1.5em; height: .32em; border-radius: 1em; background: var(--c); box-shadow: 0 0 .7em var(--c); }
+  .lg span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lg.hl { background: var(--surface); border-color: var(--line); }
+  .lg.off { opacity: .4; text-decoration: line-through; }
+  .lg:focus-visible { outline: .15em solid var(--accent-3); }
+  .note { color: var(--fg-soft); font-size: .78em; line-height: 1.5; border-left: .2em solid var(--accent); padding-left: .9em; }
+
+  .plot { flex: 1; min-width: 0; position: relative; }
+  .radar { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; font-family: var(--font-body); }
+  .ring, .spoke, .alabel, .core { opacity: 0; animation: fadein calc(.6s / var(--speed)) ease-out forwards; animation-delay: calc(var(--i, 0) * .1s / var(--speed)); }
+  .ring { fill: none; stroke: var(--line); stroke-width: .35; }
+  .ring.outer { fill: var(--surface); fill-opacity: .55; stroke-width: .6; }
+  .spoke { stroke: var(--line); stroke-width: .35; }
+  .core { fill: var(--fg-soft); }
+  .alabel { fill: var(--fg); font-size: 5.2px; }
+  .nomo .ring, .nomo .spoke, .nomo .alabel, .nomo .core, .nomo .rise, .nomo .lg { animation: none; opacity: 1; transform: none; }
+
+  .ser { transition: opacity .3s; }
+  .sers.hasHl .ser:not(.hl) { opacity: .12; }
+  .sers .ser.off, .sers.hasHl .ser.off { opacity: 0; pointer-events: none; }
+  .poly { fill: var(--c); fill-opacity: var(--fill, .18); stroke: var(--c); stroke-width: .8; stroke-linejoin: round; opacity: 0; filter: drop-shadow(0 .15px 1.2px var(--c)); transition: fill-opacity .3s; }
+  .ser.grow .poly { opacity: 1; }
+  .ser.hl .poly { fill-opacity: calc(var(--fill, .18) + .22); }
+  .dot { fill: var(--c); stroke: var(--bg); stroke-width: .6; opacity: 0; transform-box: fill-box; transform-origin: center; pointer-events: none; }
+  .ser.pop .dot { animation: pop calc(.45s / var(--speed)) cubic-bezier(.2,1.6,.4,1) forwards; animation-delay: calc(var(--j) * .05s / var(--speed)); }
+  .vls { opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .vl { fill: var(--fg); font-family: var(--font-mono); font-size: 3.6px; paint-order: stroke; stroke: var(--bg); stroke-width: 1px; }
+  .vlon .ser.pop .vls, .ser.hl.pop .vls { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

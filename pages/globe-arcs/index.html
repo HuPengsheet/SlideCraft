@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全球连线</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { background: var(--bg); }
+  .gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none;
+    opacity: 0; transition: opacity calc(1.4s / var(--speed)) ease; }
+  .gl.on { opacity: 1; }
+  .gl.drag { cursor: grabbing; }
+  .veil { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 58% 50%, transparent 45%, var(--bg) 100%); opacity: .75; }
+  .hud { position: absolute; left: 4em; top: 3.6em; max-width: 27em; pointer-events: none; z-index: 2; }
+  .hud .bar { width: 3em; height: .22em; background: var(--accent); margin-bottom: 1.1em; border-radius: 1em;
+    transform: scaleX(0); transform-origin: left; transition: transform calc(.9s / var(--speed)) cubic-bezier(.2,.7,.2,1); }
+  .hud h1 { font-family: var(--font-display); font-weight: 800; font-size: 3em; line-height: 1.1; margin: 0; letter-spacing: -.01em; text-wrap: balance;
+    opacity: 0; transform: translateY(.5em); transition: opacity calc(.9s / var(--speed)) ease calc(.15s / var(--speed)), transform calc(.9s / var(--speed)) cubic-bezier(.2,.7,.2,1) calc(.15s / var(--speed)); }
+  .hud p { margin: .8em 0 0; color: var(--fg-soft); font-size: 1.05em; max-width: 24em;
+    opacity: 0; transform: translateY(.5em); transition: opacity calc(.9s / var(--speed)) ease calc(.35s / var(--speed)), transform calc(.9s / var(--speed)) cubic-bezier(.2,.7,.2,1) calc(.35s / var(--speed)); }
+  .hud.on .bar { transform: none; }
+  .hud.on h1, .hud.on p { opacity: 1; transform: none; }
+  .meta { position: absolute; left: 4em; bottom: 3.4em; display: flex; gap: 2.6em; z-index: 2; pointer-events: none;
+    opacity: 0; transition: opacity calc(1s / var(--speed)) ease calc(.6s / var(--speed)); }
+  .meta.on { opacity: 1; }
+  .meta b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2.4em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .meta span { display: block; margin-top: .5em; font-family: var(--font-mono); font-size: .72em; letter-spacing: .18em; color: var(--fg-soft); text-transform: uppercase; }
+  .meta div { padding-left: .9em; border-left: .15em solid var(--accent); }
+  .meta div:nth-child(2) { border-color: var(--accent-2); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

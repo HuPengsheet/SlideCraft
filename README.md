@@ -4,7 +4,7 @@ HTML 幻灯片与单页特效的素材库，分两部分：
 
 | 目录 | 内容 | 数量 |
 |---|---|---|
-| [pages/](pages/) | 单页特效模板，如对话模拟、图片墙、数字滚动、图表动画，可嵌进 PPT | 16 个 |
+| [pages/](pages/) | 单页特效模板，如对话模拟、图片墙、数字滚动、图表动画，可嵌进 PPT | 28 个 |
 | [templates/](templates/) | 完整的 PPT 模板，每套 10 到 12 页，风格各异 | 34 套 |
 
 所有内容都是纯 HTML、CSS 和 JS，不需要构建，用浏览器直接打开。
@@ -19,35 +19,41 @@ HTML 幻灯片与单页特效的素材库，分两部分：
 ### 展示
 
 <table>
-<tr><td width="50%" valign="top"><a href="pages/gallery/"><img src="previews/pages/gallery.gif" alt="图片展示墙" width="100%"></a><br><b>图片展示墙</b>（<a href="pages/gallery/">pages/gallery</a>）<br>16 张预览图错落入场，悬停倾斜、微摆动，点击放大。独立页面，改 index.html 里的 CONFIG</td><td width="50%" valign="top"><a href="pages/media-wall/"><img src="previews/pages/media-wall.gif" alt="媒体墙" width="100%"></a><br><b>媒体墙</b>（<a href="pages/media-wall/">pages/media-wall</a>）<br>图片、动图、视频组成的网格，灯箱浏览。字段：columns、aspect、fit、items[]</td></tr>
-<tr><td width="50%" valign="top"><a href="pages/compare-slider/"><img src="previews/pages/compare-slider.gif" alt="前后对比滑块" width="100%"></a><br><b>前后对比滑块</b>（<a href="pages/compare-slider/">pages/compare-slider</a>）<br>拖动分隔线对比两张图，加载时自动扫一遍。字段：before/after 或 pairs[]</td><td width="50%" valign="top"><a href="pages/browser-demo/"><img src="previews/pages/browser-demo.gif" alt="浏览器 / 手机演示" width="100%"></a><br><b>浏览器 / 手机演示</b>（<a href="pages/browser-demo/">pages/browser-demo</a>）<br>窗口里轮播截图，模拟光标移动与点击。字段：device、screens[]</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/gallery/"><img src="previews/pages/gallery.gif" alt="图片展示墙" width="100%"></a><br><b>图片展示墙</b>（<a href="pages/gallery/">pages/gallery</a>）<br>16 张预览图错落入场，悬停倾斜、微摆动，点击放大。改 `index.html` 里的 `CONFIG.items`（独立页面）</td><td width="50%" valign="top"><a href="pages/media-wall/"><img src="previews/pages/media-wall.gif" alt="媒体墙" width="100%"></a><br><b>媒体墙</b>（<a href="pages/media-wall/">pages/media-wall</a>）<br>图片、动图、视频组成的网格，灯箱浏览。`columns`、`aspect`、`fit`、`items[]: {src,name,note}`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/compare-slider/"><img src="previews/pages/compare-slider.gif" alt="前后对比滑块" width="100%"></a><br><b>前后对比滑块</b>（<a href="pages/compare-slider/">pages/compare-slider</a>）<br>拖动分隔线对比两张图，加载时自动扫一遍。`before`/`after` 或 `pairs[]`，`orientation`</td><td width="50%" valign="top"><a href="pages/browser-demo/"><img src="previews/pages/browser-demo.gif" alt="浏览器 / 手机演示" width="100%"></a><br><b>浏览器 / 手机演示</b>（<a href="pages/browser-demo/">pages/browser-demo</a>）<br>窗口里轮播截图，模拟光标移动与点击。`device`、`screens[]: {src,url,caption,cursor[]}`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/carousel-3d/"><img src="previews/pages/carousel-3d.gif" alt="3D 图片轮播" width="100%"></a><br><b>3D 图片轮播</b>（<a href="pages/carousel-3d/">pages/carousel-3d</a>）<br>封面流与环形两种样式，拖动、方向键、点击切换。`style`（`coverflow`|`ring`），`items[]: {src,title,note}`，`autoMs`</td><td width="50%" valign="top"><a href="pages/bento-grid/"><img src="previews/pages/bento-grid.gif" alt="便当盒仪表盘" width="100%"></a><br><b>便当盒仪表盘</b>（<a href="pages/bento-grid/">pages/bento-grid</a>）<br>数字、文字、图片、迷你折线混排的磁贴，自动排布。`columns`，`tiles[]: {type,col,row,w,h,accent}`</td></tr>
 </table>
 
 ### 对话与终端
 
 <table>
-<tr><td width="50%" valign="top"><a href="pages/chat-sim/"><img src="previews/pages/chat-sim.gif" alt="Claude Code 对话模拟" width="100%"></a><br><b>Claude Code 对话模拟</b>（<a href="pages/chat-sim/">pages/chat-sim</a>）<br>逐字输出、工具调用、diff 代码块。独立页面，改 conversation.js 里的 script</td><td width="50%" valign="top"><a href="pages/terminal-demo/"><img src="previews/pages/terminal-demo.gif" alt="终端演示" width="100%"></a><br><b>终端演示</b>（<a href="pages/terminal-demo/">pages/terminal-demo</a>）<br>敲命令、输出日志、进度条。字段：script[]（cmd、out、progress、wait、clear）</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/chat-sim/"><img src="previews/pages/chat-sim.gif" alt="Claude Code 对话模拟" width="100%"></a><br><b>Claude Code 对话模拟</b>（<a href="pages/chat-sim/">pages/chat-sim</a>）<br>逐字输出、工具调用、diff 代码块。改 `conversation.js` 里的 `script`（独立页面）</td><td width="50%" valign="top"><a href="pages/terminal-demo/"><img src="previews/pages/terminal-demo.gif" alt="终端演示" width="100%"></a><br><b>终端演示</b>（<a href="pages/terminal-demo/">pages/terminal-demo</a>）<br>敲命令、输出日志、进度条。`script[]`：`cmd`/`out`/`progress`/`wait`/`clear`</td></tr>
 </table>
 
 ### 数据
 
 <table>
-<tr><td width="50%" valign="top"><a href="pages/number-counter/"><img src="previews/pages/number-counter.gif" alt="数字滚动" width="100%"></a><br><b>数字滚动</b>（<a href="pages/number-counter/">pages/number-counter</a>）<br>大数字依次滚动到目标值，带进度条。字段：items[]</td><td width="50%" valign="top"><a href="pages/chart-animated/"><img src="previews/pages/chart-animated.gif" alt="动态图表" width="100%"></a><br><b>动态图表</b>（<a href="pages/chart-animated/">pages/chart-animated</a>）<br>柱状、折线、环形图的生长动画。字段：type、labels[]、series[]</td></tr>
-<tr><td width="50%" valign="top"><a href="pages/bar-race/"><img src="previews/pages/bar-race.gif" alt="排行榜赛跑" width="100%"></a><br><b>排行榜赛跑</b>（<a href="pages/bar-race/">pages/bar-race</a>）<br>条形随时间重新排序。字段：frames[]、topN</td><td width="50%"></td></tr>
+<tr><td width="50%" valign="top"><a href="pages/number-counter/"><img src="previews/pages/number-counter.gif" alt="数字滚动" width="100%"></a><br><b>数字滚动</b>（<a href="pages/number-counter/">pages/number-counter</a>）<br>大数字依次滚动到目标值，带进度条。`items[]: {value,label,unit,progress}`</td><td width="50%" valign="top"><a href="pages/chart-animated/"><img src="previews/pages/chart-animated.gif" alt="动态图表" width="100%"></a><br><b>动态图表</b>（<a href="pages/chart-animated/">pages/chart-animated</a>）<br>柱状、折线、环形图的生长动画。`type`（`bar`|`line`|`donut`），`labels[]`，`series[]`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/bar-race/"><img src="previews/pages/bar-race.gif" alt="排行榜赛跑" width="100%"></a><br><b>排行榜赛跑</b>（<a href="pages/bar-race/">pages/bar-race</a>）<br>条形随时间重新排序。`frames[]: {label,values}`，`topN`</td><td width="50%" valign="top"><a href="pages/radar-chart/"><img src="previews/pages/radar-chart.gif" alt="雷达图" width="100%"></a><br><b>雷达图</b>（<a href="pages/radar-chart/">pages/radar-chart</a>）<br>多系列多边形从中心生长，悬停高亮，点击图例开关。`axes[]`，`series[]: {name,values}`，`rings`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/funnel-chart/"><img src="previews/pages/funnel-chart.gif" alt="漏斗图" width="100%"></a><br><b>漏斗图</b>（<a href="pages/funnel-chart/">pages/funnel-chart</a>）<br>梯形依次展开，显示阶段转化率。`stages[]: {label,value}`，`scale`，`orientation`</td><td width="50%" valign="top"><a href="pages/gantt-schedule/"><img src="previews/pages/gantt-schedule.gif" alt="甘特图" width="100%"></a><br><b>甘特图</b>（<a href="pages/gantt-schedule/">pages/gantt-schedule</a>）<br>条形生长，进度填充，今日线扫过，里程碑。`unit`，`rows[]: {name,group,start,end,progress}`，`today`</td></tr>
 </table>
 
 ### 叙事
 
 <table>
-<tr><td width="50%" valign="top"><a href="pages/timeline/"><img src="previews/pages/timeline.gif" alt="时间线" width="100%"></a><br><b>时间线</b>（<a href="pages/timeline/">pages/timeline</a>）<br>事件依次点亮，播放结束后可点节点跳转。字段：orientation、events[]</td><td width="50%" valign="top"><a href="pages/flow-diagram/"><img src="previews/pages/flow-diagram.gif" alt="流程 / 架构图" width="100%"></a><br><b>流程 / 架构图</b>（<a href="pages/flow-diagram/">pages/flow-diagram</a>）<br>节点依次出现，光点沿连线流动。字段：layout、nodes[]、edges[]</td></tr>
-<tr><td width="50%" valign="top"><a href="pages/step-tour/"><img src="previews/pages/step-tour.gif" alt="步骤导览" width="100%"></a><br><b>步骤导览</b>（<a href="pages/step-tour/">pages/step-tour</a>）<br>聚光灯依次高亮截图上的区域。字段：image、steps[]</td><td width="50%" valign="top"><a href="pages/text-reveal/"><img src="previews/pages/text-reveal.gif" alt="逐句文案" width="100%"></a><br><b>逐句文案</b>（<a href="pages/text-reveal/">pages/text-reveal</a>）<br>大字逐句出现，支持打字、遮罩、逐词、Glitch、淡入。字段：lines[]</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/timeline/"><img src="previews/pages/timeline.gif" alt="时间线" width="100%"></a><br><b>时间线</b>（<a href="pages/timeline/">pages/timeline</a>）<br>事件依次点亮，播放结束后可点节点跳转。`orientation`，`events[]: {when,title,text,image}`</td><td width="50%" valign="top"><a href="pages/flow-diagram/"><img src="previews/pages/flow-diagram.gif" alt="流程 / 架构图" width="100%"></a><br><b>流程 / 架构图</b>（<a href="pages/flow-diagram/">pages/flow-diagram</a>）<br>节点依次出现，光点沿连线流动。`layout`（`free`|`row`），`nodes[]`，`edges[]`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/step-tour/"><img src="previews/pages/step-tour.gif" alt="步骤导览" width="100%"></a><br><b>步骤导览</b>（<a href="pages/step-tour/">pages/step-tour</a>）<br>聚光灯依次高亮界面截图上的区域。`image`，`steps[]: {x,y,w,h,title,text}`</td><td width="50%" valign="top"><a href="pages/text-reveal/"><img src="previews/pages/text-reveal.gif" alt="逐句文案" width="100%"></a><br><b>逐句文案</b>（<a href="pages/text-reveal/">pages/text-reveal</a>）<br>打字机、遮罩、逐词、Glitch、淡入。`lines[]: {text,effect,emphasis}`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/kinetic-type/"><img src="previews/pages/kinetic-type.gif" alt="动态排版" width="100%"></a><br><b>动态排版</b>（<a href="pages/kinetic-type/">pages/kinetic-type</a>）<br>预告片式大字：冲击、滑入、回声、拆字、描边。`beatMs`，`lines[]: {text,style,color}`，`finale`</td><td width="50%" valign="top"><a href="pages/quote-carousel/"><img src="previews/pages/quote-carousel.gif" alt="金句轮播" width="100%"></a><br><b>金句轮播</b>（<a href="pages/quote-carousel/">pages/quote-carousel</a>）<br>逐字显现，进度条，圆点和方向键跳转。`layout`，`holdMs`，`quotes[]: {text,by,role}`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/code-showcase/"><img src="previews/pages/code-showcase.gif" alt="代码演示" width="100%"></a><br><b>代码演示</b>（<a href="pages/code-showcase/">pages/code-showcase</a>）<br>语法高亮，逐步 diff 动画，聚焦区域。`steps[]: {code,lang,caption,focus}`</td><td width="50%"></td></tr>
 </table>
 
 ### 氛围
 
 <table>
-<tr><td width="50%" valign="top"><a href="pages/hero-intro/"><img src="previews/pages/hero-intro.gif" alt="开场封面" width="100%"></a><br><b>开场封面</b>（<a href="pages/hero-intro/">pages/hero-intro</a>）<br>粒子、渐变、网格、圆环四种背景。字段：backdrop、title、subtitle</td><td width="50%" valign="top"><a href="pages/marquee/"><img src="previews/pages/marquee.gif" alt="滚动跑马灯" width="100%"></a><br><b>滚动跑马灯</b>（<a href="pages/marquee/">pages/marquee</a>）<br>多行无限滚动的文字、标签或图片。字段：rows[]</td></tr>
-<tr><td width="50%" valign="top"><a href="pages/countdown/"><img src="previews/pages/countdown.gif" alt="倒计时" width="100%"></a><br><b>倒计时</b>（<a href="pages/countdown/">pages/countdown</a>）<br>翻页数字，可指定真实日期或演示秒数。字段：target 或 demo、units、style</td><td width="50%"></td></tr>
+<tr><td width="50%" valign="top"><a href="pages/hero-intro/"><img src="previews/pages/hero-intro.gif" alt="开场封面" width="100%"></a><br><b>开场封面</b>（<a href="pages/hero-intro/">pages/hero-intro</a>）<br>粒子、渐变、网格、圆环四种背景。`backdrop`，`title`，`subtitle`</td><td width="50%" valign="top"><a href="pages/marquee/"><img src="previews/pages/marquee.gif" alt="滚动跑马灯" width="100%"></a><br><b>滚动跑马灯</b>（<a href="pages/marquee/">pages/marquee</a>）<br>多行无限滚动的文字、标签或图片。`rows[]: {items,direction,speed,style}`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/countdown/"><img src="previews/pages/countdown.gif" alt="倒计时" width="100%"></a><br><b>倒计时</b>（<a href="pages/countdown/">pages/countdown</a>）<br>翻页数字，可指定真实日期或演示秒数。`target` 或 `demo:{seconds}`，`units`，`style`</td><td width="50%" valign="top"><a href="pages/globe-arcs/"><img src="previews/pages/globe-arcs.gif" alt="旋转地球飞线" width="100%"></a><br><b>旋转地球飞线</b>（<a href="pages/globe-arcs/">pages/globe-arcs</a>）<br>点阵地球，城市涟漪，大圆弧线飞行，可拖动。`cities[]`，`arcs[]: {from,to}`，`rotateSpeed`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/orbit-map/"><img src="previews/pages/orbit-map.gif" alt="轨道式生态图" width="100%"></a><br><b>轨道式生态图</b>（<a href="pages/orbit-map/">pages/orbit-map</a>）<br>同心轨道旋转，悬停暂停并显示说明。`center`，`orbits[]: {speed,items[]}`，`tilt`</td><td width="50%" valign="top"><a href="pages/team-cards/"><img src="previews/pages/team-cards.gif" alt="团队介绍" width="100%"></a><br><b>团队介绍</b>（<a href="pages/team-cards/">pages/team-cards</a>）<br>头像卡片，聚光灯轮流展开，缺照片时生成字母头像。`layout`，`people[]: {name,role,bio,photo}`</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/pricing-plans/"><img src="previews/pages/pricing-plans.gif" alt="价格方案" width="100%"></a><br><b>价格方案</b>（<a href="pages/pricing-plans/">pages/pricing-plans</a>）<br>高亮方案的渐变边框，月付年付切换。`billing`，`plans[]: {name,price,features,highlight}`</td><td width="50%"></td></tr>
 </table>
 
 ## 二、PPT 模板（templates/）
@@ -86,9 +92,10 @@ node scripts/check.mjs templates/soft-editorial/template.html
 ## 验证状态
 
 - 34 套模板是原样复制，与上游逐文件比对一致。
-- 16 个单页都用 Playwright 的 Chromium 实际加载并录制过，页面无 JS 报错，画面有变化（录制时发现 bar-race 报错，原因是 player.js 里逐帧时间差可能为负，已在 pages/_shared/player.js 修复）。
-- 入口页 [pages/index.html](pages/index.html) 用 Playwright 测过：16 个页面逐个切换、主题传入 iframe、方向键、搜索、URL 记录均正常。
-- 没有验证的：真实的鼠标拖动和触摸操作（compare-slider 的拖动、media-wall 的悬停倾斜与灯箱）、视频素材（示例全是 webp）、各页面的观感是否合适。动图只能说明画面在播放，不能说明好不好看。
+- 28 个单页都用 Playwright 的 Chromium 实际加载并录制过动图，页面无 JS 报错，画面有变化。前 16 个录制时发现 bar-race 报错，原因是 player.js 里逐帧时间差可能为负，已在 pages/_shared/player.js 修复。
+- 后 12 个页面（雷达图、漏斗图、甘特图、便当盒、团队介绍、金句轮播、旋转地球、3D 轮播、动态排版、轨道图、代码演示、价格方案）由子任务编写并各自用 Playwright 测过：5 套主题、三种视口下不超出舞台、重播不重复、异常配置不崩溃。这些是子任务自己的测量结果，我只复核了语法、动图里画面有变化和入口页能加载，没有逐项重测。
+- 入口页 [pages/index.html](pages/index.html) 用 Playwright 测过：28 个页面逐个切换都能加载，主题能传入 iframe。方向键、搜索、URL 记录是在 16 个页面时测的，加到 28 个后没有重测。
+- 没有验证的：真实的鼠标拖动和触摸（对比滑块、地球拖动、3D 轮播拖动）、视频素材（示例全是 webp）、高分屏渲染、减少动态效果的静态帧、各页面的观感是否合适。动图只能说明画面在播放，不能说明好不好看。
 
 ## 许可
 

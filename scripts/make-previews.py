@@ -18,6 +18,10 @@ PAGES = {
     "number-counter": (6, ""), "chart-animated": (6, ""), "bar-race": (10, ""),
     "timeline": (9, ""), "flow-diagram": (9, ""), "step-tour": (10, ""), "text-reveal": (10, ""),
     "hero-intro": (6, ""), "marquee": (6, ""), "countdown": (6, ""),
+    "radar-chart": (8, ""), "funnel-chart": (8, ""), "gantt-schedule": (9, ""),
+    "bento-grid": (8, ""), "team-cards": (12, ""), "quote-carousel": (14, ""),
+    "globe-arcs": (8, ""), "carousel-3d": (10, ""), "kinetic-type": (14, ""),
+    "orbit-map": (12, ""), "code-showcase": (16, ""), "pricing-plans": (9, ""),
 }
 HIDE_UI = ".sc-ctl,.ctl,.hint{display:none!important}"
 

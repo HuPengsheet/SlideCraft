@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>转化漏斗</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; gap: 1.6em; padding: 3.2em 5em 2.6em; }
+  .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 2em; }
+  .head .sc-title { font-size: 2.2em; }
+  .rise { opacity: 0; animation: rise calc(.7s / var(--speed)) cubic-bezier(.2,.7,.2,1) forwards; animation-delay: calc(var(--d, 0s) / var(--speed)); }
+  @keyframes rise { from { opacity: 0; transform: translateY(.7em); } to { opacity: 1; transform: none; } }
+  .total { text-align: right; flex: none; }
+  .total .k { font-size: .75em; letter-spacing: .14em; color: var(--fg-soft); }
+  .total .v { font-family: var(--font-display); font-weight: 700; font-size: 3em; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .body { flex: 1; min-height: 0; position: relative; display: grid; }
+  .note { color: var(--fg-soft); font-size: .78em; }
+
+  /* 纵向 */
+  .vertical .body { grid-template-rows: repeat(var(--n), minmax(0, 1fr)); }
+  .vertical .row { display: grid; grid-template-columns: 15em minmax(0, 1fr) 14em; align-items: center; column-gap: 1.6em; position: relative; }
+  .vertical .lab { text-align: right; }
+  .vertical .shape { position: relative; height: 100%; }
+  .vertical .val { text-align: left; }
+  .seg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; clip-path: inset(0 0 100% 0); transition: clip-path calc(.7s / var(--speed)) cubic-bezier(.3,.7,.2,1); filter: drop-shadow(0 .35em .6em color-mix(in srgb, var(--fg) 14%, transparent)); }
+  .horizontal .seg { clip-path: inset(0 100% 0 0); }
+  .row.on .seg { clip-path: inset(-20% -20% -20% -20%); }
+  .seg .fill { fill: var(--c); }
+  .seg .sheen { fill: url(#sheenV); }
+  .horizontal .seg .sheen { fill: url(#sheenH); }
+  .lab, .val { opacity: 0; transform: translateY(.4em); transition: opacity calc(.5s / var(--speed)), transform calc(.5s / var(--speed)); }
+  .row.on .lab, .row.on .val { opacity: 1; transform: none; }
+  .lab .ix { font-family: var(--font-mono); font-size: .75em; color: var(--c); letter-spacing: .1em; }
+  .lab .nm { font-family: var(--font-display); font-weight: 600; font-size: 1.25em; line-height: 1.2; }
+  .lab .nt { color: var(--fg-soft); font-size: .78em; margin-top: .15em; }
+  .val .n { font-family: var(--font-display); font-weight: 700; font-size: var(--vs, 2.2em); line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .val .u { font-size: .8em; color: var(--fg-soft); margin-left: .25em; }
+  .chip { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: .35em; padding: .22em .7em; border-radius: 2em; background: var(--surface); border: 1px solid var(--line); color: var(--fg); font-family: var(--font-mono); font-size: .75em; white-space: nowrap; opacity: 0; transform: scale(.7); transition: opacity calc(.4s / var(--speed)), transform calc(.4s / var(--speed)) cubic-bezier(.2,1.5,.4,1); box-shadow: 0 .2em .6em color-mix(in srgb, var(--fg) 12%, transparent); }
+  .chip svg { width: .9em; height: .9em; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .chip.on { opacity: 1; transform: scale(1); }
+  .vertical .chip { top: 0; transform-origin: left center; margin-top: -.9em; left: calc(50% + var(--hw) * .5% + 1.2em); }
+  .vertical .chip.on { transform: scale(1); }
+
+  /* 横向 */
+  .horizontal .body { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+  .horizontal .row { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; row-gap: 1em; position: relative; text-align: center; }
+  .horizontal .val { grid-row: 1; }
+  .horizontal .val .n { font-size: var(--vs, 2em); }
+  .horizontal .shape { grid-row: 2; position: relative; }
+  .horizontal .lab { grid-row: 3; padding: 0 .4em; }
+  .horizontal .chip { left: 0; top: calc(50% - .9em); margin-left: -2.4em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

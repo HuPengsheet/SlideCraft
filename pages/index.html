@@ -93,7 +93,9 @@ const GROUPS = [
     { dir: "gallery",         title: "图片展示墙",      desc: "16 张图错落入场，悬停倾斜，点击放大", shared: false },
     { dir: "media-wall",      title: "媒体墙（可配置）", desc: "图片、动图、视频网格，灯箱浏览" },
     { dir: "compare-slider",  title: "前后对比滑块",    desc: "拖动分隔线对比两张图，自动扫动" },
-    { dir: "browser-demo",    title: "浏览器 / 手机演示", desc: "截图轮播加模拟光标点击" }
+    { dir: "browser-demo",    title: "浏览器 / 手机演示", desc: "截图轮播加模拟光标点击" },
+    { dir: "carousel-3d", title: "3D 图片轮播", desc: "封面流与环形两种样式，拖动、方向键切换" },
+    { dir: "bento-grid", title: "便当盒仪表盘", desc: "数字、文字、图片、迷你折线混排的磁贴" }
   ]},
   { name: "对话与终端", items: [
     { dir: "chat-sim",        title: "Claude Code 对话模拟", desc: "逐字输出、工具调用、diff 代码块", shared: false },
@@ -102,18 +104,28 @@ const GROUPS = [
   { name: "数据", items: [
     { dir: "number-counter",  title: "数字滚动",        desc: "大数字依次滚动到目标值" },
     { dir: "chart-animated",  title: "动态图表",        desc: "柱状图、折线图、环形图生长动画" },
-    { dir: "bar-race",        title: "排行榜赛跑",      desc: "条形随时间重排" }
+    { dir: "bar-race",        title: "排行榜赛跑",      desc: "条形随时间重排" },
+    { dir: "radar-chart", title: "雷达图", desc: "多系列多边形生长，悬停高亮、点击开关" },
+    { dir: "funnel-chart", title: "漏斗图", desc: "阶段转化率，梯形依次展开" },
+    { dir: "gantt-schedule", title: "甘特图", desc: "条形生长，进度填充，今日线扫过" }
   ]},
   { name: "叙事", items: [
     { dir: "timeline",        title: "时间线",          desc: "事件依次点亮，可点击跳转" },
     { dir: "flow-diagram",    title: "流程 / 架构图",   desc: "节点出现，数据光点沿连线流动" },
     { dir: "step-tour",       title: "步骤导览",        desc: "聚光灯依次高亮界面区域" },
-    { dir: "text-reveal",     title: "逐句文案",        desc: "打字、遮罩、逐词、Glitch 等切换" }
+    { dir: "text-reveal",     title: "逐句文案",        desc: "打字、遮罩、逐词、Glitch 等切换" },
+    { dir: "kinetic-type", title: "动态排版", desc: "预告片式大字：冲击、滑入、回声、拆字" },
+    { dir: "quote-carousel", title: "金句轮播", desc: "逐字显现，进度条，圆点跳转" },
+    { dir: "code-showcase", title: "代码演示", desc: "语法高亮，逐步 diff，聚焦区域" }
   ]},
   { name: "氛围", items: [
     { dir: "hero-intro",      title: "开场封面",        desc: "粒子、渐变、网格、圆环背景" },
     { dir: "marquee",         title: "滚动跑马灯",      desc: "多行无限滚动的文字与 Logo" },
-    { dir: "countdown",       title: "倒计时",          desc: "翻页数字，可指定日期" }
+    { dir: "countdown",       title: "倒计时",          desc: "翻页数字，可指定日期" },
+    { dir: "globe-arcs", title: "旋转地球飞线", desc: "点阵地球、城市涟漪、大圆弧线，可拖动" },
+    { dir: "orbit-map", title: "轨道式生态图", desc: "同心轨道旋转，悬停查看说明" },
+    { dir: "team-cards", title: "团队介绍", desc: "头像卡片聚光灯轮流展开" },
+    { dir: "pricing-plans", title: "价格方案", desc: "高亮方案渐变边框，月付年付切换" }
   ]}
 ];
 const THEMES = ["dark", "light", "paper", "neon", "terminal"];
