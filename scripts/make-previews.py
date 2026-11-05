@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-"""生成 README 用的预览图：用 Playwright 录制 pages/<name>/ 的动图 -> previews/pages/<name>.gif。
+"""生成 README 用的预览图：用 Playwright 录制 pages/<name>/ 的动图 -> previews/pages/<name>.webp（需要 ffmpeg）。
   python3 scripts/make-previews.py              录制全部页面
   python3 scripts/make-previews.py timeline     只录指定页面
-需要 playwright（Chromium）和 Pillow。"""
-import io, os, sys, time
-from PIL import Image
+需要 playwright（Chromium）和 ffmpeg。"""
+import glob, os, shutil, subprocess, sys, tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "previews")
-W, H = 640, 360
+W, FPS = 640, 20
 
 # 页面名 -> (录制秒数, URL 参数)。没列出的用默认 8 秒。
 PAGES = {
@@ -71,29 +70,31 @@ HIDE_UI = ".sc-ctl,.ctl,.hint{display:none!important}"
 
 
 def record(pw, name, secs, query):
+    """录制页面视频，再用 ffmpeg 转成 20fps 的动图 WebP。"""
     path = os.path.join(ROOT, "pages", name, "index.html")
     url = "file://" + path + (("?" + query) if query else "")
+    tmp = tempfile.mkdtemp(prefix="sc-rec-")
     b = pw.chromium.launch()
-    pg = b.new_page(viewport={"width": 1280, "height": 720})
+    ctx = b.new_context(viewport={"width": 1280, "height": 720}, record_video_dir=tmp,
+                        record_video_size={"width": 1280, "height": 720})
+    pg = ctx.new_page()
     errs = []
     pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.goto(url)
     pg.add_style_tag(content=HIDE_UI)
-    frames, t0 = [], time.time()
-    pg.wait_for_timeout(300)
-    while time.time() - t0 < secs:
-        t = time.time()
-        png = pg.screenshot()
-        frames.append((time.time() - t0, Image.open(io.BytesIO(png)).convert("RGB").resize((W, H), Image.LANCZOS)))
-        pg.wait_for_timeout(max(0, 330 - (time.time() - t) * 1000))
+    pg.wait_for_timeout(int(secs * 1000))
+    ctx.close()
     b.close()
-    # 帧间隔取实际采样间隔，保证播放速度接近真实
-    durs = [max(40, int((frames[i + 1][0] - frames[i][0]) * 1000)) for i in range(len(frames) - 1)] + [1500]
+    video = glob.glob(os.path.join(tmp, "*.webm"))[0]
     os.makedirs(os.path.join(OUT, "pages"), exist_ok=True)
-    dst = os.path.join(OUT, "pages", name + ".gif")
-    imgs = [f[1].quantize(colors=128, method=Image.MEDIANCUT, dither=Image.NONE) for f in frames]
-    imgs[0].save(dst, save_all=True, append_images=imgs[1:], duration=durs, loop=0, optimize=True)
-    print(f"{name}: {len(frames)} frames, {os.path.getsize(dst)//1024} KB, errors={errs}")
+    dst = os.path.join(OUT, "pages", name + ".webp")
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", video,
+                        "-vf", f"fps={FPS},scale={W}:-1:flags=lanczos", "-c:v", "libwebp_anim",
+                        "-quality", "55", "-loop", "0", dst], capture_output=True, text=True)
+    shutil.rmtree(tmp, ignore_errors=True)
+    if r.returncode:
+        raise RuntimeError("ffmpeg: " + r.stderr.strip().splitlines()[-1])
+    print(f"{name}: {os.path.getsize(dst) // 1024} KB, errors={errs}", flush=True)
 
 
 if __name__ == "__main__":

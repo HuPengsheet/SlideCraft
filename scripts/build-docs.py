@@ -32,7 +32,7 @@ def esc(s):
 
 
 def cell(i):
-    return (f'<td width="50%" valign="top"><a href="pages/{i["slug"]}/"><img src="previews/pages/{i["slug"]}.gif" '
+    return (f'<td width="50%" valign="top"><a href="pages/{i["slug"]}/"><img src="previews/pages/{i["slug"]}.webp" '
             f'alt="{esc(i["title"])}" width="100%"></a><br><b>{esc(i["title"])}</b><br>{esc(i["prompt"])}</td>')
 
 
@@ -63,7 +63,7 @@ for c in cats:
     out.append("<table>\n" + "\n".join(rows) + "\n</table>\n")
 out.append("""## 工具
 
-- [scripts/make-previews.py](scripts/make-previews.py)：用 Playwright 录制页面动图到 `previews/`，依赖 Playwright 与 Pillow。
+- [scripts/make-previews.py](scripts/make-previews.py)：用 Playwright 录制页面动图到 `previews/`，依赖 Playwright 与 ffmpeg。
 - [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 生成本文件和入口页用的提示词数据。
 """)
 open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8").write("\n".join(out))
