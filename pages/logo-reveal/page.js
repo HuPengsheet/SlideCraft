@@ -76,7 +76,7 @@ player.play(async (r) => {
   const gid = "sh" + Math.floor(Math.random() * 1e6);
   defs.innerHTML = `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${bb.width * .35}" y2="0">
       <stop offset="0" stop-color="${SC.esc(shine)}" stop-opacity="0"/><stop offset=".5" stop-color="${SC.esc(shine)}" stop-opacity=".85"/><stop offset="1" stop-color="${SC.esc(shine)}" stop-opacity="0"/></linearGradient>
-    <clipPath id="${gid}c"><rect x="${cx - vw}" y="${cy - vh}" width="0" height="${vh * 2}"/></clipPath>`;
+    <clipPath id="${gid}c"><rect x="${cx - vw / 2}" y="${cy - vh}" width="0" height="${vh * 2}"/></clipPath>`;
   svg.prepend(defs);
   const clipRect = defs.querySelector("rect");
 
@@ -116,10 +116,10 @@ player.play(async (r) => {
       fx = bo;
     } else {
       const w = SC.ease.inOut(prog(t, .2, 1.9));
-      clipRect.setAttribute("width", vw * 2 * w);
+      clipRect.setAttribute("width", vw * w);
       fillG.setAttribute("clip-path", `url(#${gid}c)`);
       fillOp = 1; strokeOp = 1 - .6 * w; stroke.setAttribute("stroke-dashoffset", 0);
-      const ex = cx - vw + vw * 2 * w * 1; // 擦除前沿
+      const ex = cx - vw / 2 + vw * w; // 擦除前沿
       lead.setAttribute("x1", ex); lead.setAttribute("x2", ex); lead.style.opacity = w > 0 && w < 1 ? 1 : 0;
       fx = w;
     }

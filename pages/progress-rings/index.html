@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>进度环组</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; align-items: center; justify-content: center; gap: 7em; padding: 3em 6em; }
+  .ringbox { position: relative; flex: none; width: 27em; height: 27em; }
+  .ringbox svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .base { fill: none; opacity: .16; }
+  .arc { fill: none; stroke-linecap: round; filter: drop-shadow(0 0 .25em currentColor); }
+  .ctr { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 var(--pad, 6em); }
+  .ctr .big { font-family: var(--font-display); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: var(--fs, 3em); }
+  .ctr .big small { font-size: .38em; color: var(--fg-soft); margin-left: .12em; font-weight: 600; }
+  .ctr .cl { margin-top: .5em; color: var(--fg-soft); font-size: .85em; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .side { display: flex; flex-direction: column; gap: 1.6em; min-width: 0; width: 24em; }
+  .side .head .sc-title { font-size: 2.2em; overflow-wrap: anywhere; }
+  .side .head .sc-sub { overflow-wrap: anywhere; }
+  .legend { display: flex; flex-direction: column; gap: .9em; }
+  .row { display: flex; align-items: center; gap: .9em; padding: .8em 1em; opacity: 0; transform: translateX(1.2em); transition: opacity .6s, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .row.on { opacity: 1; transform: none; }
+  .row i { flex: none; width: .5em; align-self: stretch; border-radius: 1em; background: currentColor; }
+  .row .tx { flex: 1; min-width: 0; }
+  .row .nm { font-size: 1em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row .vv { color: var(--fg-soft); font-size: .8em; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--font-mono); }
+  .row .pc { flex: none; font-family: var(--font-display); font-weight: 700; font-size: 1.6em; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

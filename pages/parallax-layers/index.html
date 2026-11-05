@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>视差分层</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { background: var(--bg); user-select: none; -webkit-user-select: none; }
+  .scene { position: absolute; inset: 0; overflow: hidden; }
+  .lay { position: absolute; inset: 0; opacity: 0; scale: 1.05; translate: 0 calc(var(--d, .5) * 1.875em);
+    transition: opacity calc(1s / var(--speed)), scale calc(1.4s / var(--speed)) cubic-bezier(.2,.7,.2,1), translate calc(1.4s / var(--speed)) cubic-bezier(.2,.7,.2,1); }
+  .lay.in { opacity: var(--op, 1); scale: 1; translate: 0 0; }
+  .shift { position: absolute; inset: -2.812em; will-change: transform; }
+  .shift > svg, .shift > img, .shift > video { width: 100%; height: 100%; display: block; object-fit: var(--fit, cover); pointer-events: none; }
+  .shift > .blur { filter: blur(var(--blur, 0em)); }
+  .miss { width: 100%; height: 100%; background: linear-gradient(180deg, transparent 30%, color-mix(in srgb, var(--accent-3) 22%, var(--surface)) 100%); }
+
+  .vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 55%, transparent 55%, color-mix(in srgb, var(--page-bg) 55%, transparent) 100%); }
+  .titlewrap { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .titlewrap .lay { display: flex; align-items: center; justify-content: center; translate: 0 1.25em; scale: .96; }
+  .titlewrap .lay.in { translate: 0 0; scale: 1; }
+  .titlewrap .shift { inset: 0; display: flex; align-items: center; justify-content: center; }
+  .tt { text-align: center; max-width: 43.75em; padding: 0 2.5em; margin-top: -3.75em; }
+  .tt .sc-eyebrow { color: var(--fg); text-shadow: 0 0.062em 0.375em color-mix(in srgb, var(--bg) 80%, transparent); }
+  .tt h1 { font-family: var(--font-display); font-weight: 800; font-size: 4.6em; line-height: 1.08; letter-spacing: -.02em; margin: 0.094em 0 0; color: var(--fg); overflow-wrap: anywhere;
+    text-shadow: 0 0.031em 0.562em color-mix(in srgb, var(--bg) 85%, transparent), 0 0.013em 0.125em color-mix(in srgb, var(--bg) 60%, transparent); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .tt p { margin: 0.562em auto 0; max-width: 21.25em; font-size: 1.25em; color: var(--fg); opacity: .85; text-shadow: 0 0.031em 0.375em color-mix(in srgb, var(--bg) 85%, transparent); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

@@ -23,11 +23,11 @@
   @keyframes pan { to { background-position: 6em 6em; } }
   .shade { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 8%, transparent 70%); }
 
-  .num { position: relative; display: flex; height: 1em; font-size: 22em; line-height: 1; font-family: var(--font-display); font-weight: 800; font-variant-numeric: tabular-nums; margin-right: .12em; letter-spacing: -.04em; flex: none; }
+  .num { position: relative; display: flex; height: 1em; font-size: var(--nf, 22em); line-height: 1; font-family: var(--font-display); font-weight: 800; font-variant-numeric: tabular-nums; margin-right: .12em; letter-spacing: -.04em; flex: none; }
   .col { display: block; height: 1em; overflow: hidden; width: .62em; text-align: center; }
   .col > b { display: block; font-weight: inherit; }
   .col > b > i { display: block; height: 1em; font-style: normal; color: var(--accent); text-shadow: 0 .04em .12em var(--line); }
-  .txt { position: relative; border-left: .15em solid var(--accent); padding-left: 2.6em; min-width: 0; flex: 1; }
+  .txt { position: relative; border-left: .15em solid var(--accent); padding-left: 2.6em; min-width: 0; flex: 1 1 0; }
   .txt .sc-eyebrow { display: block; margin-bottom: 1em; }
   .ttl { font-family: var(--font-display); font-weight: 800; font-size: 4.4em; line-height: 1.1; margin: 0; letter-spacing: -.01em; overflow-wrap: anywhere; }
   .sub { margin: .8em 0 0; font-size: 1.4em; color: var(--fg-soft); overflow-wrap: anywhere; }

@@ -12,6 +12,7 @@
     background: radial-gradient(ellipse 70% 60% at 50% 105%, color-mix(in srgb, var(--accent) 9%, var(--bg)), var(--bg) 70%); }
   .head { flex: none; opacity: 0; transform: translateY(.8em); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
   .head.on { opacity: 1; transform: none; }
+  .head, .top > div { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
   .head .sc-title { font-size: 2.2em; }
   .head .sc-sub { font-size: .95em; }
   .panes { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.8em; margin-top: 1.6em; }

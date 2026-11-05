@@ -90,48 +90,93 @@
  * dir 是 pages/ 下的目录名；shared:false 表示该页面尚未迁移到共用底座，主题/速度参数不生效。 */
 const GROUPS = [
   { name: "开场与封面", items: [
-    { dir: "hero-intro",      title: "开场封面",        desc: "粒子、渐变、网格、圆环背景" },
-    { dir: "countdown",       title: "倒计时",          desc: "翻页数字，可指定日期" },
-    { dir: "kinetic-type", title: "动态排版", desc: "预告片式大字：冲击、滑入、回声、拆字" }
+    { dir: "hero-intro", title: "开场封面", desc: "粒子、渐变、网格、圆环背景" },
+    { dir: "countdown", title: "倒计时", desc: "翻页数字，可指定日期" },
+    { dir: "kinetic-type", title: "动态排版", desc: "预告片式大字：冲击、滑入、回声、拆字" },
+    { dir: "logo-reveal", title: "品牌 Logo 揭示", desc: "描边画出轮廓、填充、高光扫过" },
+    { dir: "chapter-title", title: "章节转场页", desc: "巨大章节序号滚动，色块或线条背景" },
+    { dir: "title-split", title: "分屏标题入场", desc: "竖带依次上滑拼成标题" }
   ]},
   { name: "文字与排版", items: [
-    { dir: "text-reveal",     title: "逐句文案",        desc: "打字、遮罩、逐词、Glitch 等切换" },
+    { dir: "text-reveal", title: "逐句文案", desc: "打字、遮罩、逐词、Glitch 等切换" },
     { dir: "quote-carousel", title: "金句轮播", desc: "逐字显现，进度条，圆点跳转" },
-    { dir: "marquee",         title: "滚动跑马灯",      desc: "多行无限滚动的文字与 Logo" }
+    { dir: "marquee", title: "滚动跑马灯", desc: "多行无限滚动的文字与 Logo" },
+    { dir: "particle-text", title: "粒子成字", desc: "粒子聚成文字，鼠标可冲散" },
+    { dir: "credits-roll", title: "片尾滚动字幕", desc: "片尾滚动字幕" },
+    { dir: "danmaku", title: "弹幕墙", desc: "多轨道弹幕飞过" },
+    { dir: "word-cloud", title: "词云", desc: "按权重螺旋摆放的词云" },
+    { dir: "matrix-rain", title: "字符雨", desc: "字符雨背景加标题" }
   ]},
   { name: "数据可视化", items: [
-    { dir: "number-counter",  title: "数字滚动",        desc: "大数字依次滚动到目标值" },
-    { dir: "chart-animated",  title: "动态图表",        desc: "柱状图、折线图、环形图生长动画" },
-    { dir: "bar-race",        title: "排行榜赛跑",      desc: "条形随时间重排" },
+    { dir: "number-counter", title: "数字滚动", desc: "大数字依次滚动到目标值" },
+    { dir: "chart-animated", title: "动态图表", desc: "柱状图、折线图、环形图生长动画" },
+    { dir: "bar-race", title: "排行榜赛跑", desc: "条形随时间重排" },
     { dir: "radar-chart", title: "雷达图", desc: "多系列多边形生长，悬停高亮、点击开关" },
     { dir: "funnel-chart", title: "漏斗图", desc: "阶段转化率，梯形依次展开" },
-    { dir: "gantt-schedule", title: "甘特图", desc: "条形生长，进度填充，今日线扫过" }
+    { dir: "gantt-schedule", title: "甘特图", desc: "条形生长，进度填充，今日线扫过" },
+    { dir: "gauge-dashboard", title: "仪表盘", desc: "指针或弧线仪表，分区着色" },
+    { dir: "progress-rings", title: "进度环组", desc: "嵌套进度环" },
+    { dir: "heatmap-calendar", title: "热力日历", desc: "贡献图式热力日历" },
+    { dir: "sankey-flow", title: "桑基图", desc: "桑基图，流量带依次展开" },
+    { dir: "treemap", title: "矩形树图", desc: "矩形树图，面积表示数值" },
+    { dir: "stock-ticker", title: "行情滚动条", desc: "行情滚动条加实时折线" }
   ]},
   { name: "流程与结构", items: [
-    { dir: "timeline",        title: "时间线",          desc: "事件依次点亮，可点击跳转" },
-    { dir: "flow-diagram",    title: "流程 / 架构图",   desc: "节点出现，数据光点沿连线流动" },
-    { dir: "step-tour",       title: "步骤导览",        desc: "聚光灯依次高亮界面区域" },
-    { dir: "orbit-map", title: "轨道式生态图", desc: "同心轨道旋转，悬停查看说明" }
+    { dir: "timeline", title: "时间线", desc: "事件依次点亮，可点击跳转" },
+    { dir: "flow-diagram", title: "流程 / 架构图", desc: "节点出现，数据光点沿连线流动" },
+    { dir: "step-tour", title: "步骤导览", desc: "聚光灯依次高亮界面区域" },
+    { dir: "orbit-map", title: "轨道式生态图", desc: "同心轨道旋转，悬停查看说明" },
+    { dir: "org-chart", title: "组织架构树", desc: "组织架构树，可折叠展开" },
+    { dir: "mind-map", title: "思维导图", desc: "思维导图，分支逐层生长" },
+    { dir: "roadmap", title: "产品路线图", desc: "季度路线图，状态与进度" },
+    { dir: "swimlane", title: "泳道流程图", desc: "跨角色泳道流程图" },
+    { dir: "decision-tree", title: "决策树", desc: "决策树，沿选择路径高亮" },
+    { dir: "swot-matrix", title: "四象限矩阵", desc: "SWOT 四象限与散点" },
+    { dir: "layer-stack", title: "分层架构图", desc: "分层架构图，点击放大一层" }
   ]},
   { name: "媒体与图片", items: [
-    { dir: "gallery",         title: "图片展示墙",      desc: "16 张图错落入场，悬停倾斜，点击放大", shared: false },
-    { dir: "media-wall",      title: "媒体墙（可配置）", desc: "图片、动图、视频网格，灯箱浏览" },
-    { dir: "compare-slider",  title: "前后对比滑块",    desc: "拖动分隔线对比两张图，自动扫动" },
-    { dir: "carousel-3d", title: "3D 图片轮播", desc: "封面流与环形两种样式，拖动、方向键切换" }
+    { dir: "gallery", title: "图片展示墙", desc: "16 张图错落入场，悬停倾斜，点击放大", shared: false },
+    { dir: "media-wall", title: "媒体墙（可配置）", desc: "图片、动图、视频网格，灯箱浏览" },
+    { dir: "compare-slider", title: "前后对比滑块", desc: "拖动分隔线对比两张图，自动扫动" },
+    { dir: "carousel-3d", title: "3D 图片轮播", desc: "封面流与环形两种样式，拖动、方向键切换" },
+    { dir: "polaroid-scatter", title: "拍立得散落", desc: "拍立得散落桌面" },
+    { dir: "parallax-layers", title: "视差分层", desc: "鼠标驱动的视差分层" },
+    { dir: "flip-cards", title: "翻转卡片", desc: "3D 翻转卡片" },
+    { dir: "zoom-lens", title: "放大镜细节", desc: "放大镜巡游细节" },
+    { dir: "video-frame", title: "设备相框视频", desc: "笔记本、手机、电视外框加标注线" }
   ]},
   { name: "产品与界面演示", items: [
-    { dir: "chat-sim",        title: "Claude Code 对话模拟", desc: "逐字输出、工具调用、diff 代码块", shared: false },
-    { dir: "terminal-demo",   title: "终端演示",        desc: "敲命令、输出日志、进度条" },
-    { dir: "browser-demo",    title: "浏览器 / 手机演示", desc: "截图轮播加模拟光标点击" },
-    { dir: "code-showcase", title: "代码演示", desc: "语法高亮，逐步 diff，聚焦区域" }
+    { dir: "chat-sim", title: "Claude Code 对话模拟", desc: "逐字输出、工具调用、diff 代码块", shared: false },
+    { dir: "terminal-demo", title: "终端演示", desc: "敲命令、输出日志、进度条" },
+    { dir: "browser-demo", title: "浏览器 / 手机演示", desc: "截图轮播加模拟光标点击" },
+    { dir: "code-showcase", title: "代码演示", desc: "语法高亮，逐步 diff，聚焦区域" },
+    { dir: "phone-scroll", title: "手机长图滚动", desc: "手机里滚动长截图，停靠批注" },
+    { dir: "notification-stack", title: "通知堆叠", desc: "系统通知依次弹出堆叠" },
+    { dir: "command-palette", title: "命令面板", desc: "命令面板输入、过滤、执行" },
+    { dir: "chat-bubbles", title: "聊天气泡", desc: "聊天气泡，输入中动画" },
+    { dir: "api-playground", title: "接口调试", desc: "接口调试：请求与响应" },
+    { dir: "live-dashboard", title: "实时监控面板", desc: "实时监控面板，异常告警" },
+    { dir: "form-wizard", title: "表单向导", desc: "多步表单自动填写" }
   ]},
   { name: "信息版式", items: [
     { dir: "bento-grid", title: "便当盒仪表盘", desc: "数字、文字、图片、迷你折线混排的磁贴" },
     { dir: "team-cards", title: "团队介绍", desc: "头像卡片聚光灯轮流展开" },
-    { dir: "pricing-plans", title: "价格方案", desc: "高亮方案渐变边框，月付年付切换" }
+    { dir: "pricing-plans", title: "价格方案", desc: "高亮方案渐变边框，月付年付切换" },
+    { dir: "faq-accordion", title: "问答折叠", desc: "问答手风琴" },
+    { dir: "feature-table", title: "功能对比表", desc: "功能对比表，推荐列高亮" },
+    { dir: "checklist-progress", title: "清单进度", desc: "清单逐项勾选，总进度增长" },
+    { dir: "testimonial-wall", title: "评价墙", desc: "评价墙，多列反向滚动" },
+    { dir: "stat-compare", title: "数字对比", desc: "左右大数字对比与差值" },
+    { dir: "agenda-list", title: "议程目录", desc: "议程目录，当前项高亮" }
   ]},
   { name: "3D 与氛围", items: [
-    { dir: "globe-arcs", title: "旋转地球飞线", desc: "点阵地球、城市涟漪、大圆弧线，可拖动" }
+    { dir: "globe-arcs", title: "旋转地球飞线", desc: "点阵地球、城市涟漪、大圆弧线，可拖动" },
+    { dir: "tag-sphere", title: "3D 标签球", desc: "3D 标签球" },
+    { dir: "aurora-bg", title: "极光背景", desc: "极光流动渐变背景" },
+    { dir: "cube-rotate", title: "立方体翻面", desc: "3D 立方体翻面" },
+    { dir: "ripple-grid", title: "波纹点阵", desc: "点阵波纹" },
+    { dir: "terrain-lines", title: "山脉线条", desc: "线条山脉" },
+    { dir: "isometric-city", title: "等距城市", desc: "等距方块城市升起" }
   ]}
 ];
 const THEMES = ["dark", "light", "paper", "neon", "terminal"];

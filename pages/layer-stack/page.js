@@ -47,7 +47,7 @@ player.play(async (r) => {
   root.append(...(hasHead ? [head] : []), stack);
   if (cfg.hint && layers.length) root.append(SC.el("hint", SC.esc(cfg.hint)));
   stage.append(root);
-  if (!hasHead) stack.style.left = "4em";
+  if (!hasHead) stack.style.left = "2.5em";
 
   if (!layers.length) {
     stack.append(SC.el("empty", "尚未配置 layers，请在 config.js 里添加。"));

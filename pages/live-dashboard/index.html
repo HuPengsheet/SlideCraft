@@ -12,6 +12,7 @@
     background: radial-gradient(ellipse 60% 50% at 80% -10%, color-mix(in srgb, var(--accent) 10%, var(--bg)), var(--bg) 70%); }
   .top { flex: none; display: flex; align-items: flex-end; justify-content: space-between; gap: 2em; opacity: 0; transform: translateY(.8em); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
   .top.on { opacity: 1; transform: none; }
+  .top > div { min-width: 0; overflow-wrap: anywhere; }
   .top .sc-title { font-size: 2em; }
   .top .sc-sub { font-size: .9em; }
   .chip { flex: none; display: flex; align-items: center; gap: .6em; padding: .45em 1.1em; border-radius: 2em; border: 1px solid color-mix(in srgb, var(--good) 55%, transparent); background: color-mix(in srgb, var(--good) 10%, transparent); color: var(--good); font-size: .8em; font-weight: 700; transition: all .4s; white-space: nowrap; }

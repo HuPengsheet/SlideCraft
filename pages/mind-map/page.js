@@ -122,7 +122,7 @@ player.play(async (r) => {
   svg.style.width = ww + "em"; svg.style.height = wh + "em";
   svg.setAttribute("viewBox", `0 0 ${ww} ${wh}`);
   for (const n of all) {
-    n.dom.style.left = n.cx - n.w / 2 + ox + "em"; n.dom.style.top = n.cy - n.h / 2 + oy + "em";
+    n.dom.style.left = (n.cx - n.w / 2 + ox) / ww * 100 + "%"; n.dom.style.top = (n.cy - n.h / 2 + oy) / wh * 100 + "%";
   }
 
   /* 连线：父节点靠近子节点一侧的边中点 → 子节点近侧边中点 */

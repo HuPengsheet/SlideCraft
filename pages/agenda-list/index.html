@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>议程目录</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage {
+    --sh: 0 .08em .16em color-mix(in srgb, var(--fg) 6%, transparent), 0 1.4em 2.4em -1.1em color-mix(in srgb, var(--accent) 45%, transparent);
+    display: flex; align-items: center; gap: 5em; padding: 3em 5.5em;
+    background:
+      radial-gradient(46em 30em at -6% -10%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+      radial-gradient(40em 28em at 106% 110%, color-mix(in srgb, var(--accent-2) 11%, transparent), transparent 70%),
+      var(--bg);
+  }
+  .side { flex: none; width: 22em; }
+  .side .sc-title { font-size: 3.2em; margin-top: .3em; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; }
+  .side .sc-sub { font-size: 1.1em; margin-top: .8em; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; }
+
+  .list { position: relative; --rows: 6; --cols: 1; list-style: none; margin: 0; padding: 0; flex: 1; min-width: 0; max-height: 100%; display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--rows), auto); grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); column-gap: 2.4em; align-content: center; }
+  .item { --fs: calc(clamp(.4em, calc(7em / var(--rows)), 1.15em) * var(--k, 1)); font-size: var(--fs); position: relative; display: flex; align-items: center; gap: 1em; padding: .7em 1em; margin: 0 -1em; border-radius: .9em; border: 1px solid transparent; min-width: 0;
+    opacity: 0; transform: translateY(1.2em); transition: opacity .6s, transform .7s cubic-bezier(.2,.8,.2,1), background .5s, border-color .5s, box-shadow .5s; }
+  .item.in { opacity: 1; transform: none; }
+  .list.focus .item.in { opacity: .38; }
+  .list.focus .item.in.cur { opacity: 1; transform: translateX(.5em); background: linear-gradient(165deg, color-mix(in srgb, var(--fg) 5%, transparent), transparent 60%), var(--surface); border-color: color-mix(in srgb, var(--accent) 65%, var(--line)); box-shadow: var(--sh); }
+  .no { flex: none; width: 1.7em; font-family: var(--font-display); font-weight: 800; font-size: 2.4em; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--fg-soft); transition: color .4s; }
+  .cur .no { color: var(--accent); }
+  .body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .15em; }
+  .ti { font-family: var(--font-display); font-weight: 700; font-size: 1.6em; line-height: 1.2; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+  .dense .item { padding: .3em 1em; }
+  .dense .ti { -webkit-line-clamp: 1; line-clamp: 1; }
+  .nt { color: var(--fg-soft); font-size: .95em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nonote .nt { display: none; }
+  .tm { flex: none; font-family: var(--font-mono); font-size: .95em; color: var(--fg-soft); padding: .25em .8em; border: 1px solid var(--line); border-radius: 2em; white-space: nowrap; max-width: 9em; overflow: hidden; text-overflow: ellipsis; }
+  .cur .tm { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); }
+  .empty { color: var(--fg-soft); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

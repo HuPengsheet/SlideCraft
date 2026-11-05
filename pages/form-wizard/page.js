@@ -64,7 +64,7 @@ player.play(async (r) => {
     cur = i;
     all.forEach((el, k) => { el.classList.toggle("before", k < i); el.classList.toggle("after", k > i); });
     sps.forEach((e, k) => { e.classList.toggle("done", k < i); e.classList.toggle("cur", k === i); });
-    sps.forEach((e, k) => { const d = SC.$(".dot", e); d.textContent = k < i ? "✓" : String(k + 1); });
+    sps.forEach((e, k) => { const d = SC.$(".dot", e); d.innerHTML = k < i ? '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 4.6"/></svg>' : String(k + 1); });
     if (i === n) ok.classList.add("go"); else ok.classList.remove("go");
   };
   const final = () => { slides.forEach((s) => s.inputs.forEach((x) => { x.inp.value = x.f.value; })); goto(n); };

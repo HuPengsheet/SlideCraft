@@ -9,42 +9,42 @@
 <style>
   .stage { background: radial-gradient(ellipse at 72% 40%, var(--surface) 0%, var(--bg) 72%); user-select: none; -webkit-user-select: none; }
   .root { position: absolute; inset: 0; }
-  .head { position: absolute; left: 4em; top: 4em; width: 21em; opacity: 0; translate: 0 1em; transition: opacity calc(.8s / var(--speed)), translate calc(.8s / var(--speed)) cubic-bezier(.2,.7,.2,1); }
+  .head { position: absolute; left: 2.5em; top: 2.5em; width: 13.125em; opacity: 0; translate: 0 0.625em; transition: opacity calc(.8s / var(--speed)), translate calc(.8s / var(--speed)) cubic-bezier(.2,.7,.2,1); }
   .head.in { opacity: 1; translate: 0 0; }
-  .head .sc-title { font-size: 2.3em; font-weight: 800; margin-top: .3em; letter-spacing: -.01em; overflow-wrap: anywhere; }
-  .head .sc-sub { margin-top: 1em; line-height: 1.65; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
-  .head .rule { width: 3em; height: .2em; margin-top: 1.4em; background: var(--accent); border-radius: 1em; }
-  .hint { position: absolute; left: 4em; bottom: 3.6em; width: 21em; font-size: .72em; color: var(--fg-soft); letter-spacing: .08em; }
+  .head .sc-title { font-size: 2.3em; font-weight: 800; margin-top: 0.188em; letter-spacing: -.01em; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .head .sc-sub { margin-top: 0.625em; line-height: 1.65; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+  .head .rule { width: 1.875em; height: 0.125em; margin-top: 0.875em; background: var(--accent); border-radius: 0.625em; }
+  .hint { position: absolute; left: 2.5em; bottom: 2.25em; width: 13.125em; font-size: .72em; color: var(--fg-soft); letter-spacing: .08em; }
 
-  .stack { position: absolute; left: 29em; right: 4em; top: 3.6em; bottom: 3.6em; display: flex; flex-direction: column; gap: .7em; }
-  .layer { --lc: var(--accent); position: relative; flex: 1 1 0; min-height: 0; display: flex; align-items: center; gap: 1.4em; padding: 0 1.4em 0 1.8em; overflow: hidden; cursor: pointer; outline: none;
-    border-radius: .9em; background: color-mix(in srgb, var(--lc) 9%, var(--surface)); border: 1px solid color-mix(in srgb, var(--lc) 32%, var(--line));
-    box-shadow: inset .3em 0 0 var(--lc), 0 .9em 1.8em -1em rgba(0,0,0,.5);
-    opacity: 0; translate: 0 3.5em; scale: .97;
+  .stack { position: absolute; left: 18.125em; right: 2.5em; top: 2.25em; bottom: 2.25em; display: flex; flex-direction: column; gap: 0.438em; }
+  .layer { --lc: var(--accent); position: relative; flex: 1 1 0; min-height: 0; display: flex; align-items: center; gap: 0.875em; padding: 0 0.875em 0 1.125em; overflow: hidden; cursor: pointer; outline: none;
+    border-radius: 0.562em; background: color-mix(in srgb, var(--lc) 9%, var(--surface)); border: 1px solid color-mix(in srgb, var(--lc) 32%, var(--line));
+    box-shadow: inset 0.188em 0 0 var(--lc), 0 0.562em 1.125em -0.625em rgba(0,0,0,.5);
+    opacity: 0; translate: 0 2.188em; scale: .97;
     transition: opacity calc(.7s / var(--speed)), translate calc(.8s / var(--speed)) cubic-bezier(.2,.8,.2,1), scale calc(.8s / var(--speed)) cubic-bezier(.2,.8,.2,1),
       flex-grow calc(.6s / var(--speed)) cubic-bezier(.3,.7,.2,1), filter calc(.5s / var(--speed)), border-color .25s; }
   .layer.in { opacity: 1; translate: 0 0; scale: 1; }
   .layer.in:hover, .layer:focus-visible { border-color: var(--lc); }
   .stack.zoom .layer.in:not(.on) { opacity: .4; filter: saturate(.6); }
-  .stack.zoom .layer.on { flex-grow: 4.2; box-shadow: inset .3em 0 0 var(--lc), 0 1.4em 2.6em -1em rgba(0,0,0,.6); }
+  .stack.zoom .layer.on { flex-grow: 4.2; box-shadow: inset 0.188em 0 0 var(--lc), 0 0.875em 1.625em -0.625em rgba(0,0,0,.6); }
 
-  .lname { flex: 0 0 9.5em; min-width: 0; }
+  .lname { flex: 0 0 5.938em; min-width: 0; }
   .lname .no { font-family: var(--font-mono); font-size: .62em; letter-spacing: .14em; color: var(--lc); }
   .lname b { display: block; font-family: var(--font-display); font-size: 1.3em; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .lname i { display: none; font-style: normal; font-size: .78em; line-height: 1.5; color: var(--fg-soft); margin-top: .4em; overflow-wrap: anywhere; }
+  .lname i { display: none; font-style: normal; font-size: .78em; line-height: 1.5; color: var(--fg-soft); margin-top: 0.25em; overflow-wrap: anywhere; }
   .layer.on .lname i { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
 
-  .mods { flex: 1; min-width: 0; max-height: 100%; display: flex; gap: .7em; align-items: stretch; overflow: hidden; }
-  .mod { flex: 1 1 0; min-width: 0; padding: .75em .8em; border-radius: .6em; background: var(--surface); border: 1px solid var(--line); font-size: .92em; text-align: center;
-    display: flex; flex-direction: column; justify-content: center; opacity: 0; translate: 0 1em;
+  .mods { flex: 1; min-width: 0; max-height: 100%; display: flex; gap: 0.438em; align-items: stretch; overflow: hidden; }
+  .mod { flex: 1 1 0; min-width: 0; padding: 0.469em 0.5em; border-radius: 0.375em; background: var(--surface); border: 1px solid var(--line); font-size: .92em; text-align: center;
+    display: flex; flex-direction: column; justify-content: center; opacity: 0; translate: 0 0.625em;
     transition: opacity calc(.5s / var(--speed)) calc(var(--j) * .07s / var(--speed)), translate calc(.6s / var(--speed)) cubic-bezier(.2,.8,.2,1) calc(var(--j) * .07s / var(--speed)); }
   .layer.in .mod { opacity: 1; translate: 0 0; }
   .mod .mn { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .mod .mt { display: none; font-size: .8em; color: var(--fg-soft); margin-top: .35em; line-height: 1.45; overflow-wrap: anywhere; }
+  .mod .mt { display: none; font-size: .8em; color: var(--fg-soft); margin-top: 0.219em; line-height: 1.45; overflow-wrap: anywhere; }
   .layer.on .mods { flex-wrap: wrap; align-content: center; }
-  .layer.on .mod { flex: 1 1 11em; text-align: left; }
+  .layer.on .mod { flex: 1 1 6.875em; text-align: left; }
   .layer.on .mod .mt { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .empty { margin: auto; padding: 2em 3em; border: .12em dashed var(--line); border-radius: .9em; color: var(--fg-soft); }
+  .empty { margin: auto; padding: 1.25em 1.875em; border: 0.075em dashed var(--line); border-radius: 0.562em; color: var(--fg-soft); }
 </style>
 </head>
 <body>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>聊天气泡</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(55% 85% at 50% 50%, color-mix(in srgb, var(--accent) 10%, var(--bg)), var(--bg) 72%); }
+  .chat { --w: 25em; position: relative; width: var(--w); height: 32em; display: flex; flex-direction: column; border-radius: 1.6em; overflow: hidden; background: var(--bg); border: 1px solid var(--line);
+    box-shadow: 0 2em 4em color-mix(in srgb, var(--fg) 20%, transparent); opacity: 0; transform: translateY(1.5em) scale(.95); transition: opacity calc(.7s / var(--speed)), transform calc(.9s / var(--speed)) cubic-bezier(.2,.8,.2,1); }
+  .chat.slack { --w: 48em; border-radius: .9em; }
+  .chat.in { opacity: 1; transform: none; }
+  .hd { flex: none; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: .9em 1.2em; background: var(--surface); border-bottom: 1px solid var(--line); min-height: 3.6em; }
+  .slack .hd { align-items: flex-start; }
+  .hd b { font-family: var(--font-display); font-size: 1.05em; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hd span { font-size: .7em; color: var(--fg-soft); }
+  .hd span::before { content: ""; display: inline-block; width: .6em; height: .6em; border-radius: 50%; background: var(--good); margin-right: .5em; }
+  .body { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; position: relative; }
+  .msgs { padding: 1em 1.1em .8em; display: flex; flex-direction: column; gap: .7em; will-change: transform; }
+  .slack .msgs { padding: 1em 1.6em; gap: 1em; }
+  .ts { align-self: center; font-size: .68em; color: var(--fg-soft); padding: .2em .8em; }
+  .m { display: flex; gap: .6em; align-items: flex-start; max-width: 100%; animation: pop calc(.45s / var(--speed)) cubic-bezier(.2,.9,.3,1.2) both; }
+  .m.me { flex-direction: row-reverse; }
+  @keyframes pop { from { opacity: 0; transform: translateY(.8em) scale(.92); } to { opacity: 1; transform: none; } }
+  .me { transform-origin: 100% 100%; } .m:not(.me) { transform-origin: 0 100%; }
+  .av { flex: none; width: 2.3em; height: 2.3em; border-radius: .5em; display: grid; place-items: center; font-weight: 700; font-size: .9em; background: var(--c, var(--accent-3)); color: var(--bg); overflow: hidden; }
+  .av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .imessage .av { display: none; } .imessage .m .nm { display: none; }
+  .imessage .av.show { display: none; }
+  .col { min-width: 0; display: flex; flex-direction: column; gap: .2em; max-width: 72%; }
+  .m.me .col { align-items: flex-end; }
+  .nm { font-size: .7em; color: var(--fg-soft); padding: 0 .3em; }
+  .bub { position: relative; padding: .6em .9em; border-radius: .45em; background: var(--surface); border: 1px solid var(--line); line-height: 1.45; font-size: .92em; overflow-wrap: anywhere; word-break: break-word; max-width: 100%; max-height: 14em; overflow: hidden; }
+  .m.me .bub { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .wechat .bub::before { content: ""; position: absolute; top: .75em; width: .55em; height: .55em; background: inherit; border: inherit; border-width: 1px 0 0 1px; transform: rotate(-45deg); left: -.3em; }
+  .wechat .m.me .bub::before { left: auto; right: -.3em; transform: rotate(135deg); }
+  .imessage .bub { border-radius: 1.2em; padding: .5em .95em; }
+  .imessage .m:not(.me) .bub { border: 0; background: color-mix(in srgb, var(--fg) 10%, var(--surface)); }
+  .imessage .col { max-width: 75%; }
+  /* slack：所有消息靠左，无气泡底 */
+  .slack .m, .slack .m.me { flex-direction: row; }
+  .slack .col, .slack .m.me .col { max-width: 100%; align-items: flex-start; flex: 1; }
+  .slack .nm { font-size: .85em; color: var(--fg); font-weight: 700; padding: 0; }
+  .slack .nm i { font-style: normal; font-weight: 400; color: var(--fg-soft); margin-left: .6em; font-size: .85em; }
+  .slack .bub, .slack .m.me .bub { background: none; border: 0; color: var(--fg); padding: 0; border-radius: 0; font-size: 1em; }
+  .slack .av { border-radius: .45em; width: 2.6em; height: 2.6em; }
+  .dots { display: flex; gap: .3em; padding: .35em .2em; }
+  .dots i { width: .5em; height: .5em; border-radius: 50%; background: var(--fg-soft); animation: bounce calc(1s / var(--speed)) ease-in-out infinite; }
+  .dots i:nth-child(2) { animation-delay: calc(.15s / var(--speed)); } .dots i:nth-child(3) { animation-delay: calc(.3s / var(--speed)); }
+  @keyframes bounce { 0%, 60%, 100% { transform: none; opacity: .5; } 30% { transform: translateY(-.4em); opacity: 1; } }
+  .img { width: 14em; max-width: 100%; aspect-ratio: 16 / 10; border-radius: .4em; overflow: hidden; background: color-mix(in srgb, var(--fg) 10%, var(--surface)); }
+  .img img, .img video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .bub.pad0 { padding: .25em; background: var(--surface); }
+  .m.me .bub.pad0 { background: var(--accent); }
+  .slack .bub.pad0 { padding: 0; } .slack .img { width: 20em; }
+  .card { width: 15em; max-width: 100%; display: flex; flex-direction: column; gap: .25em; color: var(--fg); }
+  .card .img { width: 100%; margin-bottom: .3em; }
+  .card b { font-size: 1em; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .card span { font-size: .82em; color: var(--fg-soft); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .bub.cd { padding: .7em .8em; background: var(--surface) !important; border: 1px solid var(--line) !important; color: var(--fg) !important; }
+  .slack .bub.cd { border-left: .25em solid var(--accent) !important; border-radius: .3em !important; padding: .6em .9em; }
+  .voice { display: flex; align-items: center; gap: .6em; width: var(--vw, 8em); max-width: 100%; }
+  .voice svg { flex: none; width: 1em; height: 1em; fill: currentColor; }
+  .voice .wv { flex: 1; display: flex; align-items: center; gap: .15em; height: 1.2em; }
+  .voice .wv i { flex: 1; min-width: 1px; max-width: .25em; border-radius: .2em; background: currentColor; opacity: .85; height: var(--h); animation: wv calc(1.2s / var(--speed)) ease-in-out infinite; animation-delay: calc(var(--i) * .06s / var(--speed)); }
+  @keyframes wv { 50% { transform: scaleY(.45); } }
+  .voice .du { flex: none; font-size: .8em; opacity: .85; font-family: var(--font-mono); }
+  .ft { flex: none; display: flex; align-items: center; gap: .6em; padding: .7em 1em; background: var(--surface); border-top: 1px solid var(--line); }
+  .ft .in { flex: 1; min-width: 0; height: 2.2em; border-radius: .5em; background: var(--bg); border: 1px solid var(--line); padding: 0 .8em; display: flex; align-items: center; font-size: .85em; white-space: nowrap; overflow: hidden; color: var(--fg); }
+  .imessage .ft .in { border-radius: 2em; }
+  .ft .in.ph { color: var(--fg-soft); }
+  .ft .snd { flex: none; width: 2.2em; height: 2.2em; border-radius: 50%; background: var(--accent); }
+  .slack .ft .snd { border-radius: .4em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

@@ -59,7 +59,7 @@
   .co.r .ln { left: calc(var(--x) * 1%); width: calc(100% - var(--x) * 1% + var(--out)); transform-origin: left; }
   .co.l .ln { right: calc(100% - var(--x) * 1%); width: calc(var(--x) * 1% + var(--out)); transform-origin: right; }
   .co.in .ln { transform: scaleX(1); }
-  .co .lb { position: absolute; top: 0; max-width: 9em; width: max-content; padding: .45em .75em; font-size: .8em; line-height: 1.35; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: .5em; box-shadow: 0 .6em 1.4em color-mix(in srgb, var(--fg) 14%, transparent); overflow-wrap: anywhere; opacity: 0; transition: opacity calc(.4s / var(--speed)) calc(.5s / var(--speed)), transform calc(.5s / var(--speed)) calc(.5s / var(--speed)); }
+  .co .lb { position: absolute; top: 0; max-width: 9em; width: max-content; padding: .45em .75em; font-size: .8em; line-height: 1.35; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: .5em; box-shadow: 0 .6em 1.4em color-mix(in srgb, var(--fg) 14%, transparent); overflow-wrap: anywhere; max-height: 5.6em; overflow: hidden; opacity: 0; transition: opacity calc(.4s / var(--speed)) calc(.5s / var(--speed)), transform calc(.5s / var(--speed)) calc(.5s / var(--speed)); }
   .co.r .lb { left: calc(100% + var(--out) + .3em); transform: translate(-.8em, -50%); }
   .co.l .lb { right: calc(100% + var(--out) + .3em); transform: translate(.8em, -50%); }
   .co.in .lb { opacity: 1; }

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>通知堆叠</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { background: radial-gradient(60% 90% at 30% 60%, color-mix(in srgb, var(--accent-3) 10%, var(--bg)), var(--bg) 70%); }
+  .copy { position: absolute; top: 50%; width: 38em; transform: translateY(-50%); transition: opacity calc(.8s / var(--speed)); opacity: 0; }
+  .copy.in { opacity: 1; }
+  .copy.left { left: 5em; } .copy.right { right: 5em; text-align: right; } .copy.mid { top: 3.2em; left: 0; right: 0; width: auto; transform: none; text-align: center; }
+  .copy h1 { margin: .3em 0 0; font-family: var(--font-display); font-size: 3em; line-height: 1.1; letter-spacing: -.015em; overflow-wrap: anywhere; max-height: 3.4em; overflow: hidden; }
+  .copy p { margin: .7em 0 0; color: var(--fg-soft); font-size: 1.1em; max-height: 4.4em; overflow: hidden; }
+  .copy .cnt { font: 700 .8em var(--font-mono); letter-spacing: .14em; color: var(--accent); }
+
+  .deck { --h: 5.6em; position: absolute; width: 24em; height: calc(var(--h) + 4em); }
+  .deck.tr { top: 3em; right: 3em; } .deck.tl { top: 3em; left: 3em; }
+  .deck.br { bottom: 3em; right: 3em; } .deck.bl { bottom: 3em; left: 3em; }
+  .deck.c { top: 50%; left: 50%; margin: -4.8em 0 0 -12em; }
+  .card { --d: 0; position: absolute; left: 0; right: 0; height: var(--h); display: flex; gap: .9em; padding: .85em 1em; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 1em; overflow: hidden;
+    box-shadow: 0 1em 2.4em color-mix(in srgb, var(--fg) 16%, transparent), 0 .15em .4em color-mix(in srgb, var(--fg) 10%, transparent);
+    z-index: calc(100 - var(--d));
+    transform: translateY(calc(var(--d) * var(--dir) * 1.15em)) scale(calc(1 - var(--d) * .055));
+    opacity: calc(1 - var(--d) * .22);
+    transition: transform calc(.65s / var(--speed)) cubic-bezier(.2,.9,.25,1), opacity calc(.5s / var(--speed)); }
+  .top .card { top: 0; transform-origin: 50% 0; } .bot .card { bottom: 0; transform-origin: 50% 100%; }
+  .card.gone { opacity: 0; pointer-events: none; }
+  .card.enter { transition: none; opacity: 0; transform: translateX(var(--from, 0)) translateY(var(--fy, 0)); }
+  .card .ic { flex: none; width: 2.8em; height: 2.8em; border-radius: .75em; display: grid; place-items: center; background: var(--tone, var(--accent)); color: var(--bg); font-weight: 700; font-size: 1em; }
+  .card .ic svg { width: 1.5em; height: 1.5em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .card .bd { min-width: 0; flex: 1; }
+  .card .tp { display: flex; justify-content: space-between; gap: .8em; align-items: baseline; color: var(--fg-soft); font-size: .72em; }
+  .card .tp span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: .05em; }
+  .card .tp span:last-child { flex: none; }
+  .card h3 { margin: .15em 0 0; font-size: 1em; line-height: 1.25; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .card p { margin: .15em 0 0; font-size: .85em; line-height: 1.35; color: var(--fg-soft); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
+  .more { position: absolute; left: 50%; transform: translateX(-50%); font: 600 .72em var(--font-mono); padding: .3em .9em; border-radius: 2em; background: var(--surface); border: 1px solid var(--line); color: var(--fg-soft); opacity: 0; transition: opacity calc(.4s / var(--speed)); white-space: nowrap; }
+  .more.on { opacity: 1; }
+  .top .more { bottom: 0; } .bot .more { top: 0; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

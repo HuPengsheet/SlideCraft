@@ -13,6 +13,7 @@ const DEFAULTS = {
 
 const { cfg, player, stage } = SC.init(DEFAULTS);
 
+const K = .625;           // 布局按 100 单位宽计算，输出 em 时乘 K（舞台宽 62.5em）
 const W = 13, H = 15.6;   // 相片基准尺寸，与 CSS 一致（em）
 let ac = null;
 
@@ -81,9 +82,9 @@ player.play(async (r) => {
     e.tabIndex = 0; e.setAttribute("role", "button"); e.setAttribute("aria-pressed", "false");
     const cap = p.caption == null ? "" : String(p.caption);
     e.setAttribute("aria-label", cap || `相片 ${i + 1}`);
-    e.style.cssText = `left:${cx.toFixed(2)}em;top:${cy.toFixed(2)}em;--rot:${rot.toFixed(2)}deg;--s:${s.toFixed(3)};--sf:${sf.toFixed(3)};` +
-      `--fx:${(Math.cos(ang) * dist).toFixed(1)}em;--fy:${(Math.sin(ang) * dist).toFixed(1)}em;--spin:${((rnd() - .5) * 120).toFixed(0)}deg;` +
-      `--dx:${(areaCx - cx).toFixed(2)}em;--dy:${(areaCy - cy).toFixed(2)}em;z-index:${i + 1}`;
+    e.style.cssText = `left:${(cx * K).toFixed(2)}em;top:${(cy * K).toFixed(2)}em;--rot:${rot.toFixed(2)}deg;--s:${s.toFixed(3)};--sf:${sf.toFixed(3)};` +
+      `--fx:${(Math.cos(ang) * dist * K).toFixed(1)}em;--fy:${(Math.sin(ang) * dist * K).toFixed(1)}em;--spin:${((rnd() - .5) * 120).toFixed(0)}deg;` +
+      `--dx:${((areaCx - cx) * K).toFixed(2)}em;--dy:${((areaCy - cy) * K).toFixed(2)}em;z-index:${i + 1}`;
     e.append(mediaBox(p.src), SC.el("cap", cap ? `<span>${SC.esc(cap)}</span>` : ""));
     root.append(e);
     return e;

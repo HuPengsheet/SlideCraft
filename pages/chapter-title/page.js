@@ -24,13 +24,15 @@ player.play(async (r) => {
   }).join("");
   const lines = title.split("\n");
   const longest = Math.max(1, ...lines.map((l) => [...l].length));
-  const fs = SC.clamp(26 / longest, 2.4, 4.4);
+  const total = Math.max(1, [...title].length);
+  const fs = SC.clamp(Math.min(26 / longest, 14 / Math.sqrt(total)), 1.4, 4.4);
+  const sfs = [...String(cfg.subtitle || '')].length > 30 ? 1 : 1.4;
   stage.innerHTML = `<div class="bg">${bg}</div>
-    <div class="num" aria-label="${SC.esc(text)}">${cols}</div>
+    <div class="num" style="--nf:${SC.clamp(30 / (Math.max(text.length, 1) * .62), 6, 22)}em" aria-label="${SC.esc(text)}">${cols}</div>
     <div class="txt">
       ${label ? `<span class="sc-eyebrow">${SC.esc(label)}</span>` : ""}
       <h1 class="ttl" style="font-size:${fs}em">${lines.map((l) => SC.esc(l)).join("<br>")}</h1>
-      ${cfg.subtitle ? `<p class="sub">${SC.esc(cfg.subtitle)}</p>` : ""}
+      ${cfg.subtitle ? `<p class="sub" style="font-size:${sfs}em">${SC.esc(cfg.subtitle)}</p>` : ""}
     </div>`;
   const bgEl = SC.$(".bg", stage), kids = SC.$$(".txt > *", stage);
   const bs = SC.$$(".col > b", stage);

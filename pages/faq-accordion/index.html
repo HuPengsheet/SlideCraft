@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>问答折叠</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  :root { --sh: color-mix(in srgb, var(--page-bg) 80%, transparent); }
+  .stage { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); gap: 4em; align-items: center; padding: 3em 5em;
+    background: radial-gradient(ellipse 55% 70% at 15% 40%, color-mix(in srgb, var(--accent) 10%, var(--bg)), var(--bg) 70%); }
+  .side { opacity: 0; transform: translateY(1em); transition: opacity .8s, transform .8s cubic-bezier(.2,.8,.2,1); min-width: 0; }
+  .side.on { opacity: 1; transform: none; }
+  .side .sc-title { font-size: 3em; overflow-wrap: anywhere; }
+  .side .sc-sub { overflow-wrap: anywhere; }
+  .side .sc-sub { font-size: 1.05em; margin-top: .8em; max-width: 18em; }
+  .side .bar { width: 3em; height: .22em; border-radius: 1em; background: var(--accent); margin-bottom: 1.2em; }
+  .list { align-self: stretch; min-height: 0; min-width: 0; display: flex; flex-direction: column; gap: .8em; overflow-y: auto; scrollbar-width: thin; padding: .4em .5em .4em 0; }
+  .it { flex: none; background: var(--surface); border: 1px solid var(--line); border-radius: .9em; box-shadow: 0 .6em 1.6em var(--sh); opacity: 0; transform: translateX(2em); transition: opacity .6s, transform .7s cubic-bezier(.2,.8,.2,1), border-color .3s; }
+  .it:first-child { margin-top: auto; } .it:last-child { margin-bottom: auto; }
+  .it.on { opacity: 1; transform: none; }
+  .it.open { border-color: var(--accent); }
+  .q { width: 100%; display: flex; align-items: center; gap: 1em; text-align: left; font: inherit; font-family: var(--font-display); font-weight: 700; font-size: 1.1em; color: var(--fg); background: none; border: 0; padding: .9em 1.2em; cursor: pointer; }
+  .q .t { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .q .n { flex: none; font-family: var(--font-mono); font-size: .75em; font-weight: 400; color: var(--accent); }
+  .q svg { flex: none; width: 1em; height: 1em; fill: none; stroke: var(--fg-soft); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .45s cubic-bezier(.3,.8,.2,1), stroke .3s; }
+  .it.open .q svg { transform: rotate(180deg); stroke: var(--accent); }
+  .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.3,.8,.2,1); }
+  .it.open .a { grid-template-rows: 1fr; }
+  .a > div { min-height: 0; overflow: hidden; }
+  .a p { margin: 0; padding: 0 1.2em 1.1em 3.3em; font-size: .92em; line-height: 1.6; color: var(--fg-soft); overflow-wrap: anywhere; opacity: 0; transform: translateY(-.4em); transition: opacity .5s .1s, transform .5s .1s; }
+  .it.open .a p { opacity: 1; transform: none; }
+  .nolock .q { cursor: default; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

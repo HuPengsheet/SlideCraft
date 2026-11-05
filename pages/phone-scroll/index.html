@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>手机长图滚动</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(50% 80% at 50% 50%, color-mix(in srgb, var(--accent) 11%, var(--bg)), var(--bg) 72%); }
+  .rig { position: relative; height: 32em; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(1.5em) scale(.94); transition: opacity calc(.8s / var(--speed)), transform calc(1s / var(--speed)) cubic-bezier(.2,.8,.2,1); }
+  .rig.in { opacity: 1; transform: none; }
+  .phone { position: relative; height: 100%; aspect-ratio: 9 / 19.5; padding: .6em; border-radius: 2.6em; background: var(--surface); border: .22em solid var(--line); box-shadow: 0 2.2em 3.6em color-mix(in srgb, var(--fg) 20%, transparent), inset 0 0 0 .1em color-mix(in srgb, var(--fg) 8%, transparent); }
+  .vp { position: relative; width: 100%; height: 100%; border-radius: 2em; overflow: hidden; background: var(--bg); }
+  .vp::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, color-mix(in srgb, #fff 10%, transparent), transparent 35%); }
+  .notch { position: absolute; z-index: 4; top: 1.15em; left: 50%; width: 4.4em; height: 1.1em; margin-left: -2.2em; border-radius: 1em; background: var(--line); }
+  .sb { position: absolute; z-index: 3; right: .7em; top: 3.6em; width: .22em; height: 5em; border-radius: .2em; background: color-mix(in srgb, var(--fg) 30%, transparent); transform: translateY(var(--sy, 0)); opacity: .0; transition: opacity .3s; }
+  .rig.in .sb { opacity: 1; }
+  .long > img { width: 100%; height: auto; display: block; }
+
+  /* 内置长页面 */
+  .m { padding: 3.4em 1.1em 2em; font-size: .72em; }
+  .m .bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.4em; }
+  .m .logo { font-family: var(--font-display); font-weight: 700; font-size: 1.5em; color: var(--accent); }
+  .m .av { width: 2.2em; height: 2.2em; border-radius: 50%; background: var(--accent-2); }
+  .m h2 { font-family: var(--font-display); font-size: 2.1em; line-height: 1.12; margin: 0 0 .4em; }
+  .m p { margin: 0; color: var(--fg-soft); line-height: 1.5; }
+  .m .btn { display: inline-block; margin-top: 1em; padding: .6em 1.4em; border-radius: 2em; background: var(--accent); color: var(--bg); font-weight: 700; }
+  .m .hero { height: 11em; margin: 1.4em 0 2.2em; border-radius: 1.2em; background: linear-gradient(140deg, var(--accent), var(--accent-2) 60%, var(--accent-3)); }
+  .m .sec { margin: 2.6em 0 1em; font-weight: 700; font-size: 1.25em; font-family: var(--font-display); }
+  .m .grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8em; }
+  .m .tile { padding: 1em; border-radius: 1em; background: var(--surface); border: 1px solid var(--line); }
+  .m .tile i { display: block; width: 2em; height: 2em; border-radius: .6em; margin-bottom: .7em; background: var(--accent-3); }
+  .m .tile:nth-child(2n) i { background: var(--accent-2); } .m .tile:nth-child(3n) i { background: var(--accent); }
+  .m .tile b { display: block; margin-bottom: .2em; }
+  .m .tile span { color: var(--fg-soft); font-size: .9em; }
+  .m .chart { display: flex; align-items: flex-end; gap: .6em; height: 9em; padding: 1em; border-radius: 1em; background: var(--surface); border: 1px solid var(--line); }
+  .m .chart i { flex: 1; border-radius: .4em .4em 0 0; background: var(--accent); }
+  .m .chart i:nth-child(even) { background: var(--accent-3); }
+  .m .row { display: flex; align-items: center; gap: .9em; padding: .9em 0; border-bottom: 1px solid var(--line); }
+  .m .row .th { flex: none; width: 3em; height: 3em; border-radius: .8em; background: var(--accent-3); }
+  .m .row:nth-child(even) .th { background: var(--accent-2); }
+  .m .row div b { display: block; } .m .row div span { color: var(--fg-soft); font-size: .9em; }
+  .m .price { display: flex; justify-content: space-between; align-items: baseline; padding: 1.2em; border-radius: 1em; background: var(--surface); border: 1px solid var(--accent); margin-bottom: .8em; }
+  .m .price strong { font-family: var(--font-display); font-size: 1.8em; color: var(--accent); }
+  .m .foot { margin-top: 3em; text-align: center; color: var(--fg-soft); font-size: .9em; }
+
+  /* 批注气泡 */
+  .note { --w: 17em; position: absolute; top: var(--ty, 50%); width: var(--w); padding: .9em 1.1em; border-radius: .9em; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 1em 2.2em color-mix(in srgb, var(--fg) 16%, transparent); opacity: 0; pointer-events: none; transition: opacity calc(.45s / var(--speed)), transform calc(.6s / var(--speed)) cubic-bezier(.2,.9,.3,1.2); }
+  .note.r { left: calc(100% + 2.6em); transform: translate(-1.2em, -50%); }
+  .note.l { right: calc(100% + 2.6em); transform: translate(1.2em, -50%); }
+  .note.on { opacity: 1; }
+  .note.r.on, .note.l.on { transform: translate(0, -50%); }
+  .note .no { font: 700 .75em var(--font-mono); letter-spacing: .12em; color: var(--accent); }
+  .note .tx { margin-top: .25em; font-size: 1.05em; line-height: 1.4; overflow-wrap: anywhere; max-height: 6.2em; overflow: hidden; }
+  .note::after { content: ""; position: absolute; top: 50%; width: 2.6em; height: .1em; background: var(--accent); }
+  .note.r::after { right: 100%; } .note.l::after { left: 100%; }
+  .note::before { content: ""; position: absolute; top: 50%; width: .8em; height: .8em; margin-top: -.35em; border-radius: 50%; background: var(--accent); border: .15em solid var(--bg); z-index: 1; }
+  .note.r::before { left: -2.9em; } .note.l::before { right: -2.9em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>放大镜细节</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { background: radial-gradient(ellipse at 38% 50%, var(--surface) 0%, var(--bg) 75%); user-select: none; -webkit-user-select: none; }
+  .root { position: absolute; inset: 0; }
+  .frame { position: absolute; left: 2.5em; top: 6.312em; width: 40em; height: 22.5em; border-radius: 0.5em; overflow: hidden; background: var(--surface); border: 1px solid var(--line);
+    box-shadow: 0 1.25em 2.25em -1em rgba(0,0,0,.6); opacity: 0; translate: 0 0.875em; transition: opacity calc(.8s / var(--speed)), translate calc(.9s / var(--speed)) cubic-bezier(.2,.7,.2,1); }
+  .frame.in { opacity: 1; translate: 0 0; }
+  .frame > .base, .lens .copy { position: absolute; display: block; object-fit: cover; pointer-events: none; max-width: none; }
+  .frame > .base { left: 0; top: 0; width: 100%; height: 100%; }
+  .frame .dim { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 28%, transparent); pointer-events: none; }
+  .wire { position: absolute; display: block; pointer-events: none; }
+  .pin { position: absolute; width: 1.062em; height: 1.062em; margin: -0.531em 0 0 -0.531em; border-radius: 50%; border: 0; padding: 0; cursor: pointer; font: inherit; font-size: .72em; font-family: var(--font-mono);
+    background: var(--bg); color: var(--fg); box-shadow: 0 0 0 0.125em color-mix(in srgb, var(--bg) 40%, transparent), 0 0.188em 0.5em rgba(0,0,0,.4); transition: background .25s, color .25s, scale .25s; }
+  .pin:hover, .pin.on { background: var(--accent); color: var(--bg); scale: 1.15; }
+  .pin:focus-visible { outline: 0.125em solid var(--accent); }
+  .lens { position: absolute; width: 8.75em; height: 8.75em; margin: 0; border-radius: 50%; overflow: hidden; cursor: grab; touch-action: none; background: var(--surface);
+    border: 0.156em solid var(--accent); box-shadow: 0 0 0 0.094em var(--bg), 0 0.75em 1.5em -0.25em rgba(0,0,0,.65); opacity: 0; scale: .6; transition: opacity calc(.5s / var(--speed)), scale calc(.6s / var(--speed)) cubic-bezier(.2,.9,.3,1.2); }
+  .lens.in { opacity: 1; scale: 1; }
+  .lens.drag { cursor: grabbing; }
+  .lens::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.22), transparent 45%); }
+  .lens .cross { position: absolute; left: 50%; top: 50%; width: 0.75em; height: 0.75em; margin: -0.375em 0 0 -0.375em; pointer-events: none; z-index: 1; opacity: .55;
+    background: linear-gradient(var(--accent), var(--accent)) center / 0.062em 100% no-repeat, linear-gradient(var(--accent), var(--accent)) center / 100% 0.062em no-repeat; }
+  .miss { width: 100%; height: 100%; background: var(--surface); }
+
+  .side { position: absolute; left: 46.25em; width: 13.75em; top: 6.312em; bottom: 6.438em; display: flex; flex-direction: column; opacity: 0; translate: 0 0.625em; transition: opacity calc(.8s / var(--speed)), translate calc(.8s / var(--speed)) cubic-bezier(.2,.7,.2,1); }
+  .side.in { opacity: 1; translate: 0 0; }
+  .side .sc-title { font-size: 1.9em; font-weight: 800; margin-top: 0.156em; letter-spacing: -.01em; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .side .sc-sub { margin-top: 0.375em; font-size: .9em; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .side .hd { flex: 1 1 0; min-height: 0; overflow: hidden; }
+  .cur { flex: none; margin-top: auto; padding: 0.688em 0.75em; border-radius: 0.5em; background: var(--surface); border: 1px solid var(--line); border-left: 0.188em solid var(--accent); min-height: 4.375em; }
+  .cur .k { font-family: var(--font-mono); font-size: .62em; letter-spacing: .14em; color: var(--accent); }
+  .cur b { display: block; margin-top: 0.125em; font-family: var(--font-display); font-size: 1.25em; line-height: 1.25; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .cur p { margin: 0.25em 0 0; font-size: .82em; line-height: 1.55; color: var(--fg-soft); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .cur.swap > * { animation: swap calc(.5s / var(--speed)) cubic-bezier(.2,.7,.2,1); }
+  @keyframes swap { from { opacity: 0; transform: translateY(0.375em); } }
+  .dots { flex: none; display: flex; gap: 0.312em; margin-top: 0.625em; flex-wrap: wrap; }
+  .dots i { width: 0.312em; height: 0.312em; border-radius: 0.625em; background: var(--line); cursor: pointer; transition: width calc(.4s / var(--speed)), background calc(.4s / var(--speed)); }
+  .dots i.on { width: 1.125em; background: var(--accent); }
+  .hint { position: absolute; left: 2.5em; top: 29.625em; font-size: .72em; color: var(--fg-soft); letter-spacing: .08em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

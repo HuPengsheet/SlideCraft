@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>功能对比表</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  :root { --sh: color-mix(in srgb, var(--page-bg) 80%, transparent); }
+  .stage { display: flex; flex-direction: column; align-items: center; padding: 2.4em 5em 2em;
+    background: radial-gradient(ellipse 60% 55% at 50% 0%, color-mix(in srgb, var(--accent) 9%, var(--bg)), var(--bg) 72%); }
+  .head { flex: none; text-align: center; opacity: 0; transform: translateY(.8em); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .head.on { opacity: 1; transform: none; }
+  .head, .top > div { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+  .head .sc-title { font-size: 2.2em; }
+  .head .sc-sub { font-size: .95em; }
+  .tbl { --k: 1; flex: 1; min-height: 0; width: 100%; max-width: 70em; margin-top: 1.8em; display: flex; flex-direction: column; font-size: calc(1em * var(--k));
+    background: var(--surface); border: 1px solid var(--line); border-radius: 1em; box-shadow: 0 1.2em 3em var(--sh); overflow: hidden; position: relative; opacity: 0; transform: translateY(1.6em); transition: opacity .7s, transform .8s cubic-bezier(.2,.8,.2,1); }
+  .tbl.on { opacity: 1; transform: none; }
+  .tr { display: grid; grid-template-columns: minmax(0, 1.7fr) repeat(var(--nc, 1), minmax(0, 1fr)); align-items: stretch; min-width: 0; }
+  .th { flex: none; border-bottom: 1px solid var(--line); background: var(--surface); position: relative; z-index: 1; }
+  .th > div { padding: .9em .6em .7em; text-align: center; min-width: 0; position: relative; }
+  .th .cn { font-family: var(--font-display); font-weight: 700; font-size: 1.15em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .th .cs { font-size: .75em; color: var(--fg-soft); margin-top: .2em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .th .hl { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); padding-top: 1.3em; }
+  .th .hl::before { content: attr(data-badge); position: absolute; top: 0; left: 50%; transform: translateX(-50%); padding: .2em 1.1em; font-size: .68em; font-weight: 700; letter-spacing: .08em; white-space: nowrap; border-radius: 0 0 .7em .7em; background: var(--accent); color: var(--bg); }
+  .body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .row { flex: 1 1 0; min-height: 0; max-height: 3.6em; border-bottom: 1px solid var(--line); opacity: .18; transition: opacity .5s, background .5s; }
+  .row:last-child { border-bottom: 0; }
+  .row.on { opacity: 1; }
+  .row.cur { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+  .c { display: flex; align-items: center; justify-content: center; padding: 0 .6em; min-width: 0; min-height: 0; overflow: hidden; font-size: .9em; text-align: center; }
+  .c.l { justify-content: flex-start; padding-left: 1.4em; text-align: left; font-weight: 600; }
+  .c > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .c.hl { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+  .row.on .c.hl { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+  .c svg { width: 1.2em; height: 1.2em; max-height: 90%; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .c svg.y { stroke: var(--good); } .c svg.n { stroke: var(--fg-soft); opacity: .6; }
+  .c svg path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .5s .1s ease-out; }
+  .row.on .c svg path { stroke-dashoffset: 0; }
+  .c.t { color: var(--fg-soft); } .row.on .c.hl.t { color: var(--fg); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

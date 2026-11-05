@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>产品路线图</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .head { position: absolute; left: 4em; top: 2.3em; z-index: 3; }
+  .head .sc-title { font-size: 2em; }
+  .world { position: absolute; transform-origin: 0 0; }
+  .band { position: absolute; left: 0; right: 0; border-radius: .8em; background: color-mix(in srgb, var(--surface) 70%, transparent); border: 1px solid var(--line);
+    opacity: 0; transition: opacity calc(.6s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)); }
+  .band.on { opacity: 1; }
+  .vl { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed var(--line); opacity: 0; transition: opacity calc(.6s / var(--speed)); }
+  .vl.on { opacity: .8; }
+  .qh { position: absolute; top: 0; text-align: center; font-family: var(--font-mono); font-size: .8em; letter-spacing: .1em; color: var(--fg-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    opacity: 0; transform: translateY(-.5em); transition: opacity calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)), transform calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)); }
+  .qh.on { opacity: 1; transform: none; }
+  .qh.now { color: var(--accent); font-weight: 700; }
+  .nowline { position: absolute; width: 0; border-left: .16em solid var(--accent); opacity: 0; transition: opacity calc(.6s / var(--speed)); z-index: 2; }
+  .nowline.on { opacity: .9; }
+  .nowtag { position: absolute; transform: translateX(-50%); background: var(--accent); color: var(--bg); font-size: .65em; letter-spacing: .12em; padding: .15em .7em; border-radius: 1em; opacity: 0; transition: opacity calc(.6s / var(--speed)); z-index: 3; white-space: nowrap; }
+  .nowtag.on { opacity: 1; }
+  .ln { position: absolute; left: 0; display: flex; align-items: center; gap: .6em; padding-left: 1em; font-family: var(--font-display); font-weight: 700; font-size: .95em; min-width: 0;
+    opacity: 0; transform: translateX(-.6em); transition: opacity calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)), transform calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)); }
+  .ln.on { opacity: 1; transform: none; }
+  .ln i { flex: none; width: .35em; height: 1.4em; border-radius: .2em; background: var(--c); box-shadow: 0 0 .8em color-mix(in srgb, var(--c) 60%, transparent); }
+  .ln span { min-width: 0; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
+
+  .it { position: absolute; font-size: .82em; padding: .35em .7em .35em .9em; border-radius: .7em; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: .15em;
+    background: color-mix(in srgb, var(--c) 14%, var(--surface)); border: 1px solid color-mix(in srgb, var(--c) 55%, transparent);
+    box-shadow: 0 .35em 1em color-mix(in srgb, var(--fg) 10%, transparent); z-index: 1;
+    opacity: 0; transform: translateX(-1.2em) scale(.96);
+    transition: opacity calc(.55s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)), transform calc(.65s / var(--speed)) cubic-bezier(.2,.9,.3,1.1) calc(var(--dl, 0ms) / var(--speed)), box-shadow .25s; }
+  .it.on { opacity: 1; transform: none; }
+  .it.on:hover { transform: translateY(-.2em); box-shadow: 0 .7em 1.6em color-mix(in srgb, var(--c) 30%, transparent); z-index: 4; transition-delay: 0s; }
+  .it::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: .3em; background: var(--c); }
+  .it .t { display: flex; align-items: center; gap: .45em; font-weight: 600; min-width: 0; }
+  .it .t b { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .it .s { font-size: .75em; color: var(--fg-soft); font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .it.todo { background: transparent; border: 1px dashed var(--fg-soft); box-shadow: none; }
+  .it.todo::before { opacity: .45; }
+  .it.todo .t { color: var(--fg-soft); }
+  .it.done { background: color-mix(in srgb, var(--c) 8%, var(--surface)); }
+  .it.done .t b { color: var(--fg-soft); }
+  .ck { flex: none; width: 1.15em; height: 1.15em; border-radius: 50%; background: var(--good); display: grid; place-items: center; }
+  .ck svg { width: 70%; height: 70%; fill: none; stroke: var(--bg); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed) + .5s / var(--speed)); }
+  .it.on .ck svg { stroke-dashoffset: 0; }
+  .pg { position: absolute; left: 0; right: 0; bottom: 0; height: .28em; background: color-mix(in srgb, var(--c) 20%, transparent); }
+  .pg i { display: block; height: 100%; width: 0; background: var(--c); box-shadow: 0 0 .6em var(--c); transition: width calc(1s / var(--speed)) cubic-bezier(.3,.7,.2,1) calc(var(--dl, 0ms) / var(--speed) + .5s / var(--speed)); }
+  .it.on .pg i { width: var(--p); }
+  .dt { flex: none; width: .55em; height: .55em; border-radius: 50%; background: var(--c); animation: pulse calc(1.8s / var(--speed)) ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 .35em transparent; opacity: .55; } }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

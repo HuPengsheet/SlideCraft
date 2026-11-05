@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>行情滚动条</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; justify-content: center; gap: 2.4em; padding: 3.4em 5.5em 3em; }
+  .rise { opacity: 0; animation: rise calc(.8s / var(--speed)) cubic-bezier(.2,.7,.2,1) forwards; animation-delay: calc(var(--d, 0s) / var(--speed)); }
+  @keyframes rise { from { opacity: 0; transform: translateY(.7em); } to { opacity: 1; transform: none; } }
+  .nomo .rise, .nomo .reveal { animation: none; opacity: 1; clip-path: none; }
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 3em; flex: none; }
+  .top .sc-title { font-size: 2.3em; }
+  .big { text-align: right; flex: none; }
+  .big b { display: block; font-family: var(--font-display); font-size: 4em; line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .big span { display: block; margin-top: .4em; font-family: var(--font-mono); font-size: .95em; font-variant-numeric: tabular-nums; }
+  .big small { display: block; margin-top: .2em; color: var(--fg-soft); font-size: .78em; }
+  .up { color: var(--good); } .dn { color: var(--bad); }
+
+  .band { margin: 0 -5.5em; overflow: hidden; border-block: 1px solid var(--line); background: var(--surface); box-shadow: 0 1.2em 3em -1.8em var(--fg); -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); flex: none; }
+  .belt { display: flex; width: max-content; will-change: transform; }
+  .set { display: flex; flex: none; }
+  .it { display: flex; align-items: baseline; gap: .9em; padding: 1.15em 2.2em; border-right: 1px solid var(--line); white-space: nowrap; border-radius: 0; }
+  .it .cd { font-family: var(--font-mono); font-weight: 700; font-size: 1.15em; letter-spacing: .04em; }
+  .it .px { font-family: var(--font-display); font-size: 1.5em; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 4.6em; text-align: right; }
+  .it .ch { font-family: var(--font-mono); font-size: 1em; font-variant-numeric: tabular-nums; min-width: 5.6em; padding: .15em .5em; border-radius: .35em; }
+  .it .ch::before { content: ""; display: inline-block; margin-right: .45em; border: .32em solid transparent; vertical-align: .05em; }
+  .it.up .ch::before { border-bottom: .5em solid currentColor; border-top: 0; }
+  .it.dn .ch::before { border-top: .5em solid currentColor; border-bottom: 0; }
+  .it .ch { color: inherit; }
+  .it.up .ch { color: var(--good); } .it.dn .ch { color: var(--bad); }
+
+  .panel { position: relative; flex: none; height: 15em; display: flex; gap: 1em; }
+  .yl { width: 4.2em; display: flex; flex-direction: column; justify-content: space-between; font-family: var(--font-mono); font-size: .7em; color: var(--fg-soft); text-align: right; padding: 0; font-variant-numeric: tabular-nums; }
+  .cv { flex: 1; min-width: 0; position: relative; }
+  .cv svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+  .reveal { animation: wipe calc(1.6s / var(--speed)) cubic-bezier(.4,.1,.3,1) forwards; animation-delay: calc(.9s / var(--speed)); clip-path: inset(-10% 100% -10% 0); }
+  @keyframes wipe { to { clip-path: inset(-10% -2% -10% 0); } }
+  .grid { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-dasharray: 2 4; }
+  .ln { fill: none; stroke: var(--accent); stroke-width: 2.4; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; filter: drop-shadow(0 0 4px var(--accent)); }
+  .ar { stroke: none; }
+  .dot { position: absolute; width: .9em; height: .9em; margin: -.45em 0 0 -.45em; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 .25em var(--bg), 0 0 1em var(--accent); }
+  .dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: .12em solid var(--accent); animation: ping calc(1.8s / var(--speed)) ease-out infinite; }
+  @keyframes ping { from { transform: scale(1); opacity: .9; } to { transform: scale(3.2); opacity: 0; } }
+  .nomo .dot::after { animation: none; display: none; }
+  .note { margin: 0; color: var(--fg-soft); font-size: .75em; border-left: .2em solid var(--accent); padding-left: .9em; }
+  .empty { padding: 2em; text-align: center; color: var(--fg-soft); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

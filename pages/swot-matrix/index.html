@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>四象限矩阵</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .head { position: absolute; left: 4em; top: 2.3em; z-index: 3; }
+  .head .sc-title { font-size: 2em; }
+  .mx { position: absolute; left: 10em; right: 4em; top: 7.6em; bottom: 4.2em; }
+  .cross { position: absolute; background: var(--fg-soft); opacity: .7; z-index: 3; transition: transform calc(.9s / var(--speed)) cubic-bezier(.3,.7,.2,1); }
+  .cross.h { left: 0; right: 0; top: 50%; height: 1px; transform: scaleX(0); transform-origin: 0 50%; }
+  .cross.v { top: 0; bottom: 0; left: 50%; width: 1px; transform: scaleY(0); transform-origin: 50% 0; }
+  .cross.on { transform: none; }
+  .ax { position: absolute; font-size: .78em; letter-spacing: .1em; color: var(--fg-soft); opacity: 0; transition: opacity calc(.6s / var(--speed)); display: flex; align-items: center; min-width: 0; overflow: hidden; }
+  .ax.on { opacity: 1; }
+  .ax span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+  .ax.l { left: -9em; width: 8em; justify-content: flex-end; text-align: right; }
+  .ax.b { top: 100%; margin-top: .6em; width: 50%; justify-content: center; text-align: center; height: 2.4em; }
+  .cell { position: absolute; width: 50%; height: 50%; padding: .4em; opacity: 0; transform: scale(.97); transition: opacity calc(.6s / var(--speed)), transform calc(.6s / var(--speed)) cubic-bezier(.2,.9,.3,1); }
+  .cell.on { opacity: 1; transform: none; }
+  .cell.dim { opacity: .28; }
+  .cell .in { position: relative; width: 100%; height: 100%; padding: 1em 1.3em; border-radius: .9em; display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+    background: color-mix(in srgb, var(--c) 9%, var(--surface)); border: 1px solid color-mix(in srgb, var(--c) 35%, var(--line)); transition: box-shadow .4s, border-color .4s; }
+  .cell.spot .in { border-color: var(--c); box-shadow: 0 .6em 2em color-mix(in srgb, var(--c) 28%, transparent); }
+  .cell h3 { margin: 0 0 .5em; font-family: var(--font-display); font-size: 1.15em; color: var(--c); display: flex; align-items: baseline; gap: .6em; min-width: 0; flex: none; }
+  .cell h3 b { font-size: .7em; font-family: var(--font-mono); opacity: .55; font-weight: 400; }
+  .cell h3 span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cell.sc .in h3 { position: absolute; top: .7em; margin: 0; opacity: .55; }
+  .cell.q1 .in h3, .cell.q3 .in h3 { right: 1.2em; } .cell.q0 .in h3, .cell.q2 .in h3 { left: 1.3em; }
+  .cell.q2 .in h3, .cell.q3 .in h3 { top: auto; bottom: .7em; }
+  .cell ul { list-style: none; margin: 0; padding: 0; flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: .35em; }
+  .cell li { position: relative; padding-left: 1.1em; line-height: 1.35; overflow-wrap: anywhere; opacity: 0; transform: translateX(-.6em); transition: opacity calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)), transform calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)); }
+  .cell li::before { content: ""; position: absolute; left: 0; top: .55em; width: .45em; height: .45em; border-radius: 50%; background: var(--c); }
+  .cell.show li { opacity: 1; transform: none; }
+  .pt { position: absolute; z-index: 4; width: 0; height: 0; }
+  .pt i { position: absolute; left: -.5em; top: -.5em; width: 1em; height: 1em; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 .25em color-mix(in srgb, var(--c) 25%, transparent), 0 .2em .8em color-mix(in srgb, var(--c) 50%, transparent);
+    transform: scale(0); transition: transform calc(.5s / var(--speed)) cubic-bezier(.2,1.8,.4,1) calc(var(--dl, 0ms) / var(--speed)); }
+  .pt.on i { transform: scale(1); }
+  .pt b { position: absolute; font-weight: 500; font-size: .82em; white-space: nowrap; max-width: 11em; overflow: hidden; text-overflow: ellipsis; padding: .05em .5em; border-radius: .5em; background: color-mix(in srgb, var(--bg) 82%, transparent); color: var(--fg);
+    opacity: 0; transition: opacity calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)); }
+  .pt.on b { opacity: 1; }
+  .pt.dim { opacity: .25; }
+  .pt:hover { z-index: 6; } .pt:hover i { transform: scale(1.35); }
+  .mx.focus .cell:not(.hov) { opacity: .35; }
+  .mx.focus .pt:not(.hov) { opacity: .3; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

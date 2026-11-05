@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>命令面板</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .app { position: absolute; inset: 3em 5em; border-radius: 1em; background: var(--surface); border: 1px solid var(--line); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1.5em 3em color-mix(in srgb, var(--fg) 12%, transparent); }
+  .app .tb { flex: none; display: flex; align-items: center; gap: .8em; padding: .7em 1em; border-bottom: 1px solid var(--line); font-size: .8em; color: var(--fg-soft); }
+  .app .tb i { width: .8em; height: .8em; border-radius: 50%; background: var(--line); }
+  .app .tb b { margin-left: .5em; color: var(--fg); font-weight: 600; }
+  .app .bd { flex: 1; display: grid; grid-template-columns: 12em 1fr; min-height: 0; }
+  .app .sd { border-right: 1px solid var(--line); padding: 1.2em; display: flex; flex-direction: column; gap: .8em; }
+  .app .mn { padding: 1.6em 2em; display: flex; flex-direction: column; gap: .9em; }
+  .sk { height: .9em; border-radius: .45em; background: color-mix(in srgb, var(--fg) 9%, transparent); }
+  .sk.a { background: color-mix(in srgb, var(--accent) 35%, transparent); width: 40%; height: 1.5em; }
+  .veil { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 62%, transparent); backdrop-filter: blur(.25em); opacity: 0; transition: opacity calc(.4s / var(--speed)); pointer-events: none; }
+  .veil.on { opacity: 1; }
+
+  .pal { position: absolute; left: 50%; top: 9em; width: 36em; margin-left: -18em; border-radius: 1.1em; background: var(--surface); border: 1px solid var(--line); overflow: hidden;
+    box-shadow: 0 2.2em 4.5em color-mix(in srgb, var(--fg) 28%, transparent), 0 0 0 .1em color-mix(in srgb, var(--accent) 18%, transparent);
+    opacity: 0; transform: translateY(-1em) scale(.96); transition: opacity calc(.3s / var(--speed)), transform calc(.4s / var(--speed)) cubic-bezier(.2,.9,.3,1.2); }
+  .pal.on { opacity: 1; transform: none; }
+  .in-row { display: flex; align-items: center; gap: .8em; padding: 1em 1.2em; border-bottom: 1px solid var(--line); font-size: 1.15em; min-height: 3.1em; }
+  .in-row svg { flex: none; width: 1.1em; height: 1.1em; fill: none; stroke: var(--fg-soft); stroke-width: 2; stroke-linecap: round; }
+  .in-row .q { flex: 1; min-width: 0; white-space: pre; overflow: hidden; text-overflow: ellipsis; }
+  .in-row .q.ph { color: var(--fg-soft); }
+  .caret { display: inline-block; width: .12em; height: 1.1em; vertical-align: -.2em; margin-left: .05em; background: var(--accent); animation: blink calc(1s / var(--speed)) steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .kbd { flex: none; font: 600 .62em var(--font-mono); padding: .25em .6em; border: 1px solid var(--line); border-radius: .4em; color: var(--fg-soft); background: var(--bg); }
+  .list { max-height: 19.6em; overflow: hidden; padding: .5em; position: relative; }
+  .grp { padding: .5em .8em .25em; font: 600 .66em var(--font-mono); letter-spacing: .12em; color: var(--fg-soft); text-transform: uppercase; }
+  .row { display: flex; align-items: center; gap: .85em; padding: .6em .8em; border-radius: .6em; transition: background calc(.15s / var(--speed)); }
+  .row.sel { background: color-mix(in srgb, var(--accent) 18%, transparent); box-shadow: inset .18em 0 0 var(--accent); }
+  .row.flash { background: var(--accent); color: var(--bg); }
+  .row.flash .sub, .row.flash .kbd { color: var(--bg); }
+  .row .ic { flex: none; width: 1.9em; height: 1.9em; border-radius: .5em; display: grid; place-items: center; font: 700 .8em var(--font-mono); background: color-mix(in srgb, var(--accent-3) 22%, var(--bg)); color: var(--accent-3); }
+  .row:nth-of-type(3n) .ic { background: color-mix(in srgb, var(--accent-2) 22%, var(--bg)); color: var(--accent-2); }
+  .row .tx { flex: 1; min-width: 0; }
+  .row .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .95em; }
+  .row .sub { font-size: .72em; color: var(--fg-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  mark { background: none; color: var(--accent); font-weight: 700; }
+  .row.flash mark { color: var(--bg); text-decoration: underline; }
+  .empty { padding: 1.6em; text-align: center; color: var(--fg-soft); font-size: .9em; }
+  .ft { display: flex; gap: 1.2em; padding: .6em 1.2em; border-top: 1px solid var(--line); font-size: .66em; color: var(--fg-soft); background: var(--bg); }
+  .ft span b { font: 600 1em var(--font-mono); margin-right: .4em; color: var(--fg); }
+  .toast { position: absolute; left: 50%; bottom: 3.4em; transform: translate(-50%, 1em); display: flex; align-items: center; gap: .7em; padding: .75em 1.3em; border-radius: 3em; background: var(--fg); color: var(--bg); font-size: .95em; max-width: 34em; box-shadow: 0 1em 2.4em color-mix(in srgb, var(--fg) 25%, transparent); opacity: 0; transition: opacity calc(.35s / var(--speed)), transform calc(.5s / var(--speed)) cubic-bezier(.2,.9,.3,1.2); z-index: 5; }
+  .toast.on { opacity: 1; transform: translate(-50%, 0); }
+  .toast i { flex: none; width: 1.2em; height: 1.2em; border-radius: 50%; background: var(--good); }
+  .toast span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

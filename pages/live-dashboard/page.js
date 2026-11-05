@@ -37,10 +37,10 @@ player.play(async (r) => {
   const show = (p, v) => SC.fmt(v, { decimals: dec(p) });
 
   /* 数据：向区间中部回归的随机游走 */
-  let tick = 0, incident = false, incidentLeft = 0;
+  let tick = 0, incident = false, incidentLeft = 0, warm = true;
   const step = () => {
     tick++;
-    if (incAt > 0 && tick === incAt && incIdx >= 0) { incident = true; incidentLeft = incLen; }
+    if (!warm && incAt > 0 && tick === incAt && incIdx >= 0) { incident = true; incidentLeft = incLen; }
     else if (incident && --incidentLeft <= 0) incident = false;
     panels.forEach((p, i) => {
       p.prev = p.v;
@@ -53,8 +53,8 @@ player.play(async (r) => {
       p.hist.push(p.v); if (p.hist.length > HIST) p.hist.shift();
     });
   };
-  for (let i = 0; i < HIST; i++) { const keep = incAt; step(); } // 预热历史
-  tick = 0; incident = false; incidentLeft = 0; // 预热不计入周期
+  for (let i = 0; i < HIST; i++) step(); // 预热历史
+  tick = 0; incident = false; incidentLeft = 0; warm = false; // 预热不计入周期
 
   /* DOM */
   stage.innerHTML = "";
