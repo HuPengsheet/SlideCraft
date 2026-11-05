@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""由 PROMPTS.md 生成 README.md 和 pages/prompts.js（入口页用）。
+"""由 PROMPTS.md 生成 README.md、pages/prompts.js（入口页用）和 site/data.js（展示站用）。
   python3 scripts/build-docs.py
 PROMPTS.md 是提示词的唯一来源：改提示词只改它，再运行本脚本。"""
 import json, os, re
@@ -40,7 +40,7 @@ out = [f"""# SlideCraft
 
 HTML 页面展示方式的图鉴：按类别整理 {total} 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
 
-纯 HTML、CSS 和 JS，无需构建。浏览器打开 [pages/index.html](pages/index.html) 可以浏览全部页面，切换主题和速度，并查看每页的提示词。
+纯 HTML、CSS 和 JS，无需构建。\n\n- [site/index.html](site/index.html)：展示站，按类别浏览全部效果，点开即可实时运行、切换主题和速度、复制提示词。\n- [pages/index.html](pages/index.html)：开发用的查看器，左侧目录加预览。\n\n展示站引用上级目录的 `pages/` 和 `previews/`，部署时要以仓库根目录为站点根目录。
 
 ## 使用
 
@@ -64,7 +64,8 @@ for c in cats:
 out.append("""## 工具
 
 - [scripts/make-previews.py](scripts/make-previews.py)：用 Playwright 录制页面动图到 `previews/`，依赖 Playwright 与 ffmpeg。
-- [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 生成本文件和入口页用的提示词数据。
+- [scripts/make-posters.py](scripts/make-posters.py)：从动图里挑一帧，生成展示站用的静态海报。
+- [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 生成本文件、入口页和展示站用的提示词数据。
 """)
 open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8").write("\n".join(out))
 
@@ -72,4 +73,8 @@ prompts = {i["slug"]: i["prompt"] for c in cats for i in c["items"]}
 open(os.path.join(ROOT, "pages", "prompts.js"), "w", encoding="utf-8").write(
     "/* 由 scripts/build-docs.py 从 PROMPTS.md 生成，不要手改。 */\nwindow.PROMPTS = "
     + json.dumps(prompts, ensure_ascii=False, indent=1) + ";\n")
-print(f"README.md 和 pages/prompts.js 已生成：{total} 条")
+os.makedirs(os.path.join(ROOT, "site"), exist_ok=True)
+open(os.path.join(ROOT, "site", "data.js"), "w", encoding="utf-8").write(
+    "/* 由 scripts/build-docs.py 从 PROMPTS.md 生成，不要手改。 */\nwindow.SITE = "
+    + json.dumps({"cats": cats}, ensure_ascii=False, indent=1) + ";\n")
+print(f"README.md、pages/prompts.js、site/data.js 已生成：{total} 条")

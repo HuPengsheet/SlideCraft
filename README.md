@@ -2,7 +2,12 @@
 
 HTML 页面展示方式的图鉴：按类别整理 73 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
 
-纯 HTML、CSS 和 JS，无需构建。浏览器打开 [pages/index.html](pages/index.html) 可以浏览全部页面，切换主题和速度，并查看每页的提示词。
+纯 HTML、CSS 和 JS，无需构建。
+
+- [site/index.html](site/index.html)：展示站，按类别浏览全部效果，点开即可实时运行、切换主题和速度、复制提示词。
+- [pages/index.html](pages/index.html)：开发用的查看器，左侧目录加预览。
+
+展示站引用上级目录的 `pages/` 和 `previews/`，部署时要以仓库根目录为站点根目录。
 
 ## 使用
 
@@ -98,4 +103,5 @@ HTML 页面展示方式的图鉴：按类别整理 73 种单页展示效果，�
 ## 工具
 
 - [scripts/make-previews.py](scripts/make-previews.py)：用 Playwright 录制页面动图到 `previews/`，依赖 Playwright 与 ffmpeg。
-- [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 生成本文件和入口页用的提示词数据。
+- [scripts/make-posters.py](scripts/make-posters.py)：从动图里挑一帧，生成展示站用的静态海报。
+- [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 生成本文件、入口页和展示站用的提示词数据。
