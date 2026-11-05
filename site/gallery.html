@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>效果展示 · SlideCraft</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><i></i>SlideCraft</a>
+  <nav class="links"><a href="index.html">首页</a><a href="gallery.html" class="cur">效果展示</a></nav>
+</header>
+
+<main id="top">
+  <section class="g-head">
+    <p class="kicker">效果展示</p>
+    <h1>全部 <span id="total">73</span> 种效果</h1>
+    <p class="lede">按用途分成 <b id="ncat">8</b> 类。点任意一张卡片，就能在弹窗里实时运行，并拿到对应的 AI 提示词。</p>
+  </section>
+
+  <div class="bar" id="bar">
+    <div class="pills" id="pills"></div>
+    <label class="search"><span>搜索</span><input id="q" type="search" placeholder="例如：地球、图表、打字" autocomplete="off"></label>
+  </div>
+
+  <div id="gallery"></div>
+  <p class="empty" id="empty" hidden>没有找到匹配的效果，换个词试试。</p>
+</main>
+
+<footer class="foot">
+  <p>SlideCraft · 纯 HTML、CSS 与 JS，无需构建</p>
+  <p>每个效果由 <code>config.js</code> 驱动，支持 5 套主题、倍速、暂停与重播</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script src="gallery.js"></script>
+</body>
+</html>

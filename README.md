@@ -4,7 +4,8 @@ HTML 页面展示方式的图鉴：按类别整理 73 种单页展示效果，�
 
 纯 HTML、CSS 和 JS，无需构建。
 
-- [site/index.html](site/index.html)：展示站，按类别浏览全部效果，点开即可实时运行、切换主题和速度、复制提示词。
+- [site/index.html](site/index.html)：落地页，一屏不滚动：标题、数字和入口按钮，右侧是缓慢滚动的效果海报墙，悬停播放，点击打开。
+- [site/gallery.html](site/gallery.html)：展示页，按类别浏览和搜索全部效果，点开即可实时运行、切换主题和速度、复制提示词。
 - [pages/index.html](pages/index.html)：开发用的查看器，左侧目录加预览。
 
 展示站引用上级目录的 `pages/` 和 `previews/`，部署时要以仓库根目录为站点根目录。

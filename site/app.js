@@ -6,8 +6,6 @@ const bySlug = Object.fromEntries(all.map((i) => [i.slug, i]));
 const NO_SHARED = new Set(["gallery", "chat-sim"]);      // 没接入共用底座，不支持主题和速度参数
 const THEMES = ["dark", "light", "paper", "neon", "terminal"];
 const SPEEDS = [0.5, 1, 2, 4];
-const FEATURED = ["hero-intro", "globe-arcs", "kinetic-type", "bar-race", "code-showcase", "orbit-map", "aurora-bg", "chart-animated"]
-  .filter((s) => bySlug[s]);
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const summary = (p) => p.split(/[。！]/)[0] + "。";
 
@@ -95,24 +93,55 @@ const spy = new IntersectionObserver((es) => {
 }, { rootMargin: "-30% 0px -60% 0px" });
 document.querySelectorAll(".sec").forEach((s) => spy.observe(s));
 
-/* ---------- 首屏：真实运行的页面轮播 ---------- */
-const heroFrame = $("#heroFrame");
-heroFrame.style.pointerEvents = "none";
-$("#heroDots").innerHTML = FEATURED.map(() => "<i></i>").join("");
-let heroIdx = -1, heroTimer;
-function heroShow(i) {
-  heroIdx = (i + FEATURED.length) % FEATURED.length;
-  const s = FEATURED[heroIdx];
-  heroFrame.src = `../pages/${s}/index.html?controls=0&theme=dark`;
-  $("#heroName").textContent = `${pad(heroIdx + 1)} / ${pad(FEATURED.length)}  ${bySlug[s].title}`;
-  document.querySelectorAll("#heroDots i").forEach((d, k) => d.classList.toggle("on", k === heroIdx));
+/* ---------- 首屏：小图墙 ---------- */
+const wall = $("#wall");
+wall.innerHTML = all.map((i) => `
+  <button class="tile" data-s="${i.slug}" aria-label="${esc(i.title)}">
+    <img class="poster" src="posters/${i.slug}.jpg" alt="" decoding="async">
+    <img class="live" alt="" decoding="async">
+    <b>${esc(i.title)}</b>
+  </button>`).join("");
+const tiles = [...wall.children];
+const wio = new IntersectionObserver((es) => es.forEach((en) => {
+  if (en.isIntersecting) { en.target.classList.add("in"); wio.unobserve(en.target); }
+}));
+tiles.forEach((t, k) => { t.style.transitionDelay = Math.min(k * 14, 700) + "ms"; wio.observe(t); });
+wall.addEventListener("click", (e) => { const t = e.target.closest(".tile"); if (t) openModal(t.dataset.s); });
+wall.addEventListener("pointerover", (e) => {
+  const t = e.target.closest(".tile"), l = t && $(".live", t);
+  if (l && !l.src) l.src = `../previews/pages/${t.dataset.s}.webp`;
+});
+
+/* 按屏幕大小算列数，让整面墙刚好放进首屏；窄屏不强求一屏，固定 4 列 */
+function fitWall() {
+  const gap = 6, w = wall.clientWidth, n = tiles.length;
+  if (innerWidth < 700) { wall.style.gridTemplateColumns = "repeat(4, 1fr)"; return; }
+  const avail = innerHeight - wall.getBoundingClientRect().top - scrollY - 18;
+  let cols = Math.max(6, Math.ceil(w / 190));
+  for (; cols < 22; cols++) {
+    const tw = (w - gap * (cols - 1)) / cols, rows = Math.ceil(n / cols);
+    if (rows * (tw * 9 / 16) + gap * (rows - 1) <= avail) break;
+  }
+  wall.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 }
-function heroLoop() {
-  clearInterval(heroTimer);
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  heroTimer = setInterval(() => { if (!document.hidden && $("#modal").hidden) heroShow(heroIdx + 1); }, 9000);
+fitWall();
+addEventListener("resize", fitWall);
+
+/* 墙上同时有几块在播放动图，轮流更换，让整面墙“活”着 */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function wallPlay() {
+  if (reduce || document.hidden || !$("#modal").hidden) return;
+  const vh = innerHeight;
+  const seen = tiles.filter((t) => { const r = t.getBoundingClientRect(); return r.bottom > 0 && r.top < vh && !t.matches(":hover"); });
+  const playing = tiles.filter((t) => t.classList.contains("play"));
+  if (playing.length >= 6 || !seen.length) return;
+  const t = seen[Math.floor(Math.random() * seen.length)];
+  if (t.classList.contains("play")) return;
+  const l = $(".live", t);
+  const on = () => { t.classList.add("play"); setTimeout(() => t.classList.remove("play"), 4200); };
+  if (l.src) on(); else { l.onload = on; l.src = `../previews/pages/${t.dataset.s}.webp`; }
 }
-heroShow(0); heroLoop();
+setInterval(wallPlay, 700);
 $("#shuffle").onclick = () => openModal(all[Math.floor(Math.random() * all.length)].slug);
 
 /* ---------- 弹窗查看器 ---------- */

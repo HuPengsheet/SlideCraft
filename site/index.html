@@ -4,63 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SlideCraft · 一页的 73 种展示方式</title>
-<meta name="description" content="73 种单页 HTML 展示效果，每一种都附有可直接复制的 AI 提示词。">
+<meta name="description" content="73 种单页 HTML 展示效果，每一种都能实时运行，并附可直接复制的 AI 提示词。">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="landing.css">
 </head>
-<body>
+<body class="lp">
 <header class="top">
-  <a class="brand" href="#top"><i></i>SlideCraft</a>
-  <nav class="links"><a href="#gallery">效果</a><a href="https://github.com/" id="gh" hidden>GitHub</a></nav>
+  <a class="brand" href="index.html"><i></i>SlideCraft</a>
+  <nav class="links"><a href="index.html" class="cur">首页</a><a href="gallery.html">效果展示</a></nav>
 </header>
 
 <main id="top">
   <section class="hero">
-    <div class="hero-copy">
+    <div class="hero-in">
       <p class="kicker">单页 HTML 展示效果图鉴</p>
       <h1>一页，<br>可以这样<em>展示</em>。</h1>
-      <p class="lede"><b id="total">73</b> 种展示方式，按用途分成 <b id="ncat">8</b> 类。每一种都能在浏览器里直接运行，并附一条描述画面与动效的提示词，复制给 AI 就能做出同类页面。</p>
-      <div class="cta"><a class="btn solid" href="#gallery">浏览全部效果</a><button class="btn" id="shuffle">随机看一个</button></div>
+      <p class="lede"><b id="total">73</b> 种展示方式，每一种都能在浏览器里直接运行，并附一条描述画面与动效的提示词，复制给 AI 就能做出同类页面。</p>
+      <div class="cta"><a class="btn solid big" href="gallery.html">浏览全部效果</a><button class="btn big" id="shuffle">随机看一个</button></div>
+      <dl class="stats">
+        <div><dt id="s1">73</dt><dd>种效果</dd></div>
+        <div><dt id="s2">8</dt><dd>个类别</dd></div>
+        <div><dt>5</dt><dd>套主题</dd></div>
+        <div><dt>0</dt><dd>依赖</dd></div>
+      </dl>
     </div>
-    <div class="hero-stage">
-      <div class="screen"><iframe id="heroFrame" title="实时预览" tabindex="-1"></iframe></div>
-      <div class="hero-cap"><span id="heroName"></span><span class="dots" id="heroDots"></span></div>
-    </div>
+    <div class="wall-wrap"><div class="wall" id="wall"></div></div>
   </section>
-
-  <div class="bar" id="bar">
-    <div class="pills" id="pills"></div>
-    <label class="search"><span>搜索</span><input id="q" type="search" placeholder="例如：地球、图表、打字" autocomplete="off"></label>
-  </div>
-
-  <div id="gallery"></div>
-  <p class="empty" id="empty" hidden>没有找到匹配的效果，换个词试试。</p>
 </main>
 
-<footer class="foot">
-  <p>SlideCraft · 纯 HTML、CSS 与 JS，无需构建</p>
-  <p>每个效果由 <code>config.js</code> 驱动，支持 5 套主题、倍速、暂停与重播</p>
-</footer>
-
-<div class="modal" id="modal" hidden>
-  <div class="m-back" data-close></div>
-  <div class="m-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-    <div class="m-head">
-      <div><span class="m-cat" id="mCat"></span><h2 id="mTitle"></h2></div>
-      <div class="m-nav"><button id="mPrev" aria-label="上一个">←</button><button id="mNext" aria-label="下一个">→</button><button data-close aria-label="关闭">✕</button></div>
-    </div>
-    <div class="m-body">
-      <div class="m-view"><div class="screen"><iframe id="mFrame" title="预览" allow="autoplay"></iframe></div></div>
-      <aside class="m-side">
-        <div class="ctl"><span>主题</span><div class="chips" id="mThemes"></div></div>
-        <div class="ctl"><span>速度</span><div class="chips" id="mSpeeds"></div></div>
-        <div class="ctl"><button class="btn sm" id="mReplay">重播</button><a class="btn sm" id="mOpen" target="_blank" rel="noopener">新窗口打开</a></div>
-        <div class="prompt"><div class="p-head"><b>提示词</b><button class="btn sm solid" id="mCopy">复制</button></div><p id="mPrompt"></p></div>
-        <p class="hint">← → 切换 · Esc 关闭</p>
-      </aside>
-    </div>
-  </div>
-</div>
 <script src="data.js"></script>
-<script src="app.js"></script>
+<script src="common.js"></script>
+<script src="landing.js"></script>
 </body>
 </html>
