@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""生成 README 用的预览图。
-  python3 scripts/make-previews.py pages        录制 pages/ 下每个页面的动图 -> previews/pages/<name>.gif
-  python3 scripts/make-previews.py templates    取模板封面截图             -> previews/templates/<slug>.webp
-  python3 scripts/make-previews.py pages timeline hero-intro   只录指定页面
-需要 playwright（Chromium）和 PIL。模板截图来自上游仓库的 screenshots/，路径用环境变量 BHT_SHOTS 指定。"""
-import glob, io, json, os, sys, time
+"""生成 README 用的预览图：用 Playwright 录制 pages/<name>/ 的动图 -> previews/pages/<name>.gif。
+  python3 scripts/make-previews.py              录制全部页面
+  python3 scripts/make-previews.py timeline     只录指定页面
+需要 playwright（Chromium）和 Pillow。"""
+import io, os, sys, time
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -52,28 +51,13 @@ def record(pw, name, secs, query):
     print(f"{name}: {len(frames)} frames, {os.path.getsize(dst)//1024} KB, errors={errs}")
 
 
-def templates():
-    shots = os.environ.get("BHT_SHOTS", "/tmp/bht-src/repo/screenshots")
-    idx = json.load(open(os.path.join(ROOT, "templates", "index.json")))["templates"]
-    os.makedirs(os.path.join(OUT, "templates"), exist_ok=True)
-    for t in idx:
-        c = sorted(glob.glob(os.path.join(shots, t["slug"] + "-*.png")), key=lambda p: int(p.rsplit("-", 1)[1][:-4]))
-        dst = os.path.join(OUT, "templates", t["slug"] + ".webp")
-        Image.open(c[0]).convert("RGB").resize((W, H), Image.LANCZOS).save(dst, quality=80)
-    print(f"templates: {len(idx)} images")
-
-
 if __name__ == "__main__":
-    mode = sys.argv[1] if len(sys.argv) > 1 else "pages"
-    if mode == "templates":
-        templates()
-    else:
-        from playwright.sync_api import sync_playwright
-        names = sys.argv[2:] or list(PAGES)
-        with sync_playwright() as pw:
-            for n in names:
-                secs, q = PAGES.get(n, (8, ""))
-                try:
-                    record(pw, n, secs, q)
-                except Exception as e:
-                    print(f"{n}: FAIL {str(e).splitlines()[0][:150]}")
+    from playwright.sync_api import sync_playwright
+    names = sys.argv[1:] or list(PAGES)
+    with sync_playwright() as pw:
+        for n in names:
+            secs, q = PAGES.get(n, (8, ""))
+            try:
+                record(pw, n, secs, q)
+            except Exception as e:
+                print(f"{n}: FAIL {str(e).splitlines()[0][:150]}")

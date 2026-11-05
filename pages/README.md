@@ -49,25 +49,23 @@
 
 ## 页面清单
 
-### 展示
+### 开场与封面
 
 | 页面 | 用途 | 关键字段 |
 |---|---|---|
-| [gallery](gallery/) | 16 张预览图错落入场，悬停倾斜、微摆动，点击放大 | 改 `index.html` 里的 `CONFIG.items`（独立页面） |
-| [media-wall](media-wall/) | 图片、动图、视频组成的网格，灯箱浏览 | `columns`、`aspect`、`fit`、`items[]: {src,name,note}` |
-| [compare-slider](compare-slider/) | 拖动分隔线对比两张图，加载时自动扫一遍 | `before`/`after` 或 `pairs[]`，`orientation` |
-| [browser-demo](browser-demo/) | 窗口里轮播截图，模拟光标移动与点击 | `device`、`screens[]: {src,url,caption,cursor[]}` |
-| [carousel-3d](carousel-3d/) | 封面流与环形两种样式，拖动、方向键、点击切换 | `style`（`coverflow`\|`ring`），`items[]: {src,title,note}`，`autoMs` |
-| [bento-grid](bento-grid/) | 数字、文字、图片、迷你折线混排的磁贴，自动排布 | `columns`，`tiles[]: {type,col,row,w,h,accent}` |
+| [hero-intro](hero-intro/) | 粒子、渐变、网格、圆环四种背景 | `backdrop`，`title`，`subtitle` |
+| [countdown](countdown/) | 翻页数字，可指定真实日期或演示秒数 | `target` 或 `demo:{seconds}`，`units`，`style` |
+| [kinetic-type](kinetic-type/) | 预告片式大字：冲击、滑入、回声、拆字、描边 | `beatMs`，`lines[]: {text,style,color}`，`finale` |
 
-### 对话与终端
+### 文字与排版
 
 | 页面 | 用途 | 关键字段 |
 |---|---|---|
-| [chat-sim](chat-sim/) | 逐字输出、工具调用、diff 代码块 | 改 `conversation.js` 里的 `script`（独立页面） |
-| [terminal-demo](terminal-demo/) | 敲命令、输出日志、进度条 | `script[]`：`cmd`/`out`/`progress`/`wait`/`clear` |
+| [text-reveal](text-reveal/) | 打字机、遮罩、逐词、Glitch、淡入 | `lines[]: {text,effect,emphasis}` |
+| [quote-carousel](quote-carousel/) | 逐字显现，进度条，圆点和方向键跳转 | `layout`，`holdMs`，`quotes[]: {text,by,role}` |
+| [marquee](marquee/) | 多行无限滚动的文字、标签或图片 | `rows[]: {items,direction,speed,style}` |
 
-### 数据
+### 数据可视化
 
 | 页面 | 用途 | 关键字段 |
 |---|---|---|
@@ -78,28 +76,45 @@
 | [funnel-chart](funnel-chart/) | 梯形依次展开，显示阶段转化率 | `stages[]: {label,value}`，`scale`，`orientation` |
 | [gantt-schedule](gantt-schedule/) | 条形生长，进度填充，今日线扫过，里程碑 | `unit`，`rows[]: {name,group,start,end,progress}`，`today` |
 
-### 叙事
+### 流程与结构
 
 | 页面 | 用途 | 关键字段 |
 |---|---|---|
 | [timeline](timeline/) | 事件依次点亮，播放结束后可点节点跳转 | `orientation`，`events[]: {when,title,text,image}` |
 | [flow-diagram](flow-diagram/) | 节点依次出现，光点沿连线流动 | `layout`（`free`\|`row`），`nodes[]`，`edges[]` |
 | [step-tour](step-tour/) | 聚光灯依次高亮界面截图上的区域 | `image`，`steps[]: {x,y,w,h,title,text}` |
-| [text-reveal](text-reveal/) | 打字机、遮罩、逐词、Glitch、淡入 | `lines[]: {text,effect,emphasis}` |
-| [kinetic-type](kinetic-type/) | 预告片式大字：冲击、滑入、回声、拆字、描边 | `beatMs`，`lines[]: {text,style,color}`，`finale` |
-| [quote-carousel](quote-carousel/) | 逐字显现，进度条，圆点和方向键跳转 | `layout`，`holdMs`，`quotes[]: {text,by,role}` |
-| [code-showcase](code-showcase/) | 语法高亮，逐步 diff 动画，聚焦区域 | `steps[]: {code,lang,caption,focus}` |
+| [orbit-map](orbit-map/) | 同心轨道旋转，悬停暂停并显示说明 | `center`，`orbits[]: {speed,items[]}`，`tilt` |
 
-### 氛围
+### 媒体与图片
 
 | 页面 | 用途 | 关键字段 |
 |---|---|---|
-| [hero-intro](hero-intro/) | 粒子、渐变、网格、圆环四种背景 | `backdrop`，`title`，`subtitle` |
-| [marquee](marquee/) | 多行无限滚动的文字、标签或图片 | `rows[]: {items,direction,speed,style}` |
-| [countdown](countdown/) | 翻页数字，可指定真实日期或演示秒数 | `target` 或 `demo:{seconds}`，`units`，`style` |
-| [globe-arcs](globe-arcs/) | 点阵地球，城市涟漪，大圆弧线飞行，可拖动 | `cities[]`，`arcs[]: {from,to}`，`rotateSpeed` |
-| [orbit-map](orbit-map/) | 同心轨道旋转，悬停暂停并显示说明 | `center`，`orbits[]: {speed,items[]}`，`tilt` |
+| [gallery](gallery/) | 16 张预览图错落入场，悬停倾斜、微摆动，点击放大 | 改 `index.html` 里的 `CONFIG.items`（独立页面） |
+| [media-wall](media-wall/) | 图片、动图、视频组成的网格，灯箱浏览 | `columns`、`aspect`、`fit`、`items[]: {src,name,note}` |
+| [compare-slider](compare-slider/) | 拖动分隔线对比两张图，加载时自动扫一遍 | `before`/`after` 或 `pairs[]`，`orientation` |
+| [carousel-3d](carousel-3d/) | 封面流与环形两种样式，拖动、方向键、点击切换 | `style`（`coverflow`\|`ring`），`items[]: {src,title,note}`，`autoMs` |
+
+### 产品与界面演示
+
+| 页面 | 用途 | 关键字段 |
+|---|---|---|
+| [chat-sim](chat-sim/) | 逐字输出、工具调用、diff 代码块 | 改 `conversation.js` 里的 `script`（独立页面） |
+| [terminal-demo](terminal-demo/) | 敲命令、输出日志、进度条 | `script[]`：`cmd`/`out`/`progress`/`wait`/`clear` |
+| [browser-demo](browser-demo/) | 窗口里轮播截图，模拟光标移动与点击 | `device`、`screens[]: {src,url,caption,cursor[]}` |
+| [code-showcase](code-showcase/) | 语法高亮，逐步 diff 动画，聚焦区域 | `steps[]: {code,lang,caption,focus}` |
+
+### 信息版式
+
+| 页面 | 用途 | 关键字段 |
+|---|---|---|
+| [bento-grid](bento-grid/) | 数字、文字、图片、迷你折线混排的磁贴，自动排布 | `columns`，`tiles[]: {type,col,row,w,h,accent}` |
 | [team-cards](team-cards/) | 头像卡片，聚光灯轮流展开，缺照片时生成字母头像 | `layout`，`people[]: {name,role,bio,photo}` |
 | [pricing-plans](pricing-plans/) | 高亮方案的渐变边框，月付年付切换 | `billing`，`plans[]: {name,price,features,highlight}` |
+
+### 3D 与氛围
+
+| 页面 | 用途 | 关键字段 |
+|---|---|---|
+| [globe-arcs](globe-arcs/) | 点阵地球，城市涟漪，大圆弧线飞行，可拖动 | `cities[]`，`arcs[]: {from,to}`，`rotateSpeed` |
 
 各页面的完整字段、默认值和取值范围见其 `config.js` 开头的注释。
