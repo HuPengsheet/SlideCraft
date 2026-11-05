@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分屏标题入场</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .band { position: absolute; top: 0; bottom: 0; overflow: hidden; will-change: transform; box-shadow: 0 0 2.4em var(--line); }
+  .comp { position: absolute; top: 0; bottom: 0; background: var(--bg); }
+  .comp .img { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .comp .fx { position: absolute; inset: 0;
+    background: radial-gradient(60% 80% at 80% 20%, var(--accent), transparent 70%), radial-gradient(50% 70% at 10% 90%, var(--accent-2), transparent 70%), var(--surface);
+    opacity: .55; }
+  .comp .img + .fx { opacity: 0; }
+  .comp .scrim { position: absolute; inset: 0; background: linear-gradient(to top, var(--bg), transparent 70%); opacity: .85; }
+  .copy { position: absolute; left: 0; bottom: 0; width: 100%; padding: 0 0 6em 0; }
+  .ttl { font-family: var(--font-display); font-weight: 800; line-height: 1.05; margin: .3em 0 0; letter-spacing: -.01em; overflow-wrap: anywhere; text-shadow: 0 .06em .5em var(--bg); }
+  .sub { font-size: 1.5em; color: var(--fg-soft); margin: .8em 0 0; overflow-wrap: anywhere; }
+  .sep { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--fg); opacity: 0; pointer-events: none; z-index: 2; }
+  .bar { display: block; width: 5em; height: .25em; background: var(--accent); margin-bottom: 1.2em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拍立得散落</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { --paper: color-mix(in srgb, var(--fg) 94%, var(--bg)); --ink: var(--bg);
+    background: radial-gradient(ellipse at 62% 50%, var(--surface) 0%, var(--bg) 75%); user-select: none; -webkit-user-select: none; }
+  :root[data-theme="light"] .stage, :root[data-theme="paper"] .stage { --paper: var(--surface); --ink: var(--fg); }
+  .root { position: absolute; inset: 0; }
+  .head { position: absolute; left: 4em; top: 4em; width: 19em; opacity: 0; translate: 0 1em; transition: opacity calc(.8s / var(--speed)), translate calc(.8s / var(--speed)) cubic-bezier(.2,.7,.2,1); }
+  .head.in { opacity: 1; translate: 0 0; }
+  .head .sc-title { font-size: 2.3em; font-weight: 800; margin-top: .3em; letter-spacing: -.01em; overflow-wrap: anywhere; }
+  .head .sc-sub { margin-top: 1em; line-height: 1.65; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+  .head .rule { width: 3em; height: .2em; margin-top: 1.4em; background: var(--accent); border-radius: 1em; }
+  .hint { position: absolute; left: 4em; bottom: 3.4em; font-size: .72em; color: var(--fg-soft); letter-spacing: .08em; }
+
+  .pol { position: absolute; width: 13em; height: 15.6em; margin: -7.8em 0 0 -6.5em; padding: .8em .8em 0; cursor: pointer; outline: none;
+    background: var(--paper); border-radius: .15em; color: var(--ink);
+    box-shadow: 0 .1em .2em color-mix(in srgb, var(--page-bg) 50%, transparent), 0 .9em 1.6em -.5em color-mix(in srgb, var(--page-bg) 85%, transparent);
+    translate: var(--fx) var(--fy); rotate: calc(var(--rot) + var(--spin)); scale: calc(var(--s) * 1.12); opacity: 0;
+    transition: translate calc(.95s / var(--speed)) cubic-bezier(.2,.9,.25,1.12), rotate calc(.95s / var(--speed)) cubic-bezier(.2,.9,.25,1.12), scale calc(.95s / var(--speed)) cubic-bezier(.2,.9,.25,1.12),
+      opacity calc(.3s / var(--speed)), box-shadow calc(.4s / var(--speed)); }
+  .pol.in { opacity: 1; translate: 0 0; rotate: var(--rot); scale: var(--s); }
+  .pol.in:hover { box-shadow: 0 .1em .2em color-mix(in srgb, var(--page-bg) 50%, transparent), 0 1.3em 2em -.5em color-mix(in srgb, var(--page-bg) 90%, transparent); }
+  .pol:focus-visible { outline: .18em solid var(--accent); outline-offset: .3em; }
+  .pol.front { translate: var(--dx) var(--dy); rotate: calc(var(--rot) * .15); scale: var(--sf);
+    transition-duration: calc(.6s / var(--speed)); box-shadow: 0 .2em .4em color-mix(in srgb, var(--page-bg) 50%, transparent), 0 2em 3.4em -.6em color-mix(in srgb, var(--page-bg) 95%, transparent); }
+  .shade { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 55%, transparent); opacity: 0; pointer-events: none; transition: opacity calc(.5s / var(--speed)); }
+  .root.zoom .shade { opacity: 1; }
+
+  .ph { position: relative; width: 100%; height: 11.4em; overflow: hidden; background: var(--line); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent); }
+  .ph img, .ph video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+  .ph .miss { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: .7em; letter-spacing: .12em; color: var(--fg-soft);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent-3) 30%, var(--surface)), color-mix(in srgb, var(--accent-2) 24%, var(--surface))); }
+  .cap { height: 3.4em; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 .3em; font-size: .95em; line-height: 1.25;
+    font-family: "Segoe Script", "Bradley Hand", "Marker Felt", "Comic Sans MS", "Kaiti SC", "KaiTi", "STKaiti", var(--font-body), cursive; }
+  .cap span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+  .empty { position: absolute; left: 50%; top: 50%; translate: -50% -50%; padding: 2em 3em; border: .12em dashed var(--line); border-radius: .9em; color: var(--fg-soft); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

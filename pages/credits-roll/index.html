@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>片尾滚动字幕</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage::before { content: ""; position: absolute; inset: 0; background: radial-gradient(closest-side at 50% 50%, var(--surface), transparent); opacity: .7; }
+  .view { position: absolute; inset: 0; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent); }
+  .roll { position: absolute; left: 50%; top: 0; width: 56em; margin-left: -28em; will-change: transform; }
+  .grp { margin-bottom: 7em; }
+  .gt { text-align: center; font-size: .8em; letter-spacing: .4em; color: var(--accent); text-transform: uppercase; margin-bottom: 2.4em; padding-left: .4em; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; column-gap: 3em; align-items: baseline; padding: .55em 0; }
+  .row .role { text-align: right; color: var(--fg-soft); font-size: 1em; overflow-wrap: anywhere; }
+  .row .name { text-align: left; font-family: var(--font-display); font-weight: 600; font-size: 1.6em; overflow-wrap: anywhere; }
+  .row.solo { grid-template-columns: 1fr; }
+  .row.solo .name { text-align: center; }
+  .end { text-align: center; padding: 4em 0 2em; }
+  .end .t { font-family: var(--font-display); font-weight: 800; font-size: 5em; line-height: 1.1; letter-spacing: -.01em; overflow-wrap: anywhere; }
+  .end .s { margin-top: .8em; color: var(--fg-soft); font-size: 1.3em; }
+  .end .bar { display: block; width: 6em; height: .2em; margin: 1.4em auto 0; background: var(--accent); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

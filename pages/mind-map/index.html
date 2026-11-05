@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>思维导图</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .head { position: absolute; left: 3.6em; top: 2.3em; z-index: 3; }
+  .head .sc-title { font-size: 2em; }
+  .world { position: absolute; transform-origin: 0 0; }
+  .mm-edges { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+  .edge { fill: none; stroke-linecap: round; stroke-dasharray: var(--len, 1000); stroke-dashoffset: var(--len, 1000); opacity: .85;
+    transition: stroke-dashoffset calc(.7s / var(--speed)) cubic-bezier(.3,.7,.2,1) calc(var(--dl, 0ms) / var(--speed)), opacity calc(.3s / var(--speed)); }
+  .edge.on { stroke-dashoffset: 0; }
+  .n { position: absolute; max-width: 11em; padding: .5em 1em; text-align: center; opacity: 0; transform: scale(.7);
+    transition: opacity calc(.5s / var(--speed)) calc(var(--dl, 0ms) / var(--speed)), transform calc(.6s / var(--speed)) cubic-bezier(.2,1.4,.4,1) calc(var(--dl, 0ms) / var(--speed)); }
+  .n.on { opacity: 1; transform: none; }
+  .n span { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+  .n small { display: block; margin-top: .2em; font-size: .55em; font-weight: 400; letter-spacing: .12em; opacity: .75; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .n.root { max-width: 9em; padding: .7em 1.3em; font-family: var(--font-display); font-weight: 700; font-size: 1.5em; border-radius: 1.1em; background: var(--accent); color: var(--bg);
+    box-shadow: 0 0 2.2em -.2em var(--accent), 0 .6em 1.6em color-mix(in srgb, var(--fg) 14%, transparent); }
+  .n.d1 { background: color-mix(in srgb, var(--c) 16%, var(--surface)); border: 1px solid var(--c); border-radius: .8em; font-family: var(--font-display); font-weight: 600;
+    box-shadow: 0 .4em 1.2em color-mix(in srgb, var(--fg) 10%, transparent); }
+  .n.dn { padding: .25em .3em .35em; border-bottom: .14em solid var(--c); font-size: .88em; }
+  .n.dn.deep { font-size: .8em; color: var(--fg-soft); }
+  .world.focus .n.on:not(.hl) { opacity: .25; }
+  .world.focus .edge.on:not(.hl) { opacity: .1; }
+  .n { cursor: default; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

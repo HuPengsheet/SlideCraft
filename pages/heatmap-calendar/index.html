@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>热力日历</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; justify-content: center; gap: 2.2em; padding: 3.6em 5.5em 3.2em; }
+  .rise { opacity: 0; animation: rise calc(.8s / var(--speed)) cubic-bezier(.2,.7,.2,1) forwards; animation-delay: calc(var(--d, 0s) / var(--speed)); }
+  @keyframes rise { from { opacity: 0; transform: translateY(.7em); } to { opacity: 1; transform: none; } }
+  .nomo .rise { animation: none; opacity: 1; }
+
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 3em; }
+  .top .sc-title { font-size: 2.4em; }
+  .big { text-align: right; flex: none; }
+  .big b { display: block; font-family: var(--font-display); font-size: 4.4em; line-height: 1; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .big span { display: block; margin-top: .3em; color: var(--fg-soft); font-size: .85em; }
+
+  .panel { padding: 1.8em 2em 1.5em; background: var(--surface); border: 1px solid var(--line); border-radius: 1em; box-shadow: 0 1.2em 3em -1.6em var(--bg), 0 .1em 0 var(--line) inset; position: relative; }
+  .cal { display: grid; gap: .25em; margin: 0 auto; }
+  .ml, .wl { font-size: .7em; color: var(--fg-soft); white-space: nowrap; line-height: 1; }
+  .ml { align-self: end; padding-bottom: .5em; }
+  .wl { align-self: center; }
+  .cell { width: 100%; aspect-ratio: 1; align-self: start; border-radius: 22%; background: var(--c); opacity: 0; transform: scale(.4); transition: opacity calc(.45s / var(--speed)), transform calc(.55s / var(--speed)) cubic-bezier(.2,1.5,.4,1); cursor: default; outline: 0 solid var(--fg); }
+  .cell.on { opacity: 1; transform: none; }
+  .nomo .cell { transition: none; }
+  .cell.on:hover { outline: .14em solid var(--fg); outline-offset: -.04em; z-index: 2; }
+  .l0 { --c: color-mix(in srgb, var(--line) 70%, var(--surface)); }
+  .l1 { --c: color-mix(in srgb, var(--accent) 22%, var(--surface)); }
+  .l2 { --c: color-mix(in srgb, var(--accent) 42%, var(--surface)); }
+  .l3 { --c: color-mix(in srgb, var(--accent) 62%, var(--surface)); }
+  .l4 { --c: color-mix(in srgb, var(--accent) 80%, var(--surface)); }
+  .l5 { --c: var(--accent); }
+  .l6 { --c: color-mix(in srgb, var(--accent) 70%, var(--accent-2)); }
+  .l7 { --c: var(--accent-2); }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 2em; margin-top: 1.3em; font-size: .75em; color: var(--fg-soft); }
+  .stats { display: flex; gap: 2.4em; }
+  .stats b { color: var(--fg); font-family: var(--font-display); font-size: 1.25em; margin-right: .3em; font-variant-numeric: tabular-nums; }
+  .lg { display: flex; align-items: center; gap: .35em; flex: none; }
+  .lg i { width: 1em; height: 1em; border-radius: 22%; background: var(--c); }
+  .lg span { margin: 0 .4em; }
+  .note { color: var(--fg-soft); font-size: .78em; border-left: .2em solid var(--accent); padding-left: .9em; margin: 0; }
+  .tip { position: absolute; z-index: 10; pointer-events: none; padding: .55em .8em; background: var(--fg); color: var(--bg); border-radius: .5em; font-size: .8em; white-space: nowrap; box-shadow: 0 .6em 1.6em -.4em var(--bg); opacity: 0; transition: opacity .15s; }
+  .tip.show { opacity: 1; }
+  .tip b { font-family: var(--font-mono); margin-left: .6em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

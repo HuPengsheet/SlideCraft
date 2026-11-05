@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>词云</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 70% at 50% 58%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%); }
+  .head { position: absolute; left: 4em; top: 2.6em; z-index: 2; max-width: 30em; }
+  .head .sc-title { font-size: 2em; overflow-wrap: anywhere; }
+  .head .sc-sub { font-size: .9em; overflow-wrap: anywhere; }
+  .cloud { position: absolute; inset: 0; }
+  .wd { position: absolute; transform: translate(-50%, -50%); line-height: 1; white-space: nowrap; }
+  .w { display: block; line-height: 1; font-family: var(--font-display); letter-spacing: -.01em; opacity: 0; transform: translateY(.5em) scale(.82);
+    transition: opacity .7s ease, transform .9s cubic-bezier(.2,.7,.2,1), color .25s; cursor: default; }
+  .w.on { opacity: var(--o, 1); transform: none; }
+  .w.t0 { color: var(--accent); font-weight: 800; text-shadow: 0 .06em .5em color-mix(in srgb, var(--accent) 35%, transparent); }
+  .w.t1 { color: var(--fg); font-weight: 700; }
+  .w.t2 { color: var(--accent-3); font-weight: 600; }
+  .w.t3 { color: var(--fg-soft); font-weight: 500; }
+  .w.on:hover { color: var(--accent-2); }
+  .meas { position: absolute; left: 0; top: 0; visibility: hidden; pointer-events: none; }
+  .meas span { position: absolute; white-space: nowrap; line-height: 1; font-family: var(--font-display); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

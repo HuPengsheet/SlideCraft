@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实时监控面板</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  :root { --sh: color-mix(in srgb, var(--page-bg) 80%, transparent); }
+  .stage { display: flex; flex-direction: column; padding: 2.2em 3.4em 2em;
+    background: radial-gradient(ellipse 60% 50% at 80% -10%, color-mix(in srgb, var(--accent) 10%, var(--bg)), var(--bg) 70%); }
+  .top { flex: none; display: flex; align-items: flex-end; justify-content: space-between; gap: 2em; opacity: 0; transform: translateY(.8em); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .top.on { opacity: 1; transform: none; }
+  .top .sc-title { font-size: 2em; }
+  .top .sc-sub { font-size: .9em; }
+  .chip { flex: none; display: flex; align-items: center; gap: .6em; padding: .45em 1.1em; border-radius: 2em; border: 1px solid color-mix(in srgb, var(--good) 55%, transparent); background: color-mix(in srgb, var(--good) 10%, transparent); color: var(--good); font-size: .8em; font-weight: 700; transition: all .4s; white-space: nowrap; }
+  .chip i { width: .6em; height: .6em; border-radius: 50%; background: currentColor; animation: pulse calc(1.6s / var(--speed)) ease-in-out infinite; }
+  .chip.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 60%, transparent); background: color-mix(in srgb, var(--bad) 14%, transparent); }
+  .chip em { font-style: normal; font-family: var(--font-mono); font-weight: 400; color: var(--fg-soft); margin-left: .4em; }
+  @keyframes pulse { 50% { opacity: .3; transform: scale(.7); } }
+
+  .grid { flex: 1; min-height: 0; display: grid; gap: 1.1em; margin-top: 1.4em; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); }
+  .pn { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; padding: 1em 1.2em; background: var(--surface); border: 1px solid var(--line); border-radius: .9em;
+    box-shadow: 0 .8em 2em var(--sh); opacity: 0; transform: translateY(1.6em) scale(.97); transition: opacity .6s, transform .7s cubic-bezier(.2,.8,.2,1), border-color .3s; }
+  .pn.on { opacity: 1; transform: none; }
+  .pn.alert { border-color: var(--bad); animation: flash calc(1s / var(--speed)) ease-in-out 4; }
+  @keyframes flash { 50% { box-shadow: 0 0 0 .25em color-mix(in srgb, var(--bad) 35%, transparent), 0 0 2.4em color-mix(in srgb, var(--bad) 50%, transparent); background: color-mix(in srgb, var(--bad) 12%, var(--surface)); } }
+  .ph { flex: none; display: flex; align-items: baseline; justify-content: space-between; gap: .8em; }
+  .pt { font-size: .75em; letter-spacing: .12em; color: var(--fg-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .pv { font-family: var(--font-display); font-weight: 700; font-size: 1.5em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pv small { font-size: .55em; color: var(--fg-soft); font-weight: 400; margin-left: .2em; }
+  .pn.alert .pv { color: var(--bad); }
+  .pb { flex: 1; min-height: 0; margin-top: .7em; position: relative; }
+  svg.ln { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+  svg.ln .gl { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  svg.ln .ar { fill: color-mix(in srgb, var(--accent) 16%, transparent); stroke: none; }
+  svg.ln .pl { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .pn.alert svg.ln .pl { stroke: var(--bad); } .pn.alert svg.ln .ar { fill: color-mix(in srgb, var(--bad) 16%, transparent); }
+  .bars { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 3%; }
+  .bars i { flex: 1; min-height: 2px; border-radius: .2em .2em 0 0; background: var(--accent-3); opacity: .85; transition: height calc(.4s / var(--speed)) ease-out; }
+  .bars i:last-child { background: var(--accent); opacity: 1; }
+  .pn.alert .bars i:last-child { background: var(--bad); }
+  .num { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: .5em; }
+  .num .d { font-size: .8em; font-family: var(--font-mono); color: var(--good); }
+  .num .d.dn { color: var(--bad); }
+  .num .tr { height: .45em; border-radius: 1em; background: var(--line); overflow: hidden; }
+  .num .tr b { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--accent-3), var(--accent)); transition: width calc(.5s / var(--speed)) ease-out; }
+  .pn.alert .num .tr b { background: var(--bad); }
+  .stl { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-around; gap: .3em; overflow: hidden; font-size: .85em; }
+  .si { display: flex; align-items: center; gap: .7em; min-height: 0; }
+  .si i { flex: none; width: .75em; height: .75em; border-radius: 50%; background: var(--good); box-shadow: 0 0 .8em color-mix(in srgb, var(--good) 70%, transparent); transition: background .3s, box-shadow .3s; }
+  .si span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .si em { font-style: normal; font-size: .85em; color: var(--fg-soft); font-family: var(--font-mono); }
+  .si.bad i { background: var(--bad); box-shadow: 0 0 .8em var(--bad); animation: pulse calc(.8s / var(--speed)) ease-in-out infinite; }
+  .si.bad em { color: var(--bad); }
+
+  .toast { position: absolute; right: 3.4em; top: 1.6em; z-index: 5; max-width: 26em; display: flex; gap: .9em; align-items: flex-start; padding: .9em 1.3em; border-radius: .8em; background: var(--surface); border: 1px solid var(--bad); box-shadow: 0 1em 3em var(--sh), 0 0 2em color-mix(in srgb, var(--bad) 35%, transparent);
+    transform: translateY(-140%); opacity: 0; transition: transform .6s cubic-bezier(.2,.9,.2,1.1), opacity .4s; }
+  .toast.on { transform: none; opacity: 1; }
+  .toast i { flex: none; width: 1.5em; height: 1.5em; border-radius: 50%; background: var(--bad); color: var(--bg); display: grid; place-items: center; font-style: normal; font-weight: 700; font-size: .9em; }
+  .toast b { display: block; font-size: .9em; color: var(--bad); }
+  .toast span { display: block; font-size: .8em; color: var(--fg-soft); overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

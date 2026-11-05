@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>桑基图</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; gap: 1em; padding: 3.2em 4.5em 2.6em; }
+  .rise { opacity: 0; animation: rise calc(.8s / var(--speed)) cubic-bezier(.2,.7,.2,1) forwards; animation-delay: calc(var(--d, 0s) / var(--speed)); }
+  @keyframes rise { from { opacity: 0; transform: translateY(.7em); } to { opacity: 1; transform: none; } }
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 3em; flex: none; }
+  .top .sc-title { font-size: 2.3em; }
+  .big { text-align: right; flex: none; }
+  .big b { display: block; font-family: var(--font-display); font-size: 3.4em; line-height: 1; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .big span { display: block; margin-top: .3em; color: var(--fg-soft); font-size: .8em; }
+  .plot { flex: 1; min-height: 0; position: relative; }
+  .plot svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; font-family: var(--font-body); }
+  .note { flex: none; color: var(--fg-soft); font-size: .75em; margin: 0; border-left: .2em solid var(--accent); padding-left: .9em; }
+  .empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--fg-soft); }
+
+  .node rect { fill: var(--c); opacity: 0; transform-box: fill-box; transform-origin: left center; filter: drop-shadow(0 2px 6px var(--c)); }
+  .node text { opacity: 0; }
+  .on .node rect { animation: nin calc(.6s / var(--speed)) cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--d) * 1s / var(--speed)); }
+  .on .node text { animation: fin calc(.6s / var(--speed)) ease-out forwards; animation-delay: calc(var(--d) * 1s / var(--speed) + .2s / var(--speed)); }
+  @keyframes nin { from { opacity: 0; transform: scaleX(.1); } to { opacity: 1; transform: none; } }
+  @keyframes fin { to { opacity: 1; } }
+  .nm { fill: var(--fg); font-size: 15px; font-weight: 600; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
+  .vl { fill: var(--fg-soft); font-family: var(--font-mono); font-size: 12px; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
+  .link { fill: none; stroke: var(--c); stroke-opacity: .34; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-opacity .25s; cursor: pointer; }
+  .on .link { animation: draw calc(1.1s / var(--speed)) cubic-bezier(.4,.1,.3,1) forwards; animation-delay: calc(var(--d) * 1s / var(--speed)); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .done .link:hover, .link.hl { stroke-opacity: .72; }
+  .has-hl .link:not(.hl) { stroke-opacity: .1; }
+  .node { cursor: default; }
+  .nomo .node rect, .nomo .node text { animation: none; opacity: 1; transform: none; }
+  .nomo .link { animation: none; stroke-dashoffset: 0; }
+  .tip { position: absolute; z-index: 10; pointer-events: none; padding: .55em .85em; background: var(--fg); color: var(--bg); border-radius: .5em; font-size: .8em; white-space: nowrap; box-shadow: 0 .6em 1.6em -.4em var(--bg); opacity: 0; transition: opacity .15s; }
+  .tip.show { opacity: 1; }
+  .tip b { font-family: var(--font-mono); margin-left: .7em; }
+  .tip i { font-style: normal; opacity: .65; margin-left: .5em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>
