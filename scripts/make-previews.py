@@ -99,7 +99,10 @@ def record(pw, name, secs, query):
 
 if __name__ == "__main__":
     from playwright.sync_api import sync_playwright
-    names = sys.argv[1:] or list(PAGES)
+    names = sys.argv[1:] or sorted(
+        os.path.basename(os.path.dirname(path))
+        for path in glob.glob(os.path.join(ROOT, "pages", "*", "index.html"))
+    )
     with sync_playwright() as pw:
         for n in names:
             secs, q = PAGES.get(n, (8, ""))

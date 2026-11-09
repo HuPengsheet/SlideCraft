@@ -1,6 +1,6 @@
 # SlideCraft
 
-HTML 页面展示方式的图鉴：按类别整理 73 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
+HTML 页面展示方式的图鉴：按类别整理 118 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
 
 纯 HTML、CSS 和 JS，无需构建。
 
@@ -99,6 +99,78 @@ HTML 页面展示方式的图鉴：按类别整理 73 种单页展示效果，�
 <tr><td width="50%" valign="top"><a href="pages/aurora-bg/"><img src="previews/pages/aurora-bg.webp" alt="极光背景" width="100%"></a><br><b>极光背景</b><br>做一个极光风格的流动背景。几大块模糊的色团缓慢漂移、相互融合，颜色取自主题的三个强调色，叠一层极细的噪点颗粒。画面中央可以放一行标题，其余部分保持安静。</td><td width="50%" valign="top"><a href="pages/cube-rotate/"><img src="previews/pages/cube-rotate.webp" alt="立方体翻面" width="100%"></a><br><b>立方体翻面</b><br>做一个 3D 立方体。六个面各放一幅图片或一段文字，立方体按顺序转到每一面停留片刻，旋转时带自然的透视和阴影。之后用户可以拖动它任意转动，松手后带惯性慢慢停下。</td></tr>
 <tr><td width="50%" valign="top"><a href="pages/ripple-grid/"><img src="previews/pages/ripple-grid.webp" alt="波纹点阵" width="100%"></a><br><b>波纹点阵</b><br>做一片点阵波纹。规则排列的圆点从某一点发出圆形的波，圆点按距离依次放大、变色再恢复。点击或鼠标位置可以再发出新的波，多道波相遇时叠加。</td><td width="50%" valign="top"><a href="pages/terrain-lines/"><img src="previews/pages/terrain-lines.webp" alt="山脉线条" width="100%"></a><br><b>山脉线条</b><br>做一幅线条山脉，像经典的脉冲星专辑封面。几十条横向折线逐行叠放，每条的起伏不同，前面的线遮住后面的线，整体缓缓向前流动。只用细线和背景色，克制而有力。</td></tr>
 <tr><td width="50%" valign="top"><a href="pages/isometric-city/"><img src="previews/pages/isometric-city.webp" alt="等距城市" width="100%"></a><br><b>等距城市</b><br>做一座等距视角的方块城市。高低不同的方块从地面依次升起，每个方块的顶面和两个侧面用三种明度区分，个别方块用强调色。镜头缓慢旋转或漂移，整体像一幅会生长的城市模型。</td><td width="50%"></td></tr>
+</table>
+
+## 画面转场
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/iris-wipe/"><img src="previews/pages/iris-wipe.webp" alt="圆形光圈转场" width="100%"></a><br><b>圆形光圈转场</b><br>做一个圆形光圈转场。先展示沙丘线条，随后圆形遮罩从画面偏右处扩张，露出另一幅潮汐画面。扩张时用细色环标出边缘，最后完全切入新画面。</td><td width="50%" valign="top"><a href="pages/diagonal-wipe/"><img src="previews/pages/diagonal-wipe.webp" alt="斜切擦除转场" width="100%"></a><br><b>斜切擦除转场</b><br>做一个对角线擦除转场。第二幅画面从左上方向右下方逐步覆盖第一幅画面，边界是一条细亮线，线条平稳加速后缓缓离场。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/tile-wipe/"><img src="previews/pages/tile-wipe.webp" alt="马赛克拼块转场" width="100%"></a><br><b>马赛克拼块转场</b><br>做一个马赛克切换效果。两幅画面严格对齐，把第二幅切成规则方格，以随机但可复现的顺序依次横向展开，像一块块替换旧画面，最后恢复为完整画面。</td><td width="50%" valign="top"><a href="pages/shutter-wipe/"><img src="previews/pages/shutter-wipe.webp" alt="横向百叶窗转场" width="100%"></a><br><b>横向百叶窗转场</b><br>做一个百叶窗转场。把屏幕切成八条横带，相邻横带朝相反方向擦出新画面，加入细微延迟，直到所有横带对齐。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/page-fold/"><img src="previews/pages/page-fold.webp" alt="翻页卷角" width="100%"></a><br><b>翻页卷角</b><br>做一个纸张翻页效果。前一幕从右边折起，移动中的折面要有渐变和投影，纸边扫过后露出下一幅画面。</td><td width="50%"></td></tr>
+</table>
+
+## 字体变形与字效
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/letter-scramble/"><img src="previews/pages/letter-scramble.webp" alt="字符解码" width="100%"></a><br><b>字符解码</b><br>做一段字符解码动画。等宽槽位先以适中的频率切换符号，然后按从左到右的顺序锁定为目标单词。每锁定一格，点亮该槽位下的短线。</td><td width="50%" valign="top"><a href="pages/type-weight/"><img src="previews/pages/type-weight.webp" alt="字重呼吸" width="100%"></a><br><b>字重呼吸</b><br>让一个醒目的单词像呼吸一样变化。字重从细逐渐过渡到粗，字形同步拉宽，再回到起始状态。下方短线显示这一轮呼吸的幅度。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/type-orbit/"><img src="previews/pages/type-orbit.webp" alt="文字绕轨" width="100%"></a><br><b>文字绕轨</b><br>做一个环形文字效果。把一行文字拆成独立字符，沿椭圆均匀排列并绕中心旋转。字符朝向随切线变化，轨道轮廓轻微起伏。</td><td width="50%" valign="top"><a href="pages/type-echo/"><img src="previews/pages/type-echo.webp" alt="描边文字回声" width="100%"></a><br><b>描边文字回声</b><br>做一个文字回声效果。实心标题保持在前景，后方多层同形描边以不同延迟向下和向右散开。越远的描边越浅，让字形有纵深感。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/type-underline/"><img src="previews/pages/type-underline.webp" alt="手绘下划线" width="100%"></a><br><b>手绘下划线</b><br>做一个标题标记效果。一条有轻微弧度的粗手绘线从左往右画出，墨线下方保留版式基准线，上方标题随绘制进度从浅色转为亮色。</td><td width="50%"></td></tr>
+</table>
+
+## 几何与生成图形
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/shape-morph/"><img src="previews/pages/shape-morph.webp" alt="几何轮廓变形" width="100%"></a><br><b>几何轮廓变形</b><br>做一组连续变形的同心几何轮廓。在相同角度上插值各图形的半径，让三角形逐步变成四边形、六边形，最后接近圆形。中心显示当前形态。</td><td width="50%" valign="top"><a href="pages/harmonic-curve/"><img src="previews/pages/harmonic-curve.webp" alt="李萨如曲线" width="100%"></a><br><b>李萨如曲线</b><br>做一个李萨如曲线绘制器。用频率比为三比二的两个正弦振动控制横纵坐标，改变相位差，同时让亮点牵着线迹逐步画完整条曲线。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/spirograph/"><img src="previews/pages/spirograph.webp" alt="旋轮线绘图" width="100%"></a><br><b>旋轮线绘图</b><br>做一个旋轮线绘图动画。一个光点跟随两组不同速率的圆周运动，逐步拉出交叠的彩色线条，线条每隔一段换色，最终闭合成几何花环。</td><td width="50%" valign="top"><a href="pages/kaleidoscope/"><img src="previews/pages/kaleidoscope.webp" alt="镜像万花筒" width="100%"></a><br><b>镜像万花筒</b><br>做一个万花筒效果。把同一组彩色菱形在十二个扇区交替镜像，始终保持放射对称。菱形沿径向依次移动并改变明暗，形成连续流动的纹样。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/recursive-tree/"><img src="previews/pages/recursive-tree.webp" alt="分形树生长" width="100%"></a><br><b>分形树生长</b><br>做一个分形树生长动画。从主干开始，每根分支长满后再分成两根更短、更细的枝条，递归多层，末梢出现小光点。让树梢随时间轻摆。</td><td width="50%"></td></tr>
+</table>
+
+## 光影与光学
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/prism-split/"><img src="previews/pages/prism-split.webp" alt="三棱镜分光" width="100%"></a><br><b>三棱镜分光</b><br>做一个三棱镜分光示意。细白光从左侧射入，进入三角棱镜后改变方向，在右侧出射点分成七道逐渐拉开的彩色光束。</td><td width="50%" valign="top"><a href="pages/light-trails/"><img src="previews/pages/light-trails.webp" alt="长曝光光轨" width="100%"></a><br><b>长曝光光轨</b><br>做一组长曝光光轨。六个发光点沿不同大小的曲线移动，轨迹近处粗亮、远处变细变暗，像相机记录下的一段段光线。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/moire-drift/"><img src="previews/pages/moire-drift.webp" alt="摩尔纹干涉" width="100%"></a><br><b>摩尔纹干涉</b><br>做一个摩尔纹动画。在圆形视窗内叠放两组间距接近的平行条纹，缓慢转动和平移其中一组，让干涉产生的宽条带随之移动。</td><td width="50%" valign="top"><a href="pages/holographic-sweep/"><img src="previews/pages/holographic-sweep.webp" alt="全息镭射扫光" width="100%"></a><br><b>全息镭射扫光</b><br>做一张全息材质样卡。斜纹固定在卡片表面，彩色渐变带随着模拟角度改变位置和方向，卡片下方实时显示角度。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/chromatic-shift/"><img src="previews/pages/chromatic-shift.webp" alt="色差分离" width="100%"></a><br><b>色差分离</b><br>做一个低频色差动画。中央线框的两层彩色轮廓向左右分离，中央轮廓保持清晰，几根短扫描线在偏移时出现，随后轮廓重新对齐。</td><td width="50%"></td></tr>
+</table>
+
+## 物理与机械运动
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/spring-settle/"><img src="previews/pages/spring-settle.webp" alt="阻尼弹簧" width="100%"></a><br><b>阻尼弹簧</b><br>做一个阻尼弹簧示意。弹簧拖动色块伸出并越过目标位置，然后来回摆动，振幅逐次减小。下方同步画出位移曲线。</td><td width="50%" valign="top"><a href="pages/newtons-cradle/"><img src="previews/pages/newtons-cradle.webp" alt="牛顿摆" width="100%"></a><br><b>牛顿摆</b><br>做一排五球牛顿摆。左端球落下碰到中间球后，右端球飞起，回落后再由左端飞起。悬线长度保持一致，球面有小高光。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/bounce-squash/"><img src="previews/pages/bounce-squash.webp" alt="弹跳与挤压" width="100%"></a><br><b>弹跳与挤压</b><br>让一个小球沿一连串逐渐变矮的抛物线向前弹跳。触地时横向挤压，升起时恢复圆形，地面的影子随球体形状变化，背景留下运动路径。</td><td width="50%" valign="top"><a href="pages/domino-chain/"><img src="previews/pages/domino-chain.webp" alt="多米诺连锁" width="100%"></a><br><b>多米诺连锁</b><br>做一排多米诺骨牌。每块牌围绕靠近地面的支点旋转，前一块倒向下一块后触发后续倒伏，底部同步更新已经倒下的数量。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/magnetic-field/"><img src="previews/pages/magnetic-field.webp" alt="磁场铁屑" width="100%"></a><br><b>磁场铁屑</b><br>做一个磁场可视化。用一片短线表示各点场方向，把两个磁极沿相反方向缓慢移动，场强变化时短线平滑转动并按距离换色。</td><td width="50%"></td></tr>
+</table>
+
+## 自然与天气
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/ocean-swell/"><img src="previews/pages/ocean-swell.webp" alt="海面涌浪" width="100%"></a><br><b>海面涌浪</b><br>做一片插画式海面。用多层不同振幅和相位的波浪线组成远近水面，波峰随时间推移，远处留一轮圆日作对照。</td><td width="50%" valign="top"><a href="pages/rain-puddles/"><img src="previews/pages/rain-puddles.webp" alt="雨滴落地" width="100%"></a><br><b>雨滴落地</b><br>做一场雨。斜向细线随机从画面上方落下，到达各自的着地点后变成向外扩张的椭圆水圈。越靠近前景的水圈越显眼。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/snow-drift/"><img src="previews/pages/snow-drift.webp" alt="分层飘雪" width="100%"></a><br><b>分层飘雪</b><br>做一幅带两层山脊的雪夜景。用远、中、近三层雪粒营造景深，近处雪粒大、下落快，远处细小缓慢，各层都受轻微侧风影响。</td><td width="50%" valign="top"><a href="pages/petal-bloom/"><img src="previews/pages/petal-bloom.webp" alt="花瓣绽放" width="100%"></a><br><b>花瓣绽放</b><br>做一个花朵开放动画。把花瓣排成多个错开的同心轮，花瓣从花蕊处伸长并舒展，相邻层之间有短暂延迟，整朵花轻轻转动。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/solar-eclipse/"><img src="previews/pages/solar-eclipse.webp" alt="日食与日冕" width="100%"></a><br><b>日食与日冕</b><br>做一幅日食示意。深色月面横穿太阳，经过中心时短暂遮住大部分日面，只留下光环和放射状日冕，随后继续滑出。</td><td width="50%"></td></tr>
+</table>
+
+## 粒子与空间运动
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/firework-burst/"><img src="previews/pages/firework-burst.webp" alt="烟花爆裂" width="100%"></a><br><b>烟花爆裂</b><br>做几朵分时升空的烟花。每朵烟花先以一条亮迹上升，达到顶点后向四周炸开，火星沿弧线下坠并留下渐淡的尾巴。</td><td width="50%" valign="top"><a href="pages/particle-vortex/"><img src="previews/pages/particle-vortex.webp" alt="粒子旋涡" width="100%"></a><br><b>粒子旋涡</b><br>做一个粒子旋涡。多股彩色粒子从中心出发，沿螺旋轨迹向外扩散。粒子亮度先升后降，整体始终保持旋转。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/pixel-dissolve/"><img src="previews/pages/pixel-dissolve.webp" alt="像素解体" width="100%"></a><br><b>像素解体</b><br>做一个像素解体效果。先用小方块拼成实心菱形，再让方块按不同延迟脱离，沿斜向飞散，同时缩小、淡出。</td><td width="50%" valign="top"><a href="pages/star-warp/"><img src="previews/pages/star-warp.webp" alt="超空间星跃" width="100%"></a><br><b>超空间星跃</b><br>做一个穿越星空的效果。星点从画面中央出现，靠近边缘时加速并拉长成放射状光线，离开画面后再在远处补入新星点。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/particle-fountain/"><img src="previews/pages/particle-fountain.webp" alt="粒子喷泉" width="100%"></a><br><b>粒子喷泉</b><br>做一个粒子喷泉。颗粒从中央喷口连续喷出，按照不同的高度与侧向速度运动，达到最高处后落下，越接近落点越淡。</td><td width="50%"></td></tr>
+</table>
+
+## 指针与界面反馈
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/magnetic-cursor/"><img src="previews/pages/magnetic-cursor.webp" alt="磁吸点阵" width="100%"></a><br><b>磁吸点阵</b><br>做一个磁吸点阵。离光标越近的圆点越向光标偏移，同时放大和换色，远处点保持原位。没有输入时用自动光标演示。</td><td width="50%" valign="top"><a href="pages/cursor-spotlight/"><img src="previews/pages/cursor-spotlight.webp" alt="追光扫描" width="100%"></a><br><b>追光扫描</b><br>做一面暗色字符墙。圆形光束跟随指针移动，照亮附近的字符，亮度随与光心的距离自然衰减。没有输入时让光束自己巡游。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/ink-stamp/"><img src="previews/pages/ink-stamp.webp" alt="点击溅墨" width="100%"></a><br><b>点击溅墨</b><br>做一个点击溅墨效果。在点击位置生成不规则的墨点群，让大墨滴留在近处、小墨滴飞得更远，然后一起淡出。无输入时自动示范一次。</td><td width="50%" valign="top"><a href="pages/spring-toggle/"><img src="previews/pages/spring-toggle.webp" alt="弹性开关" width="100%"></a><br><b>弹性开关</b><br>做一个带弹性反馈的开关。开启和关闭时圆形滑块横向移动并轻微过冲，底色和状态文字同步更新。初始阶段自动切换几次。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/elastic-sling/"><img src="previews/pages/elastic-sling.webp" alt="拖拽弹力绳" width="100%"></a><br><b>拖拽弹力绳</b><br>做一个弹力绳拖拽示例。两端固定，中间的球随指针移动带动绳索拉伸。松开后球围绕原点振荡，直到恢复静止。</td><td width="50%"></td></tr>
+</table>
+
+## 动态图表进阶
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/bubble-evolution/"><img src="previews/pages/bubble-evolution.webp" alt="气泡散点演进" width="100%"></a><br><b>气泡散点演进</b><br>做一张气泡散点图，用位置表示两个维度，圆面积表示第三个维度。年份变化时圆连续移动和缩放，并用细线连到原始位置。</td><td width="50%" valign="top"><a href="pages/waterfall-bridge/"><img src="previews/pages/waterfall-bridge.webp" alt="增减瀑布图" width="100%"></a><br><b>增减瀑布图</b><br>做一张瀑布图。从初始值开始，按顺序画出增加项和减少项，使用不同颜色并用短线连到下一项，最后显示总计柱。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/candle-tape/"><img src="previews/pages/candle-tape.webp" alt="K 线走时" width="100%"></a><br><b>K 线走时</b><br>做一张会逐根长出的 K 线图。每根蜡烛先长出实体，再显出上下影线。上涨与下跌使用不同颜色，横轴固定以便对比。</td><td width="50%" valign="top"><a href="pages/streamgraph/"><img src="previews/pages/streamgraph.webp" alt="流带面积图" width="100%"></a><br><b>流带面积图</b><br>做一张流带面积图。不同系列绕中心线堆叠，用连续曲线表达变化。一条竖线沿时间轴缓慢扫描，逐步露出后面的所有流带。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/waffle-shift/"><img src="previews/pages/waffle-shift.webp" alt="百格占比切换" width="100%"></a><br><b>百格占比切换</b><br>做一张百格占比图。用十乘十的格子代表百分比，三个类别各用一种颜色。份额改变时让对应格子依次换色，旁边的百分数和格子数量保持一致。</td><td width="50%"></td></tr>
 </table>
 
 ## 工具

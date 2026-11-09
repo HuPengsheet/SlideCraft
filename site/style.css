@@ -42,8 +42,14 @@ code { font: 0.9em var(--mono); background: var(--paper-2); padding: 1px 6px; bo
 .bar { position: sticky; top: 56px; z-index: 15; display: flex; gap: 18px; align-items: center; justify-content: space-between;
   padding: 12px var(--pad); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px);
   border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.pills { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
-.pills::-webkit-scrollbar { display: none; }
+.pill-strip { display: flex; flex: 1; min-width: 0; align-items: center; gap: 6px; }
+.pills { display: flex; flex: 1; min-width: 0; gap: 8px; overflow-x: auto;
+  overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.pill-arrow { display: grid; flex: none; place-items: center; width: 34px; height: 34px; padding: 0;
+  border: 1px solid var(--line); border-radius: 50%; background: transparent; font-size: 23px; line-height: 1; }
+.pill-arrow:hover:not(:disabled) { border-color: var(--ink); background: var(--paper-2); }
+.pill-arrow:disabled { opacity: .35; cursor: default; }
+.pill:focus-visible, .pill-arrow:focus-visible { outline: 2px solid var(--red); outline-offset: -3px; }
 .pill { flex: none; padding: 7px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; font-size: 13px; color: var(--soft); transition: .15s; }
 .pill:hover { border-color: var(--ink); color: var(--ink); }
 .pill.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
@@ -119,7 +125,7 @@ code { font: 0.9em var(--mono); background: var(--paper-2); padding: 1px 6px; bo
   .search input { width: 110px; }
   .links a:not(#gh) { display: none; }
 }
-@media (max-width: 640px) { .bar { flex-direction: column; align-items: stretch; } .search input { width: 100%; } }
+@media (max-width: 640px) { .bar { flex-direction: column; align-items: stretch; } .search input { width: 100%; min-width: 0; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } .card { opacity: 1; transform: none; } html { scroll-behavior: auto; } }
 
 .links a.cur { color: var(--ink); }

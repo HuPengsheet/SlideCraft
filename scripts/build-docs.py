@@ -70,9 +70,11 @@ out.append("""## 工具
 open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8").write("\n".join(out))
 
 prompts = {i["slug"]: i["prompt"] for c in cats for i in c["items"]}
+groups = {c["name"]: {i["slug"]: i["title"] for i in c["items"]} for c in cats}
 open(os.path.join(ROOT, "pages", "prompts.js"), "w", encoding="utf-8").write(
     "/* 由 scripts/build-docs.py 从 PROMPTS.md 生成，不要手改。 */\nwindow.PROMPTS = "
-    + json.dumps(prompts, ensure_ascii=False, indent=1) + ";\n")
+    + json.dumps(prompts, ensure_ascii=False, indent=1) + ";\nwindow.PAGE_GROUPS = "
+    + json.dumps(groups, ensure_ascii=False, indent=1) + ";\n")
 os.makedirs(os.path.join(ROOT, "site"), exist_ok=True)
 open(os.path.join(ROOT, "site", "data.js"), "w", encoding="utf-8").write(
     "/* 由 scripts/build-docs.py 从 PROMPTS.md 生成，不要手改。 */\nwindow.SITE = "

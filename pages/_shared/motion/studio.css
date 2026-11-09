@@ -1,0 +1,49 @@
+.motion-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 33em;
+  gap: 2.35em;
+  align-items: center;
+  padding: 3.2em;
+  background: radial-gradient(ellipse at 92% 25%, color-mix(in srgb, var(--motion-ink) 10%, var(--bg)), var(--bg) 65%);
+}
+.motion-copy { min-width: 0; }
+.motion-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .75em;
+  font: 600 .68em/1.5 var(--font-mono);
+  letter-spacing: .14em;
+  color: var(--motion-ink);
+}
+.motion-kicker::before { content: ""; width: 1.8em; border-top: 1px solid; }
+.motion-copy h1 {
+  font: 800 3.3em/1.04 var(--font-display);
+  letter-spacing: -.06em;
+  margin: .3em 0 .38em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.motion-copy p { margin: 0; max-width: 21em; font-size: .92em; color: var(--fg-soft); text-wrap: pretty; }
+.motion-copy .motion-hint { margin-top: 1.35em; font-size: .72em; color: var(--motion-ink); }
+.motion-screen {
+  margin: 0;
+  overflow: hidden;
+  border-radius: .85em;
+  border: 1px solid color-mix(in srgb, var(--motion-ink) 28%, var(--line));
+  box-shadow: 0 1em 2.5em -.9em color-mix(in srgb, var(--motion-ink) 15%, transparent);
+  background: var(--surface);
+}
+.motion-screen canvas { display: block; width: 100%; aspect-ratio: 3 / 2; }
+.motion-screen canvas[data-interactive] { cursor: crosshair; touch-action: none; }
+.motion-screen canvas:focus-visible { outline: 2px solid var(--motion-ink); outline-offset: -3px; }
+.motion-screen figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .85em 1.3em;
+  border-top: 1px solid var(--line);
+  color: var(--fg-soft);
+  font: 500 .66em/1.2 var(--font-mono);
+  letter-spacing: .14em;
+}
+.motion-screen figcaption span:last-child { color: var(--motion-ink); }

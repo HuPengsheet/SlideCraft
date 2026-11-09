@@ -93,8 +93,7 @@
 
 <script src="prompts.js"></script>
 <script>
-/* ===== 目录：新增页面只需在这里加一行 =====
- * dir 是 pages/ 下的目录名；shared:false 表示该页面尚未迁移到共用底座，主题/速度参数不生效。 */
+/* 既有示例保留这里的简短说明。新示例从 PROMPTS.md 生成的目录中载入。 */
 const GROUPS = [
   { name: "开场与封面", items: [
     { dir: "hero-intro", title: "开场封面", desc: "粒子、渐变、网格、圆环背景" },
@@ -186,6 +185,16 @@ const GROUPS = [
     { dir: "isometric-city", title: "等距城市", desc: "等距方块城市升起" }
   ]}
 ];
+const legacyDirs = new Set(GROUPS.flatMap((group) => group.items.map((item) => item.dir)));
+for (const [name, entries] of Object.entries(window.PAGE_GROUPS)) {
+  const items = Object.entries(entries).filter(([dir]) => !legacyDirs.has(dir)).map(([dir, title]) => ({
+    dir, title, desc: window.PROMPTS[dir].split("。")[0]
+  }));
+  if (!items.length) continue;
+  const group = GROUPS.find((entry) => entry.name === name);
+  if (group) group.items.push(...items);
+  else GROUPS.push({ name, items });
+}
 const THEMES = ["dark", "light", "paper", "neon", "terminal"];
 const SPEEDS = [0.5, 1, 2, 4];
 
