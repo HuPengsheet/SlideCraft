@@ -1,67 +1,46 @@
-/* 复刻自「小孔的 GitHub 周报」片头：20 段效果轮播，每段 10 秒。
- * 片段取自本仓库的 pages/，配色与文案按原片风格重写。 */
+/* 20 段效果轮播的配置。每段 10 秒。
+ * slug 必须是 pages/ 下真实存在的目录；标题和说明文字从 data.js（SITE）里按 slug 取，
+ * 这里只写英文副标题、三个标签和一组配色（第 2 个颜色是该段的强调色）。 */
 const REEL = {
   dur: 10,          // 每段时长（秒）
   intro: 5,         // 片头时长
   outro: 6,         // 片尾时长
   theme: "dark",
   items: [
-    { slug: "isometric-city", title: "等轴 2.5D", en: "ISOMETRIC",
-      desc: "本周热榜长成开源科技园的三座楼，贡献热力图铺满广场，天线塔与信号环一同亮起。",
-      tags: ["开源科技园", "热力图广场", "等轴空间"], pal: ["#f4f7f2", "#b7d9c4", "#1f6b4a", "#e3b341", "#ffffff"] },
-    { slug: "tile-wipe", title: "扁平矢量", en: "FLAT VECTOR",
-      desc: "手机里的贡献格子一路放大，进入小孔的工作室和绿色剪辑台，再回到手机。",
-      tags: ["逐层缩放", "工作室", "矢量插画"], pal: ["#e9f6ee", "#7dcea0", "#1e8449", "#f4d03f", "#ffffff"] },
-    { slug: "terrain-lines", title: "线条动画", en: "LINE ART",
-      desc: "绿色线条绘出贡献热力图地形，一束光沿着小径走向中央的奇异点金环。",
-      tags: ["贡献地形", "光迹走向", "透视滑行"], pal: ["#0b1f14", "#1abc9c", "#27ae60", "#f1c40f", "#ecf0f1"] },
-    { slug: "cube-rotate", title: "3D 渲染", en: "3D RENDER",
-      desc: "绿白六边形台座重新组合，粘土质感的小孔站上第一名，金环在一旁落定。",
-      tags: ["六边形台座", "粘土小孔", "柔和阴影"], pal: ["#f7f4ec", "#a3e4b8", "#16a085", "#f39c12", "#2c3e50"] },
-    { slug: "firework-burst", title: "形变动画", en: "SHAPE MORPH",
-      desc: "一万两千个光点一次次变形：GitHub → 贡献热力图 → 周热点 → 小孔的头像，每次都爆起一阵气泡。",
-      tags: ["粒子头像", "烟花爆开", "弹性落定"], pal: ["#0a0f0c", "#2ecc71", "#9b59b6", "#e74c3c", "#f1c40f"] },
-    { slug: "brush-stroke", title: "贴纸风科普", en: "STICKER EXPLAINER",
-      desc: "薄荷绿剪贴簿上贴下鼠标、麦克风、贡献热力图、剪辑图标和小孔头像，箭头串起创作步骤。",
-      tags: ["贴纸贴纸", "横拉揭示", "荧光笔"], pal: ["#eafaf1", "#58d68d", "#1abc9c", "#f4d03f", "#ffffff"] },
-    { slug: "matrix-rain", title: "赛博朋克 HUD", en: "CYBERPUNK HUD",
-      desc: "镜头穿行绿色点云数据中心，扫描机柜并读取本周 GitHub 榜单，最后锁定第一名。",
-      tags: ["点云机柜", "矩阵绿", "目标锁定"], pal: ["#04140c", "#00ff9c", "#39ff14", "#f1c40f", "#ecf0f1"] },
-    { slug: "polaroid-scatter", title: "拼贴剪贴", en: "COLLAGE CUT-OUT",
-      desc: "浅色纸上贴入本周项目的页面示意卡片，小孔头像拍立得和手绘标记组成新的创作墙。",
-      tags: ["浅色纸张", "撕纸纤维", "头像拍立得"], pal: ["#fbf8f1", "#d5f5e3", "#27ae60", "#e3b341", "#f5d6c6"] },
-    { slug: "aurora-bg", title: "弥散渐变", en: "AURORA GLASS",
-      desc: "锁屏大字是本周第一的 239K 星，玻璃球掠过时真实地折射放大，播放卡是小孔的 AI 奇异点头像。",
-      tags: "彩虹色晕|SDF 拟合|液态玻璃".split("|"), pal: ["#6c5ce7", "#00cec9", "#fd79a8", "#fdcb6e", "#dfe6e9"] },
-    { slug: "shape-morph", title: "几何构成", en: "BAUHAUS",
-      desc: "贡献格子、鼠标轮廓与奇异点金环悬浮转动，在一个角度对齐为绿黑白海报。",
-      tags: ["新几何构图", "错位对齐", "胶合板材质"], pal: ["#f4f1ea", "#2ecc71", "#145a32", "#f1c40f", "#1c1c1c"] },
-    { slug: "vhs-glitch", title: "复古\nSynthwave", en: "SYNTHWAVE VHS",
-      desc: "绿青色霓虹铺成数据波浪，镜头朝奇异点金环飞，金属字经过 VHS 录像带后期。",
-      tags: ["数据波浪", "金环面具", "VHS 后期"], pal: ["#12081f", "#00ff9c", "#ff2bd6", "#f1c40f", "#ecf0f1"] },
-    { slug: "star-warp", title: "像素风", en: "PIXEL ART",
-      desc: "黑框眼镜、黑夹克的像素小孔穿过开源城市与数据机房，收集三颗星，抵达奇异点金环。",
-      tags: "像素小孔|机器读卡|星星收集".split("|"), pal: ["#0b1a12", "#2ecc71", "#27ae60", "#f1c40f", "#ecf0f1"] },
-    { slug: "pixel-dissolve", title: "液态流动", en: "LIQUID MOTION",
-      desc: "绿色液体玻璃跃起、融合、凝成星星，再缓缓变成鼠标。",
-      tags: ["液体融合", "绿色玻璃", "星星变鼠标"], pal: ["#0c1410", "#2ecc71", "#58d68d", "#f1c40f", "#ecf0f1"] },
-    { slug: "chat-bubbles", title: "综艺花字", en: "VARIETY CAPTIONS",
-      desc: "桌上的笔记本显示开源项目的视觉演示，卡点弹幕和多层花字带出综艺感。",
-      tags: ["笔记本演示", "多层花字", "卡点弹幕"], pal: ["#f7f4ec", "#2ecc71", "#e74c3c", "#f1c40f", "#9b59b6"] },
-    { slug: "browser-demo", title: "真实页面\n2.5D 推镜", en: "PAGE CAMERA",
-      desc: "绿色主题的剪辑台拆成悬浮图层，时间线和监视器播放本次新做的手绘、等轴与像素画面。",
-      tags: ["绿色剪辑台", "新产品图层", "CSS 3D"], pal: ["#0e1a14", "#2ecc71", "#1abc9c", "#f1c40f", "#ecf0f1"] },
-    { slug: "newspaper-flip", title: "数据新闻\n编辑风", en: "EDITORIAL DATA", missing: true,
-      desc: "新排版的「小孔周报」用绿色强调本周 GitHub 热榜，镜头阅读真实榜单图表和项目摘要。",
-      tags: ["小孔周报", "真实周榜", "荧光笔"], pal: ["#fbf8f1", "#1e8449", "#145a32", "#e3b341", "#2c3e50"] },
-    { slug: "ink-bloom", title: "水墨国风", en: "INK WASH",
-      desc: "墨滴晕出城市天际线和天文台，保留纸张纤维、渲染雾气、毛笔题字与朱砂头像。",
-      tags: ["水墨城市", "天文台", "朱砂头像"], pal: ["#f4efe6", "#7f8c8d", "#2c3e50", "#c0392b", "#ecf0f1"] },
-    { slug: "spring-settle", title: "粘土定格", en: "CLAYMATION",
-      desc: "戴黑框眼镜、穿黑夹克的粘土小孔在桌前敲键盘，金色星星从创作中冒出。",
-      tags: ["粘土小孔", "桌前创作", "星星 120+"], pal: ["#f7f4ec", "#a3e4b8", "#16a085", "#f1c40f", "#2c3e50"] },
-    { slug: "globe-arcs", title: "蓝图工程图", en: "BLUEPRINT",
-      desc: "小孔的 AI 工作站分解为机箱、主板、风扇、内存和侧板，工程线框逐渐变成实体。",
-      tags: ["AI 工作站", "零件爆炸图", "图纸变实物"], pal: ["#0b1c33", "#5dade2", "#3498db", "#f1c40f", "#ecf0f1"] }
+    { slug: "isometric-city",    en: "ISOMETRIC",        tags: ["等距视角", "楼宇生长", "道路连线"],   pal: ["#f4f7f2", "#7fd1a3", "#1f6b4a", "#e3b341", "#ffffff"] },
+    { slug: "terrain-lines",     en: "LINE ART",         tags: ["山脉线条", "透视起伏", "单色描线"],   pal: ["#0b1f14", "#2fd6a0", "#1b8a63", "#e3b341", "#ecf0f1"] },
+    { slug: "particle-text",     en: "PARTICLE TYPE",    tags: ["粒子汇聚", "呼吸起伏", "鼠标冲散"],   pal: ["#08140f", "#4cf0b0", "#1abc9c", "#f1c40f", "#ecf0f1"] },
+    { slug: "shape-morph",       en: "SHAPE MORPH",      tags: ["轮廓变形", "平滑过渡", "几何图形"],   pal: ["#0a0f0c", "#3ddc97", "#9b59b6", "#e74c3c", "#f1c40f"] },
+    { slug: "polaroid-scatter",  en: "COLLAGE",          tags: ["拍立得", "随手散落", "纸张质感"],     pal: ["#fbf8f1", "#9fd9b6", "#27ae60", "#e3b341", "#f5d6c6"] },
+    { slug: "aurora-bg",         en: "AURORA GLASS",     tags: ["弥散渐变", "玻璃拟态", "缓慢流动"],   pal: ["#6c5ce7", "#a29bfe", "#00cec9", "#fd79a8", "#fdcb6e"] },
+    { slug: "matrix-rain",       en: "CYBERPUNK HUD",    tags: ["字符雨", "矩阵绿", "逐字打出"],       pal: ["#04140c", "#00ff9c", "#39ff14", "#f1c40f", "#ecf0f1"] },
+    { slug: "star-warp",         en: "HYPERSPACE",       tags: ["星点拉伸", "速度线", "纵深冲刺"],     pal: ["#080b1a", "#7fb2ff", "#5b8def", "#ffffff", "#f1c40f"] },
+    { slug: "cube-rotate",       en: "3D CUBE",          tags: ["立方体", "翻面切换", "透视旋转"],     pal: ["#f7f4ec", "#7fd1a3", "#16a085", "#f39c12", "#2c3e50"] },
+    { slug: "carousel-3d",       en: "3D CAROUSEL",      tags: ["环形排布", "景深虚化", "自动轮转"],   pal: ["#101a16", "#5ff0b0", "#16a085", "#f39c12", "#ecf0f1"] },
+    { slug: "neon-sign",         en: "NEON SIGN",        tags: ["霓虹灯管", "通电闪烁", "发光描边"],   pal: ["#12081f", "#ff4fd8", "#00e5ff", "#f1c40f", "#ecf0f1"] },
+    { slug: "vhs-glitch",        en: "SYNTHWAVE VHS",    tags: ["录像带", "色彩错位", "噪点扫描线"],   pal: ["#12081f", "#00ff9c", "#ff2bd6", "#f1c40f", "#ecf0f1"] },
+    { slug: "ripple-grid",       en: "RIPPLE GRID",      tags: ["点阵", "波纹扩散", "明暗起伏"],       pal: ["#0b1410", "#3ddc97", "#58d68d", "#f1c40f", "#ecf0f1"] },
+    { slug: "ink-bloom",         en: "INK WASH",         tags: ["水墨晕染", "宣纸底色", "东方留白"],   pal: ["#f4efe6", "#8aa39a", "#2c3e50", "#c0392b", "#ecf0f1"] },
+    { slug: "brush-stroke",      en: "CALLIGRAPHY",      tags: ["逐笔书写", "飞白", "墨色浓淡"],       pal: ["#f4efe6", "#c0392b", "#2c3e50", "#7f8c8d", "#ecf0f1"] },
+    { slug: "globe-arcs",        en: "GLOBE",            tags: ["旋转地球", "飞线弧", "点阵陆地"],     pal: ["#0b1c33", "#5dade2", "#3498db", "#f1c40f", "#ecf0f1"] },
+    { slug: "bento-grid",        en: "BENTO GRID",       tags: ["便当盒布局", "卡片依次入场", "数据面板"], pal: ["#0e1a14", "#3ddc97", "#1abc9c", "#f1c40f", "#ecf0f1"] },
+    { slug: "pixel-dissolve",    en: "PIXEL DISSOLVE",   tags: ["像素解体", "飘散", "重新聚合"],       pal: ["#0b1a12", "#2ecc71", "#27ae60", "#f1c40f", "#ecf0f1"] },
+    { slug: "newtons-cradle",    en: "PHYSICS",          tags: ["牛顿摆", "动量传递", "金属质感"],     pal: ["#10161a", "#9fb7c4", "#5f7d8c", "#f1c40f", "#ecf0f1"] },
+    { slug: "holographic-sweep", en: "HOLOGRAPHIC",      tags: ["镭射扫光", "彩虹渐变", "金属反光"],   pal: ["#10101e", "#b388ff", "#4cf0e0", "#ff8fd0", "#ecf0f1"] }
   ]
 };
+
+/* 标题和说明取自 SITE：说明用提示词的第 2 句起，凑到 60 字左右为止 */
+(() => {
+  const by = {};
+  for (const c of (window.SITE ? window.SITE.cats : [])) for (const i of c.items) by[i.slug] = i;
+  for (const it of REEL.items) {
+    const src = by[it.slug];
+    if (!src) { console.warn("reel: 未找到页面", it.slug); it.title = it.slug; it.desc = ""; continue; }
+    it.title = src.title;
+    const sents = src.prompt.split(/(?<=[。！])/).slice(1);
+    let d = "";
+    for (const s of sents) { if (d && (d + s).length > 72) break; d += s; }
+    it.desc = d || src.prompt;
+  }
+})();

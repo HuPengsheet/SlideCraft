@@ -50,7 +50,7 @@ body { display: grid; place-items: center; color: #eef4f0;
 .p-pal { display: flex; align-items: center; gap: 1.3em; margin-top: 1.5em; font-size: .8em; letter-spacing: .25em; font-weight: 700; color: #7c8a83; }
 .p-pal div { display: flex; gap: .6em; }
 .p-pal i { width: 2.1em; height: 2.1em; border-radius: 50%; border: 1px solid #ffffff22; }
-.p-now { position: absolute; left: 0; top: 46.3em; width: 24.5em; }
+.p-now { position: absolute; left: 0; top: 35.6em; width: 24.5em; }
 .p-now-row { display: flex; justify-content: space-between; font-size: .8em; letter-spacing: .25em; font-weight: 700; color: #8d9a93; }
 .p-track { height: .22em; margin-top: 1em; border-radius: 1em; background: #26302c; overflow: hidden; }
 .p-track div { width: 0; height: 100%; background: var(--acc); }
@@ -69,7 +69,7 @@ body { display: grid; place-items: center; color: #eef4f0;
 .o-mark i { width: 2.6em; height: 2.6em; border-radius: .6em; background: #07110c; transform: rotate(45deg); }
 .outro h1 { font-size: 5em; font-weight: 800; letter-spacing: .02em; }
 .outro .o-dots { margin: 2.6em 0 2.6em; gap: .7em; }
-.o-dots i { width: 1.6em; height: 1.6em; display: grid; place-items: center; font-style: normal; font-size: .55em; font-weight: 800; color: #07110c; }
+.o-dots i { width: 2.4em; height: 2.4em; display: grid; place-items: center; font-style: normal; font-size: .9em; font-weight: 800; color: #07110c; }
 .o-sub { font-size: 2em; color: #aab7b0; }
 .o-link { margin-top: 1em; font-size: 1.4em; letter-spacing: .12em; color: #6fa88e; }
 
