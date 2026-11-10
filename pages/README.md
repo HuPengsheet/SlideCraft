@@ -141,6 +141,36 @@
 | [terrain-lines](terrain-lines/) | 线条山脉 | 见 `config.js` 开头注释 |
 | [isometric-city](isometric-city/) | 等距方块城市升起 | 见 `config.js` 开头注释 |
 
+### 科技与代码
+
+| 页面 | 用途 | 关键字段 |
+|---|---|---|
+| [git-graph](git-graph/) | Git 分支生长、合并并打版本标签 | `branches[]`，`commits[]: {id,branch,msg,from,merge,tag}`，`stepMs` |
+| [neural-net](neural-net/) | 神经网络逐层前向传播，输出层高亮结果 | `layers[]: {name,nodes[]}`，`pulseMs`，`seed` |
+| [packet-network](packet-network/) | 拓扑图上数据包穿梭，丢包后重传 | `nodes[]`，`links[]`，`traffic[]: {path,label,drop}`，`hopMs` |
+| [code-diff](code-diff/) | 代码 Diff 删除与新增逐块动画 | `file`，`lines[]`（`" "`/`"-"`/`"+"` 开头，`{{ }}` 行内高亮），`stepMs`，`approve` |
+| [block-chain](block-chain/) | 区块依次出块，哈希滚动定格并链接 | `blocks[]: {data,hash}`，`difficulty`，`mineMs`，`seed` |
+
+### 复古与怀旧
+
+| 页面 | 用途 | 关键字段 |
+|---|---|---|
+| [crt-boot](crt-boot/) | CRT 开机，自检文字后出大标题 | `heading`，`bootLines[]`，`typeMs`，`brand`，`flicker` |
+| [film-leader](film-leader/) | 老电影倒数片头，切到标题卡 | `from`，`heading`，`grain`，`sepia` |
+| [neon-sign](neon-sign/) | 霓虹灯管逐段通电，单字闪烁 | `lines[]: {text,color}`，`sub`，`flicker`，`wall` |
+| [vhs-glitch](vhs-glitch/) | 录像带雪花、撕裂与色彩偏移 | `heading`，`osd`，`date`，`clock`，`counterStart`，`intensity` |
+| [vinyl-record](vinyl-record/) | 黑胶滑出旋转，歌词逐行高亮 | `album`，`artist`，`side`，`lines[]`，`beatMs`，`duration` |
+
+### 东方与节庆
+
+| 页面 | 用途 | 关键字段 |
+|---|---|---|
+| [ink-bloom](ink-bloom/) | 水墨晕染标题，墨滴落下晕开、标题逐字显出 | `eyebrow`/`title`/`subtitle`，`drops[]: {x,y,size,ink,color}`，`gap`，`seed` |
+| [brush-stroke](brush-stroke/) | 楷体大字按笔顺逐笔写出，末尾落款与印章 | `text`，`eyebrow`，`sign`，`seal`，`per` |
+| [scroll-unroll](scroll-unroll/) | 画轴左右展开露出卷面文字 | `title`，`lines[]`，`duration` |
+| [seal-stamp](seal-stamp/) | 印章压下留红印，可盖多枚 | `seals[]: {text,x,y,rot}`，`gap` |
+| [folding-fan](folding-fan/) | 扇骨依次旋开成扇面并显出文字 | `title`，`items[]`，`ribs` |
+
 各页面的完整字段、默认值和取值范围见其 `config.js` 开头的注释。
 
 ## 动效研究系列

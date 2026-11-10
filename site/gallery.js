@@ -13,30 +13,15 @@ $("#gallery").innerHTML = cats.map((c, ci) => `
           <img class="poster" src="posters/${i.slug}.jpg" alt="${esc(i.title)}" loading="lazy" decoding="async">
           <span class="tag">点击运行</span>
         </div>
-        <h3>${esc(i.title)}</h3>
-        <p>${esc(summary(i.prompt))}</p>
+        <div class="body"><h3>${esc(i.title)}</h3><p>${esc(summary(i.prompt))}</p></div>
       </button>`).join("")}
     </div>
   </section>`).join("");
 
-const pills = $("#pills");
-pills.innerHTML = `<button class="pill on" data-ci="all">全部<small>${all.length}</small></button>` +
-  cats.map((c, ci) => `<button class="pill" data-ci="${ci}">${esc(c.name)}<small>${c.items.length}</small></button>`).join("");
-
-const pillsPrev = $("#pillsPrev"), pillsNext = $("#pillsNext");
+const nav = $("#cats");
+nav.innerHTML = `<button class="category-link is-active" data-ci="all"><span>全部</span><small>${all.length}</small></button>` +
+  cats.map((c, ci) => `<button class="category-link" data-ci="${ci}"><span>${esc(c.name)}</span><small>${c.items.length}</small></button>`).join("");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-function updatePillArrows() {
-  pillsPrev.disabled = pills.scrollLeft <= 1;
-  pillsNext.disabled = pills.scrollWidth - pills.clientWidth - pills.scrollLeft <= 1;
-}
-function scrollPills(left) {
-  pills.scrollBy({ left, behavior: reducedMotion.matches ? "instant" : "smooth" });
-}
-pillsPrev.onclick = () => scrollPills(-pills.clientWidth * .8);
-pillsNext.onclick = () => scrollPills(pills.clientWidth * .8);
-pills.addEventListener("scroll", updatePillArrows, { passive: true });
-new ResizeObserver(updatePillArrows).observe(pills);
-updatePillArrows();
 
 function ensureLive(card) {
   const th = $(".thumb", card);
@@ -74,7 +59,7 @@ $("#gallery").addEventListener("click", (e) => { const c = e.target.closest(".ca
 const io = new IntersectionObserver((es) => es.forEach((en) => {
   if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
 }), { rootMargin: "0px 0px -6% 0px" });
-document.querySelectorAll(".card").forEach((c, i) => { c.style.transitionDelay = (i % 3) * 70 + "ms"; io.observe(c); });
+document.querySelectorAll(".card").forEach((c, i) => { c.style.setProperty("--d", (i % 3) * 70 + "ms"); io.observe(c); });
 
 /* ---------- 筛选、搜索、滚动高亮 ---------- */
 let filterCi = "all";
@@ -95,33 +80,43 @@ function applyFilter() {
   });
   $("#empty").hidden = shown > 0;
 }
-pills.addEventListener("click", (e) => {
-  const b = e.target.closest(".pill");
+const setActive = (match) => document.querySelectorAll(".category-link").forEach((p) => p.classList.toggle("is-active", match(p)));
+nav.addEventListener("click", (e) => {
+  const b = e.target.closest(".category-link");
   if (!b) return;
   filterCi = b.dataset.ci;
-  document.querySelectorAll(".pill").forEach((p) => p.classList.toggle("on", p === b));
+  setActive((p) => p === b);
   applyFilter();
-  const viewport = pills.getBoundingClientRect();
-  const bounds = b.getBoundingClientRect();
-  if (bounds.left < viewport.left) scrollPills(bounds.left - viewport.left);
-  else if (bounds.right > viewport.right) scrollPills(bounds.right - viewport.right);
-  if (filterCi !== "all") scrollTo({ top: $("#bar").offsetTop - 56, behavior: "smooth" });
+  if (!matchMedia("(min-width: 901px)").matches) b.scrollIntoView({ inline: "center", block: "nearest", behavior: reducedMotion.matches ? "instant" : "smooth" });
+  const intro = $(".intro");
+  const y = intro.getBoundingClientRect().bottom + scrollY - 90;
+  if (scrollY > y) scrollTo({ top: Math.max(0, y), behavior: reducedMotion.matches ? "instant" : "smooth" });
 });
 $("#q").addEventListener("input", applyFilter);
 
-const top = $(".top");
-addEventListener("scroll", () => top.classList.toggle("stuck", scrollY > 8), { passive: true });
+/* ⌘K / Ctrl+K 聚焦搜索 */
+$("#kbd").textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘ K" : "Ctrl K";
+addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); $("#q").focus(); $("#q").select(); }
+});
 
-/* 滚动到某一类时，高亮对应的分类按钮（仅在“全部”模式下） */
-const spy = new IntersectionObserver((es) => {
+/* 滚动到某一类时，高亮对应的分类按钮（仅在“全部”模式下）；回到页首时高亮“全部” */
+let spyCi = null;
+const atTop = () => scrollY < $("#gallery").offsetTop - 200;
+function syncActive() {
   if (filterCi !== "all") return;
+  const ci = atTop() || spyCi === null ? "all" : spyCi;
+  setActive((p) => p.dataset.ci === ci);
+}
+const spy = new IntersectionObserver((es) => {
   const vis = es.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-  if (!vis) return;
-  document.querySelectorAll(".pill").forEach((p) => p.classList.toggle("on", p.dataset.ci === vis.target.dataset.ci || (p.dataset.ci === "all" && scrollY < $("#gallery").offsetTop - 200)));
+  if (vis) spyCi = vis.target.dataset.ci;
+  syncActive();
 }, { rootMargin: "-30% 0px -60% 0px" });
 document.querySelectorAll(".sec").forEach((s) => spy.observe(s));
+addEventListener("scroll", syncActive, { passive: true });
 
 /* 支持 gallery.html#cat=N 直达某一类（从 1 开始） */
 const m = location.hash.match(/^#cat=(\d+)/);
-if (m && cats[+m[1] - 1]) { const b = document.querySelector(`.pill[data-ci="${+m[1] - 1}"]`); if (b) b.click(); }
+if (m && cats[+m[1] - 1]) { const b = document.querySelector(`.category-link[data-ci="${+m[1] - 1}"]`); if (b) b.click(); }
 })();

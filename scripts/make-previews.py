@@ -65,6 +65,12 @@ PAGES = {
     "ripple-grid": (7, ""),
     "terrain-lines": (6, ""),
     "isometric-city": (7, ""),
+    "git-graph": (10, ""), "neural-net": (9, ""), "packet-network": (10, ""), "code-diff": (9, ""),
+    "block-chain": (10, ""),
+    "crt-boot": (8, ""), "film-leader": (9, ""), "neon-sign": (7, ""), "vhs-glitch": (8, ""),
+    "vinyl-record": (9, ""),
+    "ink-bloom": (9, ""), "brush-stroke": (10, ""), "scroll-unroll": (7, ""), "seal-stamp": (7, ""),
+    "folding-fan": (8, ""),
 }
 HIDE_UI = ".sc-ctl,.ctl,.hint{display:none!important}"
 

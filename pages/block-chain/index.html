@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>区块链</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; justify-content: center; padding: 3em 4em; gap: 3em; }
+  .hd > * { animation: rise calc(.7s / var(--speed)) cubic-bezier(.2,.7,.2,1) both; }
+  .hd > :nth-child(2) { animation-delay: calc(.08s / var(--speed)); }
+  .hd > :nth-child(3) { animation-delay: calc(.16s / var(--speed)); }
+  @keyframes rise { from { opacity: 0; transform: translateY(.6em); } }
+
+  .chain { display: flex; align-items: center; justify-content: center; }
+  .blk { flex: 0 0 auto; width: 11.2em; padding: 1em 1.1em; display: flex; flex-direction: column; gap: .55em;
+    opacity: 0; transform: translateY(1.2em) scale(.94);
+    transition: opacity calc(.5s / var(--speed)), transform calc(.5s / var(--speed)) cubic-bezier(.2,.8,.2,1), border-color calc(.3s / var(--speed)), box-shadow calc(.3s / var(--speed)); }
+  .blk.on { opacity: 1; transform: none; }
+  .blk.mining { border-color: var(--accent-3); }
+  .blk.sealed { border-color: var(--accent); box-shadow: 0 0 1.4em -.2em color-mix(in srgb, var(--accent) 45%, transparent); }
+  .blk .top { display: flex; justify-content: space-between; align-items: baseline; }
+  .blk .no { font: 700 1.05em var(--font-mono); color: var(--accent); }
+  .blk .st { font: .62em var(--font-mono); color: var(--fg-soft); letter-spacing: .06em; }
+  .blk.mining .st { color: var(--accent-3); }
+  .blk.sealed .st { color: var(--good); }
+  .blk .data { font-size: .78em; line-height: 1.4; min-height: 2.8em; }
+  .fld { display: flex; flex-direction: column; gap: .15em; }
+  .fld .k { font: .56em var(--font-mono); color: var(--fg-soft); letter-spacing: .1em; text-transform: uppercase; }
+  .fld .v { font: .74em var(--font-mono); color: var(--fg); white-space: nowrap; overflow: hidden; }
+  .fld.prev .v { color: var(--fg-soft); }
+  .fld.prev.lit .v { color: var(--accent-2); }
+  .fld.hash .v .z { color: var(--good); font-weight: 700; }
+  .blk.mining .fld.hash .v { color: var(--accent-3); }
+  .fld.nonce .v { color: var(--fg-soft); }
+
+  .link { flex: 0 0 auto; width: 2.8em; height: 2px; position: relative; background: var(--line); }
+  .link::after { content: ""; position: absolute; inset: 0; background: var(--accent-2); transform-origin: left; transform: scaleX(0);
+    transition: transform calc(.5s / var(--speed)) ease-out; }
+  .link.on::after { transform: scaleX(1); }
+  .link i { position: absolute; top: 50%; width: .9em; height: .55em; border: 2px solid var(--line); border-radius: .3em; transform: translate(-50%, -50%);
+    background: var(--bg); transition: border-color calc(.3s / var(--speed)) calc(.3s / var(--speed)); }
+  .link i:nth-child(1) { left: 30%; } .link i:nth-child(2) { left: 70%; }
+  .link.on i { border-color: var(--accent-2); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>代码 Diff</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; flex-direction: column; justify-content: center; padding: 2.2em 6em; gap: 1.1em; }
+  .hd > * { animation: rise calc(.7s / var(--speed)) cubic-bezier(.2,.7,.2,1) both; }
+  .hd > :nth-child(2) { animation-delay: calc(.08s / var(--speed)); }
+  @keyframes rise { from { opacity: 0; transform: translateY(.6em); } }
+
+  .win { flex: 0 0 auto; display: flex; flex-direction: column; overflow: hidden; animation: rise calc(.7s / var(--speed)) calc(.15s / var(--speed)) cubic-bezier(.2,.7,.2,1) both; }
+  .bar { display: flex; align-items: center; gap: 1em; padding: .8em 1.2em; border-bottom: 1px solid var(--line); font: .85em var(--font-mono); }
+  .bar .file { font-weight: 700; color: var(--fg); }
+  .bar .sp { flex: 1; }
+  .bar .add { color: var(--good); font-weight: 700; }
+  .bar .del { color: var(--bad); font-weight: 700; }
+  .bar .meter { display: flex; gap: .18em; }
+  .bar .meter i { width: .7em; height: .7em; border-radius: .12em; background: var(--line); transition: background calc(.3s / var(--speed)); }
+  .bar .meter i.g { background: var(--good); }
+  .bar .meter i.r { background: var(--bad); }
+
+  .code { padding: .4em 0; font: .78em/1.55 var(--font-mono); }
+  .ln { display: grid; grid-template-columns: 3em 3em 1.6em 1fr; overflow: hidden; max-height: 1.55em; white-space: pre;
+    transition: max-height calc(.45s / var(--speed)) cubic-bezier(.4,0,.2,1), background calc(.3s / var(--speed)), opacity calc(.45s / var(--speed)); }
+  .ln .n { color: var(--fg-soft); opacity: .6; text-align: right; padding-right: .8em; user-select: none; }
+  .ln .s { color: var(--fg-soft); text-align: center; }
+  .ln .t { color: var(--fg); padding-right: 1em; overflow: hidden; text-overflow: ellipsis; }
+  .ln.del { background: color-mix(in srgb, var(--bad) 18%, transparent); }
+  .ln.del .s, .ln.del .t { color: var(--bad); }
+  .ln.del.gone { max-height: 0; opacity: 0; }
+  .ln.add { background: color-mix(in srgb, var(--good) 18%, transparent); }
+  .ln.add .s { color: var(--good); }
+  .ln.add.pending { max-height: 0; opacity: 0; }
+  .ln .t .hl { border-radius: .2em; }
+  .ln.add .t .hl { background: color-mix(in srgb, var(--good) 38%, transparent); }
+  .ln.del .t .hl { background: color-mix(in srgb, var(--bad) 38%, transparent); }
+
+  .foot { display: flex; align-items: center; gap: .8em; padding: .8em 1.2em; border-top: 1px solid var(--line); font-size: .8em; color: var(--fg-soft);
+    opacity: 0; transition: opacity calc(.4s / var(--speed)); }
+  .foot.on { opacity: 1; }
+  .foot b { display: inline-flex; align-items: center; gap: .4em; padding: .3em .8em; border-radius: 1em; background: var(--good); color: var(--bg); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

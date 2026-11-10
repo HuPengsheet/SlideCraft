@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>印章盖下</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  :root { --brush: "AR PL UKai CN", "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", serif;
+    --song: "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "AR PL UMing CN", serif; --red: var(--bad); }
+  .paper { position: absolute; inset: 0; background: radial-gradient(120% 100% at 50% 40%, color-mix(in srgb, var(--surface) 60%, var(--bg)), var(--bg) 75%); }
+  .paper::after { content: ""; position: absolute; inset: 0; opacity: .3; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 .7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 4em; }
+  .wrap .sc-eyebrow { font-family: var(--song); color: var(--red); letter-spacing: .5em; margin-bottom: 1em; }
+  .wrap h1 { margin: 0; font: 400 4.6em/1.15 var(--brush); letter-spacing: .14em; color: var(--fg); }
+  .wrap .sc-sub { margin-top: .7em; font: 1.1em var(--song); letter-spacing: .3em; }
+  .head > * { opacity: 0; transform: translateY(.5em); transition: opacity calc(.9s / var(--speed)) ease, transform calc(.9s / var(--speed)) ease; }
+  .head > .on { opacity: 1; transform: none; }
+  .row { display: flex; gap: 4.2em; margin-top: 3em; align-items: flex-start; justify-content: center; }
+  .slot { position: relative; width: 9em; display: flex; flex-direction: column; align-items: center; }
+  .slot .lab { margin-top: .9em; font: .95em var(--song); letter-spacing: .4em; color: var(--fg-soft); opacity: 0; transition: opacity calc(.6s / var(--speed)); }
+  .slot .lab.on { opacity: 1; }
+  .row.many { gap: 2.4em; font-size: .86em; }
+  .imprint { width: 9em; height: 9em; opacity: 0; color: var(--red); }
+  .imprint svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .imprint text { font-family: var(--song); font-weight: 900; }
+  /* 印章本体：盖下的那块石头 */
+  .stamp { position: absolute; left: 0; top: 0; width: 9em; height: 9em; pointer-events: none; opacity: 0; transform-origin: 50% 100%; }
+  .stamp .body { position: absolute; left: .5em; right: .5em; bottom: 1em; height: 6.4em; border-radius: .5em .5em .3em .3em;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--fg) 55%, var(--bg)), color-mix(in srgb, var(--fg) 80%, var(--bg)) 40%, color-mix(in srgb, var(--fg) 45%, var(--bg)));
+    box-shadow: inset 0 -.7em 0 color-mix(in srgb, var(--red) 70%, var(--fg)); }
+  .stamp .body::before { content: ""; position: absolute; left: 50%; top: -1.8em; width: 4.4em; height: 2.2em; margin-left: -2.2em; border-radius: 50% 50% .4em .4em;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--fg) 50%, var(--bg)), color-mix(in srgb, var(--fg) 78%, var(--bg)) 45%, color-mix(in srgb, var(--fg) 40%, var(--bg))); }
+  .stamp .face { position: absolute; left: .5em; right: .5em; bottom: .3em; height: .9em; border-radius: .2em; background: var(--red); }
+  .shadow { position: absolute; left: 50%; top: 9em; width: 9em; height: 1.4em; margin-left: -4.5em; border-radius: 50%; opacity: 0;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--fg) 35%, transparent), transparent); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

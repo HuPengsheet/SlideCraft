@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>录像带故障</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  /* 画面内部固定是录像带的暗底；色彩偏移用主题的第 2、3 个强调色 */
+  .stage { --ink: color-mix(in srgb, var(--accent) 14%, #f4f1ea); --tape: color-mix(in srgb, var(--bg) 22%, #08080a);
+    --sx: .08em; background: var(--tape); }
+  .tape { position: absolute; inset: 0; }
+  .pic, .slice { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--tape); }
+  .pic { opacity: 0; }
+  .slice { visibility: hidden; }
+  .slice.on { visibility: visible; }
+  .pic-in { text-align: center; color: var(--ink); }
+  .pic-in .sc-eyebrow { font: .75em var(--font-mono); letter-spacing: .4em; color: var(--ink); opacity: .75; }
+  .hd { margin: .25em 0 .2em; font: 800 5.625em/1.05 var(--font-display); letter-spacing: .02em; white-space: nowrap;
+    text-shadow: var(--sx) 0 color-mix(in srgb, var(--accent-2) 80%, transparent), calc(var(--sx) * -1) 0 color-mix(in srgb, var(--accent-3) 80%, transparent); }
+  .sb { margin: 0; font-size: 1.125em; letter-spacing: .12em; opacity: .85;
+    text-shadow: calc(var(--sx) * .6) 0 color-mix(in srgb, var(--accent-2) 70%, transparent), calc(var(--sx) * -.6) 0 color-mix(in srgb, var(--accent-3) 70%, transparent); }
+
+  .noise { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; mix-blend-mode: screen; pointer-events: none; }
+  .band { position: absolute; left: 0; right: 0; height: 2.812em; top: -3.75em; pointer-events: none; opacity: .5;
+    background: linear-gradient(transparent, rgba(255,255,255,.08) 40%, rgba(255,255,255,.18) 50%, rgba(255,255,255,.08) 60%, transparent); }
+  .scan { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0,0,0,.28) 0 .062em, transparent .062em .175em); }
+  .vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 80% 75% at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%); }
+
+  .osd { position: absolute; font: 600 1.25em/1.2 var(--font-mono); letter-spacing: .08em; color: #f2f2f2;
+    text-shadow: .08em .08em 0 rgba(0,0,0,.7); }
+  .osd.tl { left: 2.6em; top: 1.6em; }
+  .osd.tl.blink { animation: osd calc(1s / var(--speed)) steps(1) infinite; }
+  @keyframes osd { 50% { opacity: 0; } }
+  .osd.tr { right: 2.6em; top: 1.6em; }
+  .osd.bl { left: 2.6em; bottom: 1.4em; font-size: 1em; }
+  .osd.br { right: 2.6em; bottom: 1.4em; font-size: 1em; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

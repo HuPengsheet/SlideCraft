@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRT 开机</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { display: flex; align-items: center; justify-content: center; }
+  /* 显像管外壳：用主题的卡片面色，像一台米白或深灰的老电脑 */
+  .tv { position: relative; width: 53.75em; height: 31.25em; padding: 1.375em 1.375em 1.75em; border-radius: 2em;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--surface) 90%, var(--fg)), var(--surface) 45%);
+    border: 1px solid var(--line); box-shadow: 0 1.125em 2.125em -1em rgba(0,0,0,.5), inset 0 .088em 0 color-mix(in srgb, var(--fg) 7%, transparent); }
+  /* 屏幕内部固定是暗的，荧光色取主题强调色 */
+  .screen { --glow: var(--accent); position: relative; width: 100%; height: 100%; overflow: hidden;
+    border-radius: 1.625em / 2.125em; background: color-mix(in srgb, var(--accent) 5%, #050605);
+    box-shadow: inset 0 0 0 .188em rgba(0,0,0,.55); }
+  .raster { position: absolute; inset: 0; opacity: 0; transform: scale(.002, .004); filter: brightness(var(--fl, 1));
+    transition: transform calc(.4s / var(--speed)) cubic-bezier(.3, .9, .3, 1), opacity calc(.08s / var(--speed)); }
+  .raster::after { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--glow) 35%, #fff);
+    transition: opacity calc(.8s / var(--speed)) ease; }
+  .raster.s0 { opacity: 1; transform: scale(.006, .011); }
+  .raster.s1 { opacity: 1; transform: scale(1, .007); }
+  .raster.s2 { opacity: 1; transform: scale(1, 1); }
+  .raster.s3::after { opacity: 0; }
+
+  .boot { position: absolute; left: 4.5em; top: 3.6em; right: 4.5em; font: .688em/1.7 var(--font-mono); color: var(--glow);
+    text-shadow: 0 0 .35em color-mix(in srgb, var(--glow) 70%, transparent); transition: opacity calc(.6s / var(--speed)) ease; white-space: pre; }
+  .boot.off { opacity: 0; }
+  .main { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .625em; text-align: center; }
+  .hd { margin: 0; min-height: 1em; font: 700 3.75em/1 var(--font-display); letter-spacing: .06em; white-space: nowrap;
+    color: color-mix(in srgb, var(--glow) 50%, #fff);
+    text-shadow: 0 0 .06em var(--glow), 0 0 .3em var(--glow), 0 0 .9em color-mix(in srgb, var(--glow) 55%, transparent); }
+  .cur { display: inline-block; width: .5em; height: .85em; margin-left: .1em; vertical-align: -.04em; background: currentColor;
+    box-shadow: 0 0 .3em var(--glow); animation: blink calc(1s / var(--speed)) steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .sb { margin: 0; font: .938em var(--font-mono); letter-spacing: .1em; color: var(--glow); opacity: 0;
+    text-shadow: 0 0 .4em var(--glow); transition: opacity calc(.9s / var(--speed)) ease; }
+  .sb.on { opacity: .85; }
+
+  .roll { position: absolute; left: 0; right: 0; top: -6.25em; height: 5.625em; pointer-events: none;
+    background: linear-gradient(transparent, color-mix(in srgb, var(--glow) 8%, transparent), transparent); }
+  .scan { position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, rgba(0,0,0,.32) 0 .081em, transparent .081em .2em); }
+  .vig { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 78% 72% at 50% 50%, transparent 52%, rgba(0,0,0,.6) 100%); }
+  .glass { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 55% 35% at 28% 16%, rgba(255,255,255,.08), transparent 70%); }
+  .brandmark { position: absolute; left: 50%; bottom: .8em; transform: translateX(-50%); font: 600 .388em var(--font-mono); letter-spacing: .4em; color: var(--fg-soft); }
+  .led { position: absolute; right: 2.125em; bottom: .625em; width: .344em; height: .344em; border-radius: 50%; background: var(--line); }
+  .led.on { background: var(--good); box-shadow: 0 0 .312em var(--good); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

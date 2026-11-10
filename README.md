@@ -1,6 +1,6 @@
 # SlideCraft
 
-HTML 页面展示方式的图鉴：按类别整理 118 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
+HTML 页面展示方式的图鉴：按类别整理 133 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
 
 纯 HTML、CSS 和 JS，无需构建。
 
@@ -171,6 +171,30 @@ HTML 页面展示方式的图鉴：按类别整理 118 种单页展示效果，�
 <tr><td width="50%" valign="top"><a href="pages/bubble-evolution/"><img src="previews/pages/bubble-evolution.webp" alt="气泡散点演进" width="100%"></a><br><b>气泡散点演进</b><br>做一张气泡散点图，用位置表示两个维度，圆面积表示第三个维度。年份变化时圆连续移动和缩放，并用细线连到原始位置。</td><td width="50%" valign="top"><a href="pages/waterfall-bridge/"><img src="previews/pages/waterfall-bridge.webp" alt="增减瀑布图" width="100%"></a><br><b>增减瀑布图</b><br>做一张瀑布图。从初始值开始，按顺序画出增加项和减少项，使用不同颜色并用短线连到下一项，最后显示总计柱。</td></tr>
 <tr><td width="50%" valign="top"><a href="pages/candle-tape/"><img src="previews/pages/candle-tape.webp" alt="K 线走时" width="100%"></a><br><b>K 线走时</b><br>做一张会逐根长出的 K 线图。每根蜡烛先长出实体，再显出上下影线。上涨与下跌使用不同颜色，横轴固定以便对比。</td><td width="50%" valign="top"><a href="pages/streamgraph/"><img src="previews/pages/streamgraph.webp" alt="流带面积图" width="100%"></a><br><b>流带面积图</b><br>做一张流带面积图。不同系列绕中心线堆叠，用连续曲线表达变化。一条竖线沿时间轴缓慢扫描，逐步露出后面的所有流带。</td></tr>
 <tr><td width="50%" valign="top"><a href="pages/waffle-shift/"><img src="previews/pages/waffle-shift.webp" alt="百格占比切换" width="100%"></a><br><b>百格占比切换</b><br>做一张百格占比图。用十乘十的格子代表百分比，三个类别各用一种颜色。份额改变时让对应格子依次换色，旁边的百分数和格子数量保持一致。</td><td width="50%"></td></tr>
+</table>
+
+## 科技与代码
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/git-graph/"><img src="previews/pages/git-graph.webp" alt="Git 分支图" width="100%"></a><br><b>Git 分支图</b><br>做一张会生长的 Git 分支图。主干从左向右延伸，功能分支从某个提交分叉出去，各自用不同颜色。提交点依次亮起并标出提交信息和短哈希，最后分支合并回主干，并在合并点打上版本标签。</td><td width="50%" valign="top"><a href="pages/neural-net/"><img src="previews/pages/neural-net.webp" alt="神经网络前向传播" width="100%"></a><br><b>神经网络前向传播</b><br>做一个神经网络前向传播的演示。几层节点从左到右排开，层间全连接，连线粗细和亮度代表权重。信号脉冲沿连线逐层流过，节点被激活时亮起，最后输出层显示各类概率，并高亮概率最高的结果。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/packet-network/"><img src="previews/pages/packet-network.webp" alt="网络数据包" width="100%"></a><br><b>网络数据包</b><br>做一张网络拓扑图，服务器、交换机和客户端用连线相连。数据包沿路径在节点间穿梭，经过节点时节点闪一下。其中一个包在途中丢失变红，随后沿原路重传成功，右上角的日志同步记录每一步。</td><td width="50%" valign="top"><a href="pages/code-diff/"><img src="previews/pages/code-diff.webp" alt="代码 Diff" width="100%"></a><br><b>代码 Diff</b><br>做一个代码审查 Diff 的动画。编辑器窗口里先显示旧版本代码，随后删除行变红并收起，新增行变绿并展开，行内具体改动的字符额外高亮。顶部的增删统计和左侧新旧行号同步变化，全部改完后底部出现审查通过的标记。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/block-chain/"><img src="previews/pages/block-chain.webp" alt="区块链" width="100%"></a><br><b>区块链</b><br>做一个区块链出块的演示。区块从左到右依次生成，每个区块的哈希值快速滚动计算，从左往右逐位定格，开头的若干个 0 高亮显示。出块后用链条连到上一个区块，并把上一块的哈希写进当前块的 prev 字段。</td><td width="50%"></td></tr>
+</table>
+
+## 复古与怀旧
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/crt-boot/"><img src="previews/pages/crt-boot.webp" alt="CRT 开机" width="100%"></a><br><b>CRT 开机</b><br>做一个老式 CRT 显示器开机的开场。屏幕中央先亮起一个光点，拉成一条横线，再上下展开成整幅画面。画面带扫描线、暗角、轻微闪烁和缓慢下移的亮带，荧光色的自检文字逐行打出，随后换成大标题。</td><td width="50%" valign="top"><a href="pages/film-leader/"><img src="previews/pages/film-leader.webp" alt="老电影片头" width="100%"></a><br><b>老电影片头</b><br>做一个老电影片头倒数。圆圈里的数字从 5 倒数到 1，扇形指针绕圈扫过，背后是十字线、胶片颗粒、划痕和跳动的灰尘。倒数结束后画面切到一张带边框的标题卡。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/neon-sign/"><img src="previews/pages/neon-sign.webp" alt="霓虹招牌通电" width="100%"></a><br><b>霓虹招牌通电</b><br>做一块霓虹招牌通电的画面。暗色砖墙上，灯管文字一段一段亮起，带柔和的外发光，几行文字用不同颜色。其中一个字接触不良，每隔一两秒快速闪几下再稳住。</td><td width="50%" valign="top"><a href="pages/vhs-glitch/"><img src="previews/pages/vhs-glitch.webp" alt="录像带故障" width="100%"></a><br><b>录像带故障</b><br>做一个录像带播放的开场。先是满屏雪花噪点，画面随后浮现出标题。之后偶发横向撕裂、红蓝色彩偏移和滚过的噪点条。左上角有播放标识，左下角是录像日期，右下角的时间码不停走动。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/vinyl-record/"><img src="previews/pages/vinyl-record.webp" alt="黑胶唱片" width="100%"></a><br><b>黑胶唱片</b><br>做一个黑胶唱片播放的画面。唱片从专辑封套里滑出并开始旋转，唱臂落下，针尖随进度缓慢内移。右侧的歌词或条目随节拍逐行高亮滚动，底部有播放进度条。</td><td width="50%"></td></tr>
+</table>
+
+## 东方与节庆
+
+<table>
+<tr><td width="50%" valign="top"><a href="pages/ink-bloom/"><img src="previews/pages/ink-bloom.webp" alt="水墨晕染标题" width="100%"></a><br><b>水墨晕染标题</b><br>做一个水墨晕染的标题开场。几滴墨从空中落下，在宣纸上由深到浅地向外洇开，边缘不规则、浓淡自然，还能看到纸纤维方向的细丝与飞溅的墨点。晕染中楷体大标题由模糊到清晰逐字浮现，副标题随后淡入。</td><td width="50%" valign="top"><a href="pages/brush-stroke/"><img src="previews/pages/brush-stroke.webp" alt="书法逐笔书写" width="100%"></a><br><b>书法逐笔书写</b><br>做一个书法逐笔书写的开场。宣纸上一排楷体大字按笔顺一笔一笔写出，笔画有起收与粗细变化，写完后右下角落款与小印章淡入。字与落款都可在 config 里替换。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/scroll-unroll/"><img src="previews/pages/scroll-unroll.webp" alt="卷轴展开" width="100%"></a><br><b>卷轴展开</b><br>做一个卷轴展开的开场。两根带立体感和阴影的画轴从中间向左右缓缓展开，露出卷面上的标题与几行文字条目，内容逐行淡入。</td><td width="50%" valign="top"><a href="pages/seal-stamp/"><img src="previews/pages/seal-stamp.webp" alt="印章盖下" width="100%"></a><br><b>印章盖下</b><br>做一个印章盖下的开场。方形朱文印章从上方压下，轻微回弹后抬起，纸面上留下带斑驳纹理的红印，可以依次盖下多枚。</td></tr>
+<tr><td width="50%" valign="top"><a href="pages/folding-fan/"><img src="previews/pages/folding-fan.webp" alt="折扇展开" width="100%"></a><br><b>折扇展开</b><br>做一个折扇展开的开场。扇骨从合拢状态依次旋开成扇形，扇面上的文字与条目随之渐次显出，最终定格成完整的扇面。</td><td width="50%"></td></tr>
 </table>
 
 ## 工具

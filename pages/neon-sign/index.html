@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>霓虹招牌通电</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  /* 墙面固定是暗的，灯管颜色取主题强调色 */
+  .stage { --wall: color-mix(in srgb, var(--bg) 30%, #0d0c0b); background: var(--wall); display: flex; align-items: center; justify-content: center; }
+  .wall { position: absolute; inset: 0; }
+  .wall.brick { background: repeating-linear-gradient(to bottom,
+      transparent 0 1.438em, rgba(0,0,0,.55) 1.438em 1.562em),
+    repeating-linear-gradient(to right, transparent 0 2.875em, rgba(0,0,0,.55) 2.875em 3em),
+    repeating-linear-gradient(to right, transparent 0 1.438em, rgba(0,0,0,.35) 1.438em 1.562em);
+    background-position: 0 0, 0 0, 1.5em 1.562em; }
+  .sign { position: relative; padding: 1.25em 1.875em; text-align: center;
+    background: color-mix(in srgb, var(--wall) 78%, #000); border: .094em solid color-mix(in srgb, var(--fg) 14%, transparent);
+    border-radius: .25em; box-shadow: 0 .938em 1.875em rgba(0,0,0,.5); }
+  .sign::before, .sign::after { content: ""; position: absolute; left: .75em; right: .75em; height: .112em; background: color-mix(in srgb, var(--fg) 22%, transparent); }
+  .sign::before { top: .438em; } .sign::after { bottom: .438em; }
+  .ln { margin: 0; font-weight: 700; white-space: nowrap; }
+  .ln:nth-child(1) { font-size: 4.375em; line-height: 1.15; }
+  .ln:nth-child(2) { font-size: 2.125em; letter-spacing: .18em; line-height: 1.3; }
+  .ln:nth-child(3) { font-size: 1.375em; letter-spacing: .3em; line-height: 1.4; }
+  .ln:nth-child(2), .ln:nth-child(3) { font-family: var(--font-mono); font-weight: 600; }
+  .ch { color: transparent; -webkit-text-stroke: .05em color-mix(in srgb, var(--c, var(--accent)) 55%, #000);
+    transition: color calc(.06s / var(--speed)), text-shadow calc(.06s / var(--speed)); }
+  .ch.on { color: color-mix(in srgb, var(--c, var(--accent)) 55%, #fff);
+    -webkit-text-stroke: .05em var(--c, var(--accent));
+    text-shadow: 0 0 .15em var(--c, var(--accent)), 0 0 .45em var(--c, var(--accent)), 0 0 1.1em var(--c, var(--accent)); }
+  .ch.bad { color: transparent; -webkit-text-stroke: .05em color-mix(in srgb, var(--c, var(--accent)) 55%, #000); text-shadow: none; }
+  .sub { margin: .8em 0 0; font: .688em var(--font-mono); letter-spacing: .5em; color: var(--fg-soft); opacity: 0; transition: opacity calc(.8s / var(--speed)) ease; }
+  .sub.on { opacity: .8; }
+  .glow { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity calc(.6s / var(--speed)) ease;
+    background: radial-gradient(ellipse 55% 45% at 50% 50%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 75%); }
+  .glow.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

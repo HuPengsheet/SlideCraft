@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>网络数据包</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hd { position: absolute; left: 4em; top: 2.4em; z-index: 2; max-width: 34em; }
+  .hd > * { animation: rise calc(.7s / var(--speed)) cubic-bezier(.2,.7,.2,1) both; }
+  .hd > :nth-child(2) { animation-delay: calc(.08s / var(--speed)); }
+  .hd > :nth-child(3) { animation-delay: calc(.16s / var(--speed)); }
+  @keyframes rise { from { opacity: 0; transform: translateY(.6em); } }
+
+  .node { position: absolute; z-index: 2; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: .35em; }
+  .node .box { width: 3.4em; height: 3.4em; border-radius: .7em; background: var(--surface); border: 2px solid var(--line);
+    display: grid; place-items: center; font-size: 1.5em; transition: border-color calc(.25s / var(--speed)), box-shadow calc(.25s / var(--speed)); }
+  .node.kind-server .box { border-color: var(--accent); }
+  .node.flash .box { border-color: var(--accent); box-shadow: 0 0 1.2em .2em color-mix(in srgb, var(--accent) 60%, transparent); }
+  .node .name { font-size: .8em; font-weight: 600; white-space: nowrap; }
+  .node .sub { font: .65em var(--font-mono); color: var(--fg-soft); white-space: nowrap; }
+
+  .log { position: absolute; right: 3em; top: 3em; z-index: 3; width: 17em; min-height: 7em; justify-content: flex-end; display: flex; flex-direction: column; gap: .25em;
+    font: .72em var(--font-mono); color: var(--fg-soft); }
+  .log div { opacity: 0; animation: in calc(.4s / var(--speed)) forwards; }
+  .log .bad { color: var(--bad); }
+  .log .good { color: var(--good); }
+  @keyframes in { to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

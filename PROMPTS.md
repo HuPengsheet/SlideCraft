@@ -743,3 +743,99 @@
 <img src="previews/pages/waffle-shift.webp" alt="百格占比切换" width="480">
 
 > 做一张百格占比图。用十乘十的格子代表百分比，三个类别各用一种颜色。份额改变时让对应格子依次换色，旁边的百分数和格子数量保持一致。
+
+## 十八、科技与代码
+
+#### git-graph · Git 分支图
+
+<img src="previews/pages/git-graph.webp" alt="Git 分支图" width="480">
+
+> 做一张会生长的 Git 分支图。主干从左向右延伸，功能分支从某个提交分叉出去，各自用不同颜色。提交点依次亮起并标出提交信息和短哈希，最后分支合并回主干，并在合并点打上版本标签。
+
+#### neural-net · 神经网络前向传播
+
+<img src="previews/pages/neural-net.webp" alt="神经网络前向传播" width="480">
+
+> 做一个神经网络前向传播的演示。几层节点从左到右排开，层间全连接，连线粗细和亮度代表权重。信号脉冲沿连线逐层流过，节点被激活时亮起，最后输出层显示各类概率，并高亮概率最高的结果。
+
+#### packet-network · 网络数据包
+
+<img src="previews/pages/packet-network.webp" alt="网络数据包" width="480">
+
+> 做一张网络拓扑图，服务器、交换机和客户端用连线相连。数据包沿路径在节点间穿梭，经过节点时节点闪一下。其中一个包在途中丢失变红，随后沿原路重传成功，右上角的日志同步记录每一步。
+
+#### code-diff · 代码 Diff
+
+<img src="previews/pages/code-diff.webp" alt="代码 Diff" width="480">
+
+> 做一个代码审查 Diff 的动画。编辑器窗口里先显示旧版本代码，随后删除行变红并收起，新增行变绿并展开，行内具体改动的字符额外高亮。顶部的增删统计和左侧新旧行号同步变化，全部改完后底部出现审查通过的标记。
+
+#### block-chain · 区块链
+
+<img src="previews/pages/block-chain.webp" alt="区块链" width="480">
+
+> 做一个区块链出块的演示。区块从左到右依次生成，每个区块的哈希值快速滚动计算，从左往右逐位定格，开头的若干个 0 高亮显示。出块后用链条连到上一个区块，并把上一块的哈希写进当前块的 prev 字段。
+
+## 十九、复古与怀旧
+
+#### crt-boot · CRT 开机
+
+<img src="previews/pages/crt-boot.webp" alt="CRT 开机" width="480">
+
+> 做一个老式 CRT 显示器开机的开场。屏幕中央先亮起一个光点，拉成一条横线，再上下展开成整幅画面。画面带扫描线、暗角、轻微闪烁和缓慢下移的亮带，荧光色的自检文字逐行打出，随后换成大标题。
+
+#### film-leader · 老电影片头
+
+<img src="previews/pages/film-leader.webp" alt="老电影片头" width="480">
+
+> 做一个老电影片头倒数。圆圈里的数字从 5 倒数到 1，扇形指针绕圈扫过，背后是十字线、胶片颗粒、划痕和跳动的灰尘。倒数结束后画面切到一张带边框的标题卡。
+
+#### neon-sign · 霓虹招牌通电
+
+<img src="previews/pages/neon-sign.webp" alt="霓虹招牌通电" width="480">
+
+> 做一块霓虹招牌通电的画面。暗色砖墙上，灯管文字一段一段亮起，带柔和的外发光，几行文字用不同颜色。其中一个字接触不良，每隔一两秒快速闪几下再稳住。
+
+#### vhs-glitch · 录像带故障
+
+<img src="previews/pages/vhs-glitch.webp" alt="录像带故障" width="480">
+
+> 做一个录像带播放的开场。先是满屏雪花噪点，画面随后浮现出标题。之后偶发横向撕裂、红蓝色彩偏移和滚过的噪点条。左上角有播放标识，左下角是录像日期，右下角的时间码不停走动。
+
+#### vinyl-record · 黑胶唱片
+
+<img src="previews/pages/vinyl-record.webp" alt="黑胶唱片" width="480">
+
+> 做一个黑胶唱片播放的画面。唱片从专辑封套里滑出并开始旋转，唱臂落下，针尖随进度缓慢内移。右侧的歌词或条目随节拍逐行高亮滚动，底部有播放进度条。
+
+## 二十、东方与节庆
+
+#### ink-bloom · 水墨晕染标题
+
+<img src="previews/pages/ink-bloom.webp" alt="水墨晕染标题" width="480">
+
+> 做一个水墨晕染的标题开场。几滴墨从空中落下，在宣纸上由深到浅地向外洇开，边缘不规则、浓淡自然，还能看到纸纤维方向的细丝与飞溅的墨点。晕染中楷体大标题由模糊到清晰逐字浮现，副标题随后淡入。
+
+#### brush-stroke · 书法逐笔书写
+
+<img src="previews/pages/brush-stroke.webp" alt="书法逐笔书写" width="480">
+
+> 做一个书法逐笔书写的开场。宣纸上一排楷体大字按笔顺一笔一笔写出，笔画有起收与粗细变化，写完后右下角落款与小印章淡入。字与落款都可在 config 里替换。
+
+#### scroll-unroll · 卷轴展开
+
+<img src="previews/pages/scroll-unroll.webp" alt="卷轴展开" width="480">
+
+> 做一个卷轴展开的开场。两根带立体感和阴影的画轴从中间向左右缓缓展开，露出卷面上的标题与几行文字条目，内容逐行淡入。
+
+#### seal-stamp · 印章盖下
+
+<img src="previews/pages/seal-stamp.webp" alt="印章盖下" width="480">
+
+> 做一个印章盖下的开场。方形朱文印章从上方压下，轻微回弹后抬起，纸面上留下带斑驳纹理的红印，可以依次盖下多枚。
+
+#### folding-fan · 折扇展开
+
+<img src="previews/pages/folding-fan.webp" alt="折扇展开" width="480">
+
+> 做一个折扇展开的开场。扇骨从合拢状态依次旋开成扇形，扇面上的文字与条目随之渐次显出，最终定格成完整的扇面。

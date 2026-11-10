@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>折扇展开</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  :root { --brush: "AR PL UKai CN", "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", serif;
+    --song: "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "AR PL UMing CN", serif; }
+  .room { position: absolute; inset: 0; background: radial-gradient(90% 85% at 50% 60%, color-mix(in srgb, var(--surface) 70%, var(--bg)), var(--bg)); }
+  /* 扇子坐标：枢轴在 .fan 的原点，半径 23em */
+  .fan { position: absolute; left: 50%; top: 29.5em; width: 0; height: 0; }
+  .fan svg { position: absolute; left: -24em; top: -24em; width: 48em; height: 48em; overflow: visible; }
+  .leaf-a { fill: color-mix(in srgb, var(--accent-3) 12%, var(--surface)); }
+  .leaf-b { fill: color-mix(in srgb, var(--accent-3) 22%, var(--surface)); }
+  .leaf-a, .leaf-b { stroke: color-mix(in srgb, var(--fg) 14%, transparent); stroke-width: .06; }
+  .rim { fill: none; stroke: color-mix(in srgb, var(--accent-3) 70%, var(--fg)); stroke-width: .28; }
+  .rib { stroke: color-mix(in srgb, var(--accent-3) 45%, var(--fg)); stroke-width: .5; stroke-linecap: round; }
+  .guard { stroke: color-mix(in srgb, var(--accent-3) 35%, var(--fg)); stroke-width: 1.05; stroke-linecap: round; }
+  .pin { fill: color-mix(in srgb, var(--fg) 60%, var(--bg)); stroke: var(--fg); stroke-width: .15; }
+  .fan .hd { font-family: var(--brush); fill: var(--fg); opacity: 0; transition: opacity calc(.9s / var(--speed)) ease; }
+  .fan .it { font-family: var(--song); font-weight: 600; fill: var(--fg); opacity: 0; transition: opacity calc(.7s / var(--speed)) ease; }
+  .fan .dot { fill: var(--bad); opacity: 0; transition: opacity calc(.7s / var(--speed)) ease; }
+  .fan .on { opacity: 1; }
+  .cap { position: absolute; left: 0; right: 0; bottom: 1.6em; text-align: center; font: 1em var(--song); letter-spacing: .4em; color: var(--fg-soft);
+    opacity: 0; transition: opacity calc(1s / var(--speed)); }
+  .cap.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

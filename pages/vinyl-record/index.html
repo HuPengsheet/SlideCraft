@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黑胶唱片</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  .stage { --ease: cubic-bezier(.3, .8, .3, 1); }
+  /* 封套 */
+  .sleeve { position: absolute; left: 3.125em; top: 8.125em; width: 18.75em; height: 18.75em; z-index: 2; overflow: hidden; padding: 1.375em;
+    display: flex; flex-direction: column; justify-content: flex-end; border-radius: .219em;
+    background: var(--accent-2); color: var(--bg); box-shadow: 0 1em 1.875em -.875em rgba(0,0,0,.55);
+    opacity: 0; transform: translateX(-3.75em); transition: opacity calc(.6s / var(--speed)) ease, transform calc(.8s / var(--speed)) var(--ease); }
+  .sleeve.on { opacity: 1; transform: none; }
+  .sleeve::before { content: ""; position: absolute; right: -5.625em; top: -5.625em; width: 17.5em; height: 17.5em; border-radius: 50%;
+    background: repeating-radial-gradient(circle, color-mix(in srgb, var(--bg) 22%, transparent) 0 .075em, transparent .075em .875em); }
+  .sleeve::after { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.14), transparent 40%, rgba(0,0,0,.12)); }
+  .sl-side { position: absolute; left: 2.2em; top: 2em; font: 600 .562em var(--font-mono); letter-spacing: .24em; }
+  .sl-al { position: relative; margin: 0; font: 800 2.625em/1 var(--font-display); letter-spacing: -.01em; }
+  .sl-ar { position: relative; margin: .6em 0 0; font-size: .656em; letter-spacing: .08em; opacity: .8; }
+
+  /* 唱片：沟槽一起转，反光固定不动 */
+  .rec { position: absolute; left: 3.438em; top: 8.438em; width: 18.125em; height: 18.125em; z-index: 1; border-radius: 50%;
+    box-shadow: 0 .875em 1.625em -.625em rgba(0,0,0,.6); transition: transform calc(1.3s / var(--speed)) var(--ease); }
+  .rec.out { transform: translateX(9.375em); }
+  .disc { position: absolute; inset: 0; border-radius: 50%;
+    background: radial-gradient(circle, transparent 33%, rgba(255,255,255,.05) 33.4% 34%, transparent 34.4% 61%, rgba(255,255,255,.04) 61.3% 61.8%, transparent 62.2% 80%, rgba(255,255,255,.05) 80.3% 80.8%, transparent 81.2%),
+      repeating-radial-gradient(circle, #121212 0 .069em, #1c1c1c .069em .15em); }
+  .lbl { position: absolute; inset: 33.5%; border-radius: 50%; background: var(--accent); color: var(--bg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .lbl b { font: 700 .781em/1.1 var(--font-display); max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lbl small { margin-top: 2.3em; font: .375em var(--font-mono); letter-spacing: .2em; opacity: .75; }
+  .lbl::after { content: ""; position: absolute; left: 50%; top: 50%; width: .438em; height: .438em; margin: -.219em 0 0 -.219em; border-radius: 50%; background: #0c0c0c; }
+  .sheen { position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+    background: conic-gradient(from 20deg, transparent 0 4%, rgba(255,255,255,.13) 10%, transparent 17% 50%, rgba(255,255,255,.1) 60%, transparent 67%);
+    -webkit-mask: radial-gradient(circle, transparent 33%, #000 34%); mask: radial-gradient(circle, transparent 33%, #000 34%); }
+
+  /* 唱臂：支点在 (52em, 10em) */
+  .arm { position: absolute; left: 32.5em; top: 6.25em; z-index: 3; opacity: 0; transition: opacity calc(.5s / var(--speed)) ease; }
+  .arm.on { opacity: 1; }
+  .rod { position: absolute; left: -.156em; top: 0; width: .312em; height: 8.25em; border-radius: .156em; transform-origin: .156em 0;
+    transform: rotate(var(--a, 4deg)); transition: transform calc(1s / var(--speed)) cubic-bezier(.45, 0, .2, 1);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--fg) 40%, var(--bg)), color-mix(in srgb, var(--fg) 85%, var(--bg)), color-mix(in srgb, var(--fg) 40%, var(--bg))); }
+  .rod::before { content: ""; position: absolute; left: -.312em; top: -2.125em; width: .938em; height: 1.625em; border-radius: .188em;
+    background: color-mix(in srgb, var(--fg) 55%, var(--bg)); }
+  .rod::after { content: ""; position: absolute; left: -.344em; bottom: -1em; width: 1em; height: 1.375em; border-radius: .125em .125em .312em .312em;
+    background: color-mix(in srgb, var(--fg) 70%, var(--bg)); box-shadow: 0 .188em .375em rgba(0,0,0,.4); }
+  .base { position: absolute; left: -1.438em; top: -1.438em; width: 2.875em; height: 2.875em; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--fg) 65%, var(--bg)), color-mix(in srgb, var(--fg) 22%, var(--bg)));
+    box-shadow: 0 .25em .625em rgba(0,0,0,.4); }
+
+  /* 右侧：正在播放 + 逐行高亮 */
+  .panel { position: absolute; left: 37.5em; right: 3.125em; top: 5.312em; bottom: 4.062em; display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(.625em); transition: opacity calc(.7s / var(--speed)) ease, transform calc(.7s / var(--speed)) var(--ease); }
+  .panel.on { opacity: 1; transform: none; }
+  .np { display: flex; align-items: center; gap: .5em; }
+  .eq { display: flex; align-items: flex-end; gap: .14em; height: .9em; }
+  .eq i { width: .18em; height: 100%; background: var(--accent); transform-origin: bottom; transform: scaleY(.3); }
+  .ttl { margin: .3em 0 0; font: 700 1.625em/1.15 var(--font-display); }
+  .art { margin: .125em 0 0; color: var(--fg-soft); }
+  .lyr { position: relative; flex: 1; min-height: 0; overflow: hidden; margin: 1em 0 .875em;
+    -webkit-mask: linear-gradient(transparent, #000 22%, #000 78%, transparent); mask: linear-gradient(transparent, #000 22%, #000 78%, transparent); }
+  .lyr-in { position: absolute; left: 0; right: 0; top: 50%; transition: transform calc(.6s / var(--speed)) var(--ease); }
+  .ln { font-size: 1.188em; line-height: 1.7; color: var(--fg-soft); opacity: .38; transform-origin: left center; white-space: nowrap;
+    transition: color calc(.4s / var(--speed)), opacity calc(.4s / var(--speed)), transform calc(.5s / var(--speed)) var(--ease); }
+  .ln.past { opacity: .62; }
+  .ln.on { color: var(--accent); opacity: 1; transform: scale(1.12); font-weight: 700; }
+  .pb { display: flex; align-items: center; gap: 1em; font: .562em var(--font-mono); color: var(--fg-soft); font-variant-numeric: tabular-nums; }
+  .pb .bar { flex: 1; height: .156em; border-radius: .625em; background: var(--line); overflow: hidden; }
+  .pb .bar i { display: block; height: 100%; width: 0; background: var(--accent); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

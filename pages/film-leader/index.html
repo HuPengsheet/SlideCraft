@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>老电影片头</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  /* 画面内部固定是胶片的暗底；扇形、十字线和标题卡边框取主题强调色 */
+  .stage { --film: color-mix(in srgb, var(--bg) 14%, #0b0b0b); --ink: color-mix(in srgb, var(--accent) 30%, #f3f0e8); background: var(--film); }
+  .leader { position: absolute; inset: 0; opacity: 1; transition: opacity calc(.6s / var(--speed)) ease; }
+  .leader.gone { opacity: 0; }
+  .ring { position: absolute; left: 50%; top: 50%; width: 16.25em; height: 16.25em; margin: -8.125em 0 0 -8.125em; border-radius: 50%;
+    border: .219em solid var(--ink); }
+  .wedge { position: absolute; left: 50%; top: 50%; width: 16.25em; height: 16.25em; margin: -8.125em 0 0 -8.125em; border-radius: 50%;
+    background: conic-gradient(var(--accent) 0 var(--p, 0%), transparent var(--p, 0%)); }
+  .num { position: absolute; left: 0; right: 0; top: 50%; margin-top: -.6em; text-align: center; font: 700 7.5em/1 var(--font-display);
+    color: var(--ink); text-shadow: 0 0 .3em rgba(0,0,0,.6); }
+  .cross { position: absolute; inset: 0; pointer-events: none; }
+  .cross::before, .cross::after { content: ""; position: absolute; background: var(--ink); opacity: .55; }
+  .cross::before { left: 0; right: 0; top: 50%; height: .05em; }
+  .cross::after { top: 0; bottom: 0; left: 50%; width: .05em; }
+  .marks { position: absolute; inset: 0; pointer-events: none; }
+  .marks i { position: absolute; width: .438em; height: .438em; border: .075em solid var(--ink); opacity: .7; }
+  .marks i:nth-child(1) { left: 1.25em; top: 1em; border-right: 0; border-bottom: 0; }
+  .marks i:nth-child(2) { right: 1.25em; top: 1em; border-left: 0; border-bottom: 0; }
+  .marks i:nth-child(3) { left: 1.25em; bottom: 1em; border-right: 0; border-top: 0; }
+  .marks i:nth-child(4) { right: 1.25em; bottom: 1em; border-left: 0; border-top: 0; }
+  .card { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    opacity: 0; transition: opacity calc(.9s / var(--speed)) ease; }
+  .card.on { opacity: 1; }
+  .frame { padding: 1em 2.5em 1.25em; border: .075em solid var(--ink); outline: .037em solid var(--ink); outline-offset: .25em; }
+  .card .sc-eyebrow { color: var(--ink); opacity: .8; }
+  .hd { margin: .35em 0 0; font: 700 4.062em/1.05 var(--font-display); letter-spacing: .04em; color: var(--ink); white-space: nowrap; }
+  .sb { margin: .6em 0 0; font-size: .938em; letter-spacing: .14em; color: var(--ink); opacity: .85; }
+  .scratches, .dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .flick { position: absolute; inset: 0; pointer-events: none; background: #000; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

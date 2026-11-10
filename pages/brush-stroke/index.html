@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>书法逐笔书写</title>
+<link rel="stylesheet" href="../_shared/themes.css">
+<link rel="stylesheet" href="../_shared/base.css">
+<style>
+  :root { --brush: "AR PL UKai CN", "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", serif;
+    --song: "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "AR PL UMing CN", serif; }
+  .paper { position: absolute; inset: 0; background: radial-gradient(130% 100% at 50% 40%, color-mix(in srgb, var(--surface) 55%, var(--bg)), var(--bg) 78%); }
+  .paper::after { content: ""; position: absolute; inset: 0; opacity: .3; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 .7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .tt { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 4em; }
+  .row { display: flex; align-items: center; justify-content: center; gap: .3em; width: 100%; }
+  .row svg { height: var(--h, 14em); width: auto; overflow: visible; }
+  .row text { font-family: var(--brush); }
+  .sign { position: absolute; right: 4.2em; bottom: 3em; display: flex; align-items: flex-end; gap: 1em; opacity: 0; transform: translateY(.6em);
+    transition: opacity calc(1s / var(--speed)) ease, transform calc(1s / var(--speed)) ease; }
+  .sign.on { opacity: 1; transform: none; }
+  .sign .name { font: 1.1em var(--song); letter-spacing: .3em; color: var(--fg-soft); writing-mode: vertical-rl; }
+  .seal { width: 2.6em; height: 2.6em; border: .16em solid var(--bad); color: var(--bad); border-radius: .2em; display: grid; place-items: center;
+    font: 700 1.15em var(--song); letter-spacing: .05em; text-align: center; line-height: 1.05; opacity: .9;
+    background: repeating-linear-gradient(45deg, transparent, transparent .3em, color-mix(in srgb, var(--bad) 14%, transparent) .3em, color-mix(in srgb, var(--bad) 14%, transparent) .34em); }
+  .sc-eyebrow { position: absolute; left: 5em; top: 4em; font-family: var(--song); letter-spacing: .4em; color: var(--bad); opacity: 0; transition: opacity calc(1s / var(--speed)); }
+  .sc-eyebrow.on { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<script src="../_shared/core.js"></script>
+<script src="../_shared/player.js"></script>
+<script src="config.js"></script>
+<script src="page.js"></script>
+</body>
+</html>
