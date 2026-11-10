@@ -56,36 +56,39 @@ def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+PER_ROW = 4
+
+
 def cell(i, lang):
     title = i["titleEn"] if lang == "en" else i["title"]
     prompt = i["promptEn"] if lang == "en" else i["prompt"]
-    return (f'<td width="50%" valign="top"><a href="pages/{i["slug"]}/"><img src="previews/pages/{i["slug"]}.webp" '
+    return (f'<td width="25%" valign="top"><a href="pages/{i["slug"]}/"><img src="previews/pages/{i["slug"]}.webp" '
             f'alt="{esc(title)}" width="100%"></a><br><b>{esc(title)}</b><br>{esc(prompt)}</td>')
 
 
 def table_rows(items, lang):
     rows = []
-    for k in range(0, len(items), 2):
-        r = items[k:k + 2]
-        rows.append("<tr>" + "".join(cell(i, lang) for i in r) + ('<td width="50%"></td>' if len(r) == 1 else "") + "</tr>")
+    for k in range(0, len(items), PER_ROW):
+        r = items[k:k + PER_ROW]
+        pad = PER_ROW - len(r)
+        rows.append("<tr>" + "".join(cell(i, lang) for i in r) + '<td width="25%"></td>' * pad + "</tr>")
     return "<table>\n" + "\n".join(rows) + "\n</table>\n"
+
+
+def banner(lang):
+    alt = "SlideCraft 效果总览" if lang == "zh" else "SlideCraft effects overview"
+    return (f'<p align="center"><a href="{PAGES_URL}"><img src="previews/banner.jpg" alt="{alt}" width="100%"></a></p>\n')
 
 
 def readme_zh():
     out = [f"""# SlideCraft
 
+{banner("zh")}
 [![在线演示](https://img.shields.io/badge/在线演示-立即查看-blue?style=for-the-badge)]({PAGES_URL})
 
 [English](README.en.md)
 
-HTML 页面展示方式的图鉴：按类别整理 {total} 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
-
-纯 HTML、CSS 和 JS，无需构建。
-
-- [site/gallery.html]({PAGES_URL})：展示页，按类别浏览和搜索全部效果，点开即可实时运行、切换主题和速度、复制提示词，支持中英文切换。
-- [pages/index.html](pages/index.html)：开发用的查看器，左侧目录加预览。
-
-展示站引用上级目录的 `pages/` 和 `previews/`，部署时要以仓库根目录为站点根目录。
+SlideCraft 是一套纯 HTML、CSS 和 JS 写成的单页展示效果图鉴，无需构建。它把 {total} 种展示效果按用途分成 20 类，每个效果都能在浏览器里实时运行，并附一条描述画面与动效的 AI 提示词，复制给 AI 就能做出同类页面。在线的[展示站]({PAGES_URL})支持搜索、切换主题和速度，也可以切换中英文。
 
 ## 使用
 
@@ -114,18 +117,12 @@ HTML 页面展示方式的图鉴：按类别整理 {total} 种单页展示效果
 def readme_en():
     out = [f"""# SlideCraft
 
+{banner("en")}
 [![Live demo](https://img.shields.io/badge/Live%20demo-Open%20gallery-blue?style=for-the-badge)]({PAGES_URL})
 
 [中文](README.md)
 
-An illustrated catalog of single-page HTML presentation effects: {total} effects grouped by purpose. Each animation comes with the AI prompt that describes it, so you can copy the prompt to build a similar page.
-
-Pure HTML, CSS, and JS. No build step.
-
-- [site/gallery.html]({PAGES_URL}): the gallery. Browse and search every effect by category, run each one live, switch themes and speed, and copy its prompt. Available in Chinese and English.
-- [pages/index.html](pages/index.html): a development viewer with a list of pages on the left and a preview on the right.
-
-The gallery loads `pages/` and `previews/` from the parent directory, so deploy with the repository root as the site root.
+SlideCraft is an illustrated catalog of single-page presentation effects, written in plain HTML, CSS, and JS with no build step. It groups {total} effects into 20 categories. Each one runs live in the browser and comes with an AI prompt that describes its look and motion, so you can copy the prompt to build a similar page. The [online gallery]({PAGES_URL}) lets you search, switch themes and speed, and change language between Chinese and English.
 
 ## Usage
 
