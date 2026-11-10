@@ -164,3 +164,8 @@ kbd { padding: 3px 6px; border: 1px solid var(--line); border-radius: 5px; font:
 
 .links a.cur { color: var(--ink); }
 .kicker { margin: 0 0 14px; font: 500 13px var(--mono); letter-spacing: .14em; color: var(--red); text-transform: uppercase; }
+
+/* 语言切换按钮，样式与 GitHub 链接一致 */
+.lang-btn { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--surface); color: var(--soft); font: 600 13px var(--sans); cursor: pointer; transition: background .14s, border-color .14s, color .14s; }
+.lang-btn:hover { color: var(--ink); border-color: var(--soft); background: var(--paper-2); }

@@ -2,12 +2,13 @@
 
 [![在线演示](https://img.shields.io/badge/在线演示-立即查看-blue?style=for-the-badge)](https://hupengsheet.github.io/SlideCraft/site/gallery.html)
 
+[English](README.en.md)
+
 HTML 页面展示方式的图鉴：按类别整理 133 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
 
 纯 HTML、CSS 和 JS，无需构建。
 
-- [site/index.html](site/index.html)：落地页，一屏不滚动：标题、数字和入口按钮，右侧是缓慢滚动的效果海报墙，悬停播放，点击打开。
-- [site/gallery.html](site/gallery.html)：展示页，按类别浏览和搜索全部效果，点开即可实时运行、切换主题和速度、复制提示词。
+- [site/gallery.html](https://hupengsheet.github.io/SlideCraft/site/gallery.html)：展示页，按类别浏览和搜索全部效果，点开即可实时运行、切换主题和速度、复制提示词，支持中英文切换。
 - [pages/index.html](pages/index.html)：开发用的查看器，左侧目录加预览。
 
 展示站引用上级目录的 `pages/` 和 `previews/`，部署时要以仓库根目录为站点根目录。
@@ -22,7 +23,7 @@ HTML 页面展示方式的图鉴：按类别整理 133 种单页展示效果，�
 <iframe src="pages/number-counter/index.html?theme=light&speed=1" allow="autoplay"></iframe>
 ```
 
-嵌入参数、`postMessage` 控制和新增页面的方法见 [pages/README.md](pages/README.md)。全部提示词汇总在 [PROMPTS.md](PROMPTS.md)。
+嵌入参数、`postMessage` 控制和新增页面的方法见 [pages/README.md](pages/README.md)。全部提示词汇总在 [PROMPTS.md](PROMPTS.md)，英文版见 [PROMPTS.en.md](PROMPTS.en.md)。
 
 ## 开场与封面
 
@@ -203,4 +204,4 @@ HTML 页面展示方式的图鉴：按类别整理 133 种单页展示效果，�
 
 - [scripts/make-previews.py](scripts/make-previews.py)：用 Playwright 录制页面动图到 `previews/`，依赖 Playwright 与 ffmpeg。
 - [scripts/make-posters.py](scripts/make-posters.py)：从动图里挑一帧，生成展示站用的静态海报。
-- [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 生成本文件、入口页和展示站用的提示词数据。
+- [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 与 [PROMPTS.en.md](PROMPTS.en.md) 生成本文件、英文 README 和展示站用的数据。

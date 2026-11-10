@@ -9,40 +9,43 @@
 <body>
 <header class="top">
   <a class="brand" href="gallery.html"><i></i>SlideCraft</a>
-  <nav class="links"><a href="https://github.com/HuPengsheet/SlideCraft" target="_blank" rel="noopener">GitHub</a></nav>
+  <nav class="links">
+    <button class="lang-btn" id="langToggle" type="button">EN</button>
+    <a href="https://github.com/HuPengsheet/SlideCraft" target="_blank" rel="noopener" data-i18n="github">GitHub</a>
+  </nav>
 </header>
 
 <main class="library-layout">
-  <aside class="sidebar" aria-label="效果分类">
-    <p class="sidebar-heading">分类</p>
+  <aside class="sidebar" aria-label="效果分类" data-i18n-aria="catHead">
+    <p class="sidebar-heading" data-i18n="catHead">分类</p>
     <nav class="category-nav" id="cats"></nav>
-    <p class="sidebar-note">SlideCraft · 纯 HTML、CSS 与 JS，无需构建</p>
-    <p class="sidebar-note">支持 5 套主题、倍速、暂停与重播</p>
+    <p class="sidebar-note" data-i18n="note1">SlideCraft · 纯 HTML、CSS 与 JS，无需构建</p>
+    <p class="sidebar-note" data-i18n="note2">支持 5 套主题、倍速、暂停与重播</p>
   </aside>
 
   <div class="library-main">
     <section class="intro">
       <div>
-        <h1>效果展示</h1>
-        <p class="lede">按用途分类浏览。点任意一张卡片，就能在弹窗里实时运行，并拿到对应的 AI 提示词。</p>
+        <h1 data-i18n="h1">效果展示</h1>
+        <p class="lede" data-i18n="lede">按用途分类浏览。点任意一张卡片，就能在弹窗里实时运行，并拿到对应的 AI 提示词。</p>
       </div>
       <dl class="g-stats">
-        <div><dt>效果</dt><dd id="total">133</dd></div>
-        <div><dt>类别</dt><dd id="ncat">20</dd></div>
-        <div><dt>主题</dt><dd>5</dd></div>
+        <div><dt data-i18n="statEffects">效果</dt><dd id="total">133</dd></div>
+        <div><dt data-i18n="statCats">类别</dt><dd id="ncat">20</dd></div>
+        <div><dt data-i18n="statThemes">主题</dt><dd>5</dd></div>
       </dl>
     </section>
 
-    <section class="controls" aria-label="搜索效果">
+    <section class="controls" aria-label="搜索效果" data-i18n-aria="searchLabel">
       <label class="search">
         <span class="search-icon" aria-hidden="true"></span>
-        <input id="q" type="search" placeholder="搜索名称、用途，例如：地球、图表、打字" autocomplete="off" aria-label="搜索效果">
+        <input id="q" type="search" data-i18n-ph="searchPh" placeholder="搜索名称、用途，例如：地球、图表、打字" autocomplete="off" data-i18n-aria="searchLabel" aria-label="搜索效果">
         <kbd id="kbd">Ctrl K</kbd>
       </label>
     </section>
 
     <div id="gallery"></div>
-    <p class="empty" id="empty" hidden>没有找到匹配的效果，换个词试试。</p>
+    <p class="empty" id="empty" data-i18n="empty" hidden>没有找到匹配的效果，换个词试试。</p>
   </div>
 </main>
 

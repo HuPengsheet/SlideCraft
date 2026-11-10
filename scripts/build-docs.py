@@ -1,46 +1,91 @@
 #!/usr/bin/env python3
-"""由 PROMPTS.md 生成 README.md、pages/prompts.js（入口页用）和 site/data.js（展示站用）。
+"""由 PROMPTS.md（中文）与 PROMPTS.en.md（英文）生成：
+  README.md、README.en.md          仓库首页（中 / 英）
+  pages/prompts.js                 入口页用（中文）
+  site/data.js                     展示站用（双语）
   python3 scripts/build-docs.py
-PROMPTS.md 是提示词的唯一来源：改提示词只改它，再运行本脚本。"""
+提示词的唯一来源是这两个 Markdown 文件：改内容只改它们，再运行本脚本。
+两个文件的 slug 与类别顺序必须一致，否则脚本报错。"""
 import json, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-src = open(os.path.join(ROOT, "PROMPTS.md"), encoding="utf-8").read()
+PAGES_URL = "https://hupengsheet.github.io/SlideCraft/site/gallery.html"
+REPO_URL = "https://github.com/HuPengsheet/SlideCraft"
 
-cats, cur = [], None
-for line in src.splitlines():
-    m = re.match(r"## [一二三四五六七八九十]+、(.+)", line)
-    if m:
-        cur = {"name": m.group(1), "items": []}
-        cats.append(cur)
-        continue
-    m = re.match(r"#### (\S+) · (.+)", line)
-    if m and cur:
-        cur["items"].append({"slug": m.group(1), "title": m.group(2), "prompt": ""})
-        continue
-    if line.startswith("> ") and cur and cur["items"] and not cur["items"][-1]["prompt"]:
-        cur["items"][-1]["prompt"] = line[2:].strip()
+
+def parse(path):
+    """返回 [{name, items: [{slug, title, prompt, preview_alt}]}]，保持文件中的顺序。"""
+    cats, cur = [], None
+    for line in open(path, encoding="utf-8").read().splitlines():
+        m = re.match(r"## (?:[一二三四五六七八九十]+、|\d+\. )(.+)", line)
+        if m:
+            cur = {"name": m.group(1), "items": []}
+            cats.append(cur)
+            continue
+        m = re.match(r"#### (\S+) · (.+)", line)
+        if m and cur:
+            cur["items"].append({"slug": m.group(1), "title": m.group(2), "prompt": ""})
+            continue
+        if line.startswith("> ") and cur and cur["items"] and not cur["items"][-1]["prompt"]:
+            cur["items"][-1]["prompt"] = line[2:].strip()
+    missing = [i["slug"] for c in cats for i in c["items"] if not i["prompt"]]
+    if missing:
+        raise SystemExit(f"{path} 缺少提示词：" + ", ".join(missing))
+    return cats
+
+
+zh = parse(os.path.join(ROOT, "PROMPTS.md"))
+en = parse(os.path.join(ROOT, "PROMPTS.en.md"))
+if [len(c["items"]) for c in zh] != [len(c["items"]) for c in en] or \
+   [i["slug"] for c in zh for i in c["items"]] != [i["slug"] for c in en for i in c["items"]]:
+    raise SystemExit("PROMPTS.md 与 PROMPTS.en.md 的类别或 slug 顺序不一致")
+
+# 合并成一份双语结构：name / nameEn，title / titleEn，prompt / promptEn
+cats = []
+for cz, ce in zip(zh, en):
+    items = []
+    for iz, ie in zip(cz["items"], ce["items"]):
+        items.append({"slug": iz["slug"], "title": iz["title"], "titleEn": ie["title"],
+                      "prompt": iz["prompt"], "promptEn": ie["prompt"]})
+    cats.append({"name": cz["name"], "nameEn": ce["name"], "items": items})
 
 total = sum(len(c["items"]) for c in cats)
-missing = [i["slug"] for c in cats for i in c["items"] if not i["prompt"]]
-if missing:
-    raise SystemExit("缺少提示词：" + ", ".join(missing))
 
 
 def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def cell(i):
+def cell(i, lang):
+    title = i["titleEn"] if lang == "en" else i["title"]
+    prompt = i["promptEn"] if lang == "en" else i["prompt"]
     return (f'<td width="50%" valign="top"><a href="pages/{i["slug"]}/"><img src="previews/pages/{i["slug"]}.webp" '
-            f'alt="{esc(i["title"])}" width="100%"></a><br><b>{esc(i["title"])}</b><br>{esc(i["prompt"])}</td>')
+            f'alt="{esc(title)}" width="100%"></a><br><b>{esc(title)}</b><br>{esc(prompt)}</td>')
 
 
-out = [f"""# SlideCraft
+def table_rows(items, lang):
+    rows = []
+    for k in range(0, len(items), 2):
+        r = items[k:k + 2]
+        rows.append("<tr>" + "".join(cell(i, lang) for i in r) + ('<td width="50%"></td>' if len(r) == 1 else "") + "</tr>")
+    return "<table>\n" + "\n".join(rows) + "\n</table>\n"
+
+
+def readme_zh():
+    out = [f"""# SlideCraft
+
+[![在线演示](https://img.shields.io/badge/在线演示-立即查看-blue?style=for-the-badge)]({PAGES_URL})
+
+[English](README.en.md)
 
 HTML 页面展示方式的图鉴：按类别整理 {total} 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
 
-纯 HTML、CSS 和 JS，无需构建。\n\n- [site/index.html](site/index.html)：落地页，一屏不滚动：标题、数字和入口按钮，右侧是缓慢滚动的效果海报墙，悬停播放，点击打开。\n- [site/gallery.html](site/gallery.html)：展示页，按类别浏览和搜索全部效果，点开即可实时运行、切换主题和速度、复制提示词。\n- [pages/index.html](pages/index.html)：开发用的查看器，左侧目录加预览。\n\n展示站引用上级目录的 `pages/` 和 `previews/`，部署时要以仓库根目录为站点根目录。
+纯 HTML、CSS 和 JS，无需构建。
+
+- [site/gallery.html]({PAGES_URL})：展示页，按类别浏览和搜索全部效果，点开即可实时运行、切换主题和速度、复制提示词，支持中英文切换。
+- [pages/index.html](pages/index.html)：开发用的查看器，左侧目录加预览。
+
+展示站引用上级目录的 `pages/` 和 `previews/`，部署时要以仓库根目录为站点根目录。
 
 ## 使用
 
@@ -52,31 +97,73 @@ HTML 页面展示方式的图鉴：按类别整理 {total} 种单页展示效果
 <iframe src="pages/number-counter/index.html?theme=light&speed=1" allow="autoplay"></iframe>
 ```
 
-嵌入参数、`postMessage` 控制和新增页面的方法见 [pages/README.md](pages/README.md)。全部提示词汇总在 [PROMPTS.md](PROMPTS.md)。
+嵌入参数、`postMessage` 控制和新增页面的方法见 [pages/README.md](pages/README.md)。全部提示词汇总在 [PROMPTS.md](PROMPTS.md)，英文版见 [PROMPTS.en.md](PROMPTS.en.md)。
 """]
-for c in cats:
-    out.append(f"## {c['name']}\n")
-    rows = []
-    for k in range(0, len(c["items"]), 2):
-        r = c["items"][k:k + 2]
-        rows.append("<tr>" + "".join(cell(i) for i in r) + ('<td width="50%"></td>' if len(r) == 1 else "") + "</tr>")
-    out.append("<table>\n" + "\n".join(rows) + "\n</table>\n")
-out.append("""## 工具
+    for c in cats:
+        out.append(f"## {c['name']}\n")
+        out.append(table_rows(c["items"], "zh"))
+    out.append("""## 工具
 
 - [scripts/make-previews.py](scripts/make-previews.py)：用 Playwright 录制页面动图到 `previews/`，依赖 Playwright 与 ffmpeg。
 - [scripts/make-posters.py](scripts/make-posters.py)：从动图里挑一帧，生成展示站用的静态海报。
-- [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 生成本文件、入口页和展示站用的提示词数据。
+- [scripts/build-docs.py](scripts/build-docs.py)：由 [PROMPTS.md](PROMPTS.md) 与 [PROMPTS.en.md](PROMPTS.en.md) 生成本文件、英文 README 和展示站用的数据。
 """)
-open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8").write("\n".join(out))
+    return "\n".join(out)
 
+
+def readme_en():
+    out = [f"""# SlideCraft
+
+[![Live demo](https://img.shields.io/badge/Live%20demo-Open%20gallery-blue?style=for-the-badge)]({PAGES_URL})
+
+[中文](README.md)
+
+An illustrated catalog of single-page HTML presentation effects: {total} effects grouped by purpose. Each animation comes with the AI prompt that describes it, so you can copy the prompt to build a similar page.
+
+Pure HTML, CSS, and JS. No build step.
+
+- [site/gallery.html]({PAGES_URL}): the gallery. Browse and search every effect by category, run each one live, switch themes and speed, and copy its prompt. Available in Chinese and English.
+- [pages/index.html](pages/index.html): a development viewer with a list of pages on the left and a preview on the right.
+
+The gallery loads `pages/` and `previews/` from the parent directory, so deploy with the repository root as the site root.
+
+## Usage
+
+- Each page is a small standalone HTML file. Edit its `config.js` to change the content; no code changes needed.
+- Supports 5 themes (dark, light, paper, neon, terminal), playback speed, pause, and replay.
+- Open a page directly, or embed it in a slide deck with an `<iframe>`:
+
+```html
+<iframe src="pages/number-counter/index.html?theme=light&speed=1" allow="autoplay"></iframe>
+```
+
+Embed parameters, `postMessage` control, and how to add a new page are described in [pages/README.md](pages/README.md). All prompts are collected in [PROMPTS.en.md](PROMPTS.en.md) (English) and [PROMPTS.md](PROMPTS.md) (Chinese).
+"""]
+    for c in cats:
+        out.append(f"## {c['nameEn']}\n")
+        out.append(table_rows(c["items"], "en"))
+    out.append("""## Tools
+
+- [scripts/make-previews.py](scripts/make-previews.py): records each page as an animated image into `previews/` with Playwright. Requires Playwright and ffmpeg.
+- [scripts/make-posters.py](scripts/make-posters.py): picks a frame from each animation and writes the static posters used by the gallery.
+- [scripts/build-docs.py](scripts/build-docs.py): generates this file, the Chinese README, and the gallery data from [PROMPTS.md](PROMPTS.md) and [PROMPTS.en.md](PROMPTS.en.md).
+""")
+    return "\n".join(out)
+
+
+open(os.path.join(ROOT, "README.md"), "w", encoding="utf-8").write(readme_zh())
+open(os.path.join(ROOT, "README.en.md"), "w", encoding="utf-8").write(readme_en())
+
+# 入口页（pages/index.html）仍只用中文
 prompts = {i["slug"]: i["prompt"] for c in cats for i in c["items"]}
 groups = {c["name"]: {i["slug"]: i["title"] for i in c["items"]} for c in cats}
 open(os.path.join(ROOT, "pages", "prompts.js"), "w", encoding="utf-8").write(
     "/* 由 scripts/build-docs.py 从 PROMPTS.md 生成，不要手改。 */\nwindow.PROMPTS = "
     + json.dumps(prompts, ensure_ascii=False, indent=1) + ";\nwindow.PAGE_GROUPS = "
     + json.dumps(groups, ensure_ascii=False, indent=1) + ";\n")
+
 os.makedirs(os.path.join(ROOT, "site"), exist_ok=True)
 open(os.path.join(ROOT, "site", "data.js"), "w", encoding="utf-8").write(
-    "/* 由 scripts/build-docs.py 从 PROMPTS.md 生成，不要手改。 */\nwindow.SITE = "
+    "/* 由 scripts/build-docs.py 从 PROMPTS.md 与 PROMPTS.en.md 生成，不要手改。 */\nwindow.SITE = "
     + json.dumps({"cats": cats}, ensure_ascii=False, indent=1) + ";\n")
-print(f"README.md、pages/prompts.js、site/data.js 已生成：{total} 条")
+print(f"README.md、README.en.md、pages/prompts.js、site/data.js 已生成：{total} 条")
