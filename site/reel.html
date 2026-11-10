@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20 种页面特效 · SlideCraft Reel</title>
+<link rel="stylesheet" href="reel.css">
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="glow"></div>
+  <header class="top">
+    <span class="brand">SLIDECRAFT · HTML EFFECTS</span>
+    <div class="dashes" id="dashes"></div>
+  </header>
+
+  <!-- 片头 -->
+  <section class="scene intro" id="intro">
+    <div class="i-line1"><b>纯 HTML</b><span>也能做出这样的动效</span></div>
+    <div class="i-line2">
+      <div class="i-num">20</div>
+      <div class="i-text">
+        <h1>种页面特效</h1>
+        <p>SlideCraft · 一句提示词，一个页面</p>
+        <div class="i-dots" id="introDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 片段 -->
+  <section class="scene seg" id="seg">
+    <aside class="panel" id="panel">
+      <div class="p-num"><b id="pNum">01</b><i>/ 20</i></div>
+      <h2 id="pTitle"></h2>
+      <div class="p-en" id="pEn"></div>
+      <div class="p-bar"></div>
+      <p class="p-desc" id="pDesc"></p>
+      <div class="p-tags" id="pTags"></div>
+      <div class="p-pal"><span>PALETTE</span><div id="pPal"></div></div>
+      <div class="p-now">
+        <div class="p-now-row"><span>NOW PLAYING</span><span id="pTime">00:00 / 00:10</span></div>
+        <div class="p-track"><div id="pFill"></div></div>
+      </div>
+    </aside>
+    <div class="screen" id="screen">
+      <iframe class="fr" title="effect A" allow="autoplay"></iframe>
+      <iframe class="fr" title="effect B" allow="autoplay"></iframe>
+    </div>
+  </section>
+
+  <!-- 片尾 -->
+  <section class="scene outro" id="outro">
+    <div class="o-mark"><i></i></div>
+    <h1>更多效果见 SlideCraft</h1>
+    <div class="o-dots" id="outroDots"></div>
+    <p class="o-sub">纯 HTML · CSS · JS，无需构建</p>
+    <p class="o-link">github.com/HuPengsheet/SlideCraft</p>
+  </section>
+</div>
+<div class="hint" id="hint">空格 暂停 · ← → 切换 · R 重播</div>
+<script src="reel-data.js"></script>
+<script src="reel.js"></script>
+</body>
+</html>

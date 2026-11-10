@@ -1,5 +1,7 @@
 # SlideCraft
 
+[![在线演示](https://img.shields.io/badge/在线演示-立即查看-blue?style=for-the-badge)](https://hupengsheet.github.io/SlideCraft/site/gallery.html)
+
 HTML 页面展示方式的图鉴：按类别整理 133 种单页展示效果，每个动画下面附有对应的 AI 提示词，复制即可做出同类页面。
 
 纯 HTML、CSS 和 JS，无需构建。
